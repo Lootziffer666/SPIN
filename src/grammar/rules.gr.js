@@ -742,12 +742,9 @@ export const GR_RULES = [
   },
   {
     id: 'de-gr-zur-zeit',
-    from: /\bzurzeit\b/gi,
+    from: /\bzur\s+[Zz]eit\b/g,
     to: 'zurzeit',
-    confidence: 0.94,
-    // Hinweis: „zurzeit" (Adverb, = momentan) ist korrekt zusammen.
-    // „zur Zeit" (= in der Epoche) ist getrennt. Hier keine Korrektur,
-    // da „zurzeit" häufiger gemeint ist. Regel deaktiviert.
+    confidence: 0.87,
     disabledByDefault: true,
   },
 
