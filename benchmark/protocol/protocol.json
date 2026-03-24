@@ -1,0 +1,15 @@
+{
+  "protocol_id": "PROTO-A",
+  "protocol_version": "1.2.0",
+  "notes": "Example protocol contract placeholder. Replace with your FLOW contract.",
+  "metric_contract": {
+    "primary": "syntax.pass_rate",
+    "components": [
+      { "id": "syntax", "description": "Syntax validity under FLOW contract." },
+      { "id": "determinism", "description": "Replay stability under fixed inputs." },
+      { "id": "regression", "description": "No regressions vs baseline." },
+      { "id": "efficiency", "description": "Runtime/cost tracking." },
+      { "id": "slices", "description": "Slice reporting across categories and lengths." }
+    ]
+  }
+}

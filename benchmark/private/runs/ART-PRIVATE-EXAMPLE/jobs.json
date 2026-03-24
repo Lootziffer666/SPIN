@@ -1,0 +1,47 @@
+[
+  {
+    "job_id": "JOB-9EC8730081",
+    "component_id": "syntax",
+    "name": "Syntax Benchmark",
+    "kind": "quality",
+    "status": "Complete",
+    "started_at": "2026-03-02T04:38:21.573Z",
+    "ended_at": "2026-03-02T04:38:22.504Z"
+  },
+  {
+    "job_id": "JOB-02DC6CC3DF",
+    "component_id": "determinism",
+    "name": "Determinism Replay",
+    "kind": "integrity",
+    "status": "Complete",
+    "started_at": "2026-03-02T04:38:22.504Z",
+    "ended_at": "2026-03-02T04:38:23.304Z"
+  },
+  {
+    "job_id": "JOB-A5DA3F9420",
+    "component_id": "regression",
+    "name": "Regression Guard",
+    "kind": "integrity",
+    "status": "Complete",
+    "started_at": "2026-03-02T04:38:23.305Z",
+    "ended_at": "2026-03-02T04:38:24.019Z"
+  },
+  {
+    "job_id": "JOB-BEDB6BAB3A",
+    "component_id": "efficiency",
+    "name": "Efficiency Metrics",
+    "kind": "efficiency",
+    "status": "Complete",
+    "started_at": "2026-03-02T04:38:24.019Z",
+    "ended_at": "2026-03-02T04:38:24.896Z"
+  },
+  {
+    "job_id": "JOB-515DECB9CC",
+    "component_id": "slices",
+    "name": "Slice Report",
+    "kind": "analysis",
+    "status": "Complete",
+    "started_at": "2026-03-02T04:38:24.897Z",
+    "ended_at": "2026-03-02T04:38:25.648Z"
+  }
+]

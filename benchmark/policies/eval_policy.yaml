@@ -1,0 +1,8 @@
+web_access: false
+retrieval_access: false
+tool_use: allowlist
+allowed_domains: []
+forbidden_strings:
+  - ignore previous instructions
+  - exfiltrate
+  - download external

@@ -1,0 +1,1652 @@
+{
+  "dataset_id": "SPIN-DE-v1",
+  "version": "1.0.0",
+  "language": "de",
+  "description": "Realistic German test dataset for SPIN grammar, clause, phonotactic, and diagnosis benchmarks",
+  "created_at": "2026-03-24T00:00:00Z",
+  "categories": {
+    "grammar": "Tests for GR_RULES regex-based German grammar rules covering Getrenntschreibung, Komma, Apostroph, Wortwiederholung, als/wie, ss/ß, alte Rechtschreibung, Redundanz, das/dass, Zusammenschreibung, Komma-Relativsatz, Auslautverhärtung, and Superlativ-Fehlformen",
+    "clause": "Tests for clauseDetector: simple, compound, complex, and compound-complex sentence classification",
+    "phonotactics": "Tests for phonotactic analysis: illegal bigrams, sonority violations, syllable weight heuristics",
+    "diagnosis": "Tests for the 6-state diagnosis engine: performativ_instabil, normativ_selbstannullierend, konfliktaer, formal_stabil_semantisch_leer, mehrkernig, stabil",
+    "edge": "Edge cases: empty strings, special characters, mixed languages, boundary conditions",
+    "stress": "Stress tests: very long sentences, many clauses, repetitive patterns"
+  },
+  "examples": [
+    {
+      "id": "ex-001",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Er hat das gemacht, so dass alles funktioniert.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-sodass",
+        "correction": "Er hat das gemacht, sodass alles funktioniert."
+      }
+    },
+    {
+      "id": "ex-002",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "An statt zu arbeiten, ging er spazieren.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-anstatt",
+        "correction": "Anstatt zu arbeiten, ging er spazieren."
+      }
+    },
+    {
+      "id": "ex-003",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Auf Grund der Verspätung verpasste sie den Zug.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-aufgrund",
+        "correction": "aufgrund der Verspätung verpasste sie den Zug."
+      }
+    },
+    {
+      "id": "ex-004",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Mit Hilfe eines Wörterbuchs übersetzte er den Text.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-mithilfe",
+        "correction": "mithilfe eines Wörterbuchs übersetzte er den Text."
+      }
+    },
+    {
+      "id": "ex-005",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Die Kinder spielten mit einander im Garten.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-miteinander",
+        "correction": "Die Kinder spielten miteinander im Garten."
+      }
+    },
+    {
+      "id": "ex-006",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Statt dessen nahm er den Bus.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-stattdessen",
+        "correction": "Stattdessen nahm er den Bus."
+      }
+    },
+    {
+      "id": "ex-007",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Das ist keines falls akzeptabel.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-keinesfalls",
+        "correction": "Das ist keinesfalls akzeptabel."
+      }
+    },
+    {
+      "id": "ex-008",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Sie arbeiteten neben einander an dem Projekt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-nebeneinander",
+        "correction": "Sie arbeiteten nebeneinander an dem Projekt."
+      }
+    },
+    {
+      "id": "ex-009",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG_negative",
+      "input": "Aufgrund des Regens blieben wir drinnen.",
+      "expected": {
+        "should_match": false,
+        "rule_id": "de-gr-aufgrund",
+        "note": "Already correct spelling — should not be flagged"
+      }
+    },
+    {
+      "id": "ex-010",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Im Stande zu helfen war er nicht.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-imstande",
+        "correction": "imstande zu helfen war er nicht."
+      }
+    },
+    {
+      "id": "ex-011",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Heut zu Tage macht man alles digital.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-heutzutage",
+        "correction": "heutzutage macht man alles digital."
+      }
+    },
+    {
+      "id": "ex-012",
+      "category": "grammar",
+      "subcategory": "KOMMA_NEBENSATZ",
+      "input": "Ich glaube dass er recht hat.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-nebensatz",
+        "correction": "Ich glaube, dass er recht hat."
+      }
+    },
+    {
+      "id": "ex-013",
+      "category": "grammar",
+      "subcategory": "KOMMA_NEBENSATZ",
+      "input": "Sie blieb zu Hause weil es regnete.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-nebensatz",
+        "correction": "Sie blieb zu Hause, weil es regnete."
+      }
+    },
+    {
+      "id": "ex-014",
+      "category": "grammar",
+      "subcategory": "KOMMA_NEBENSATZ",
+      "input": "Er fragte mich ob ich mitkommen möchte.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-nebensatz",
+        "correction": "Er fragte mich, ob ich mitkommen möchte."
+      }
+    },
+    {
+      "id": "ex-015",
+      "category": "grammar",
+      "subcategory": "KOMMA_NEBENSATZ",
+      "input": "Das Ergebnis war anders obwohl er sich bemüht hatte.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-nebensatz",
+        "correction": "Das Ergebnis war anders, obwohl er sich bemüht hatte."
+      }
+    },
+    {
+      "id": "ex-016",
+      "category": "grammar",
+      "subcategory": "KOMMA_NEBENSATZ_negative",
+      "input": "Ich weiß, dass er kommt.",
+      "expected": {
+        "should_match": false,
+        "rule_id": "de-gr-komma-nebensatz",
+        "note": "Comma already present — should not be flagged"
+      }
+    },
+    {
+      "id": "ex-017",
+      "category": "grammar",
+      "subcategory": "KOMMA_INFINITIV",
+      "input": "Er ging in die Bibliothek um zu lernen.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-um-zu",
+        "correction": "Er ging in die Bibliothek, um zu lernen."
+      }
+    },
+    {
+      "id": "ex-018",
+      "category": "grammar",
+      "subcategory": "KOMMA_INFINITIV",
+      "input": "Sie verließ das Haus ohne zu frühstücken.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-ohne-zu",
+        "correction": "Sie verließ das Haus, ohne zu frühstücken."
+      }
+    },
+    {
+      "id": "ex-019",
+      "category": "grammar",
+      "subcategory": "APOSTROPH_GENITIV",
+      "input": "Luca's Fahrrad steht im Hof.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-apostroph-genitiv",
+        "correction": "Lucas Fahrrad steht im Hof."
+      }
+    },
+    {
+      "id": "ex-020",
+      "category": "grammar",
+      "subcategory": "APOSTROPH_GENITIV",
+      "input": "Maria's Idee war die beste.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-apostroph-genitiv",
+        "correction": "Marias Idee war die beste."
+      }
+    },
+    {
+      "id": "ex-021",
+      "category": "grammar",
+      "subcategory": "APOSTROPH_GENITIV_negative",
+      "input": "Max' Fahrrad wurde gestohlen.",
+      "expected": {
+        "should_match": false,
+        "rule_id": "de-gr-apostroph-genitiv",
+        "note": "Names ending in s/x/z correctly use apostrophe — should not be flagged"
+      }
+    },
+    {
+      "id": "ex-022",
+      "category": "grammar",
+      "subcategory": "APOSTROPH_KONTRAKTION",
+      "input": "Wir gehen für's Erste nach Hause.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-fuers",
+        "correction": "Wir gehen fürs Erste nach Hause."
+      }
+    },
+    {
+      "id": "ex-023",
+      "category": "grammar",
+      "subcategory": "APOSTROPH_KONTRAKTION",
+      "input": "Er sprang auf's Dach.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-aufs",
+        "correction": "Er sprang aufs Dach."
+      }
+    },
+    {
+      "id": "ex-024",
+      "category": "grammar",
+      "subcategory": "WORD_REPEAT",
+      "input": "Er ging in in den Laden.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-word-repeat",
+        "correction": "Er ging in den Laden."
+      }
+    },
+    {
+      "id": "ex-025",
+      "category": "grammar",
+      "subcategory": "WORD_REPEAT",
+      "input": "Die die Schüler kamen zu spät.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-word-repeat",
+        "correction": "Die Schüler kamen zu spät."
+      }
+    },
+    {
+      "id": "ex-026",
+      "category": "grammar",
+      "subcategory": "WORD_REPEAT",
+      "input": "Er und und sie gingen los.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-word-repeat",
+        "correction": "Er und sie gingen los."
+      }
+    },
+    {
+      "id": "ex-027",
+      "category": "grammar",
+      "subcategory": "ALS_WIE",
+      "input": "Er ist größer wie sein Bruder.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-wie-als-komparativ",
+        "correction": "Er ist größer als sein Bruder."
+      }
+    },
+    {
+      "id": "ex-028",
+      "category": "grammar",
+      "subcategory": "ALS_WIE",
+      "input": "Dieses Auto fährt schneller wie das andere.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-wie-als-komparativ",
+        "correction": "Dieses Auto fährt schneller als das andere."
+      }
+    },
+    {
+      "id": "ex-029",
+      "category": "grammar",
+      "subcategory": "ALS_WIE",
+      "input": "Sie ist besser als wie ich erwartet hatte.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-als-wie",
+        "correction": "Sie ist besser als ich erwartet hatte."
+      }
+    },
+    {
+      "id": "ex-030",
+      "category": "grammar",
+      "subcategory": "ALS_WIE_negative",
+      "input": "Er ist größer als sein Bruder.",
+      "expected": {
+        "should_match": false,
+        "rule_id": "de-gr-wie-als-komparativ",
+        "note": "Correct use of 'als' with comparative — should not be flagged"
+      }
+    },
+    {
+      "id": "ex-031",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Die Strasse ist gesperrt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-strasse",
+        "correction": "Die Straße ist gesperrt."
+      }
+    },
+    {
+      "id": "ex-032",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Liebe Grüsse aus Berlin.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-gruesse",
+        "correction": "Liebe Grüße aus Berlin."
+      }
+    },
+    {
+      "id": "ex-033",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Ich weiss nicht, was passiert ist.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-weiss",
+        "correction": "Ich weiß nicht, was passiert ist."
+      }
+    },
+    {
+      "id": "ex-034",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Er hat sich ausserdem beschwert.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-ausserdem",
+        "correction": "Er hat sich außerdem beschwert."
+      }
+    },
+    {
+      "id": "ex-035",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Das Wetter war heiss und drückend.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-heiss",
+        "correction": "Das Wetter war heiß und drückend."
+      }
+    },
+    {
+      "id": "ex-036",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Wie heisst du denn?",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-heisst",
+        "correction": "Wie heißt du denn?"
+      }
+    },
+    {
+      "id": "ex-037",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Sie genoss den Spaziergang schliesslich doch.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-schliesslich",
+        "correction": "Sie genoss den Spaziergang schließlich doch."
+      }
+    },
+    {
+      "id": "ex-038",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Bitte schliessen Sie die Tür.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-schliessen",
+        "correction": "Bitte schließen Sie die Tür."
+      }
+    },
+    {
+      "id": "ex-039",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT_negative",
+      "input": "Die Straße war schmal und dunkel.",
+      "expected": {
+        "should_match": false,
+        "rule_id": "de-gr-strasse",
+        "note": "Already uses correct ß — should not be flagged"
+      }
+    },
+    {
+      "id": "ex-040",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG",
+      "input": "Er wußte nicht, daß es so schwer ist.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-dass-alt",
+        "correction": "Er wußte nicht, dass es so schwer ist."
+      }
+    },
+    {
+      "id": "ex-041",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG",
+      "input": "Man muß das verstehen.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-muss-alt",
+        "correction": "Man muss das verstehen."
+      }
+    },
+    {
+      "id": "ex-042",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG",
+      "input": "Er müßte eigentlich da sein.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-muesste-alt",
+        "correction": "Er müsste eigentlich da sein."
+      }
+    },
+    {
+      "id": "ex-043",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG",
+      "input": "Der Fluß fließt durch die Stadt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-fluss-alt",
+        "correction": "Der Fluss fließt durch die Stadt."
+      }
+    },
+    {
+      "id": "ex-044",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG",
+      "input": "Nach dem Abschluß des Studiums begann er zu arbeiten.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-abschluss-alt",
+        "correction": "Nach dem Abschluss des Studiums begann er zu arbeiten."
+      }
+    },
+    {
+      "id": "ex-045",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG_negative",
+      "input": "Ich muss jetzt gehen.",
+      "expected": {
+        "should_match": false,
+        "rule_id": "de-gr-muss-alt",
+        "note": "Already uses modern spelling — should not be flagged"
+      }
+    },
+    {
+      "id": "ex-046",
+      "category": "grammar",
+      "subcategory": "REDUNDANZ",
+      "input": "Das habe ich bereits schon erledigt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-bereits-schon",
+        "correction": "Das habe ich bereits erledigt."
+      }
+    },
+    {
+      "id": "ex-047",
+      "category": "grammar",
+      "subcategory": "REDUNDANZ",
+      "input": "Er sagte es nochmals wieder.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-nochmals-wieder",
+        "correction": "Er sagte es nochmals."
+      }
+    },
+    {
+      "id": "ex-048",
+      "category": "grammar",
+      "subcategory": "REDUNDANZ",
+      "input": "Das Ergebnis war gut, aber jedoch nicht perfekt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-aber-jedoch",
+        "correction": "Das Ergebnis war gut, jedoch nicht perfekt."
+      }
+    },
+    {
+      "id": "ex-049",
+      "category": "grammar",
+      "subcategory": "ZUSAMMENSCHREIBUNG",
+      "input": "Vorallem die Kinder hatten Spaß.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-vor-allem",
+        "correction": "Vor allem die Kinder hatten Spaß."
+      }
+    },
+    {
+      "id": "ex-050",
+      "category": "grammar",
+      "subcategory": "ZUSAMMENSCHREIBUNG",
+      "input": "Zumbeispiel könnten wir morgen fahren.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-zum-beispiel",
+        "correction": "Zum Beispiel könnten wir morgen fahren."
+      }
+    },
+    {
+      "id": "ex-051",
+      "category": "grammar",
+      "subcategory": "SUPERLATIV_FEHLFORM",
+      "input": "Das ist die einzigste Möglichkeit.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-einzigste",
+        "correction": "Das ist die einzige Möglichkeit."
+      }
+    },
+    {
+      "id": "ex-052",
+      "category": "grammar",
+      "subcategory": "SUPERLATIV_FEHLFORM",
+      "input": "Das wäre die optimalste Lösung.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-optimalste",
+        "correction": "Das wäre die optimale Lösung."
+      }
+    },
+    {
+      "id": "ex-053",
+      "category": "grammar",
+      "subcategory": "SUPERLATIV_FEHLFORM",
+      "input": "Er hat den maximalsten Gewinn erzielt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-maximalste",
+        "correction": "Er hat den maximalen Gewinn erzielt."
+      }
+    },
+    {
+      "id": "ex-054",
+      "category": "grammar",
+      "subcategory": "SUPERLATIV_FEHLFORM",
+      "input": "Das ist die idealste Situation.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-idealste",
+        "correction": "Das ist die ideale Situation."
+      }
+    },
+    {
+      "id": "ex-055",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG",
+      "input": "Er hat das eigendlich nicht gewollt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-eigentlich",
+        "correction": "Er hat das eigentlich nicht gewollt."
+      }
+    },
+    {
+      "id": "ex-056",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG",
+      "input": "Das finde ich wichtik.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-wichtig",
+        "correction": "Das finde ich wichtig."
+      }
+    },
+    {
+      "id": "ex-057",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG",
+      "input": "Sie war sehr freuntlich zu mir.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-freundlich",
+        "correction": "Sie war sehr freundlich zu mir."
+      }
+    },
+    {
+      "id": "ex-058",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG",
+      "input": "Das ist irgentwas Komisches.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-irgendwas",
+        "correction": "Das ist irgendwas Komisches."
+      }
+    },
+    {
+      "id": "ex-059",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG",
+      "input": "Es ist entlich so weit.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-endlich",
+        "correction": "Es ist endlich so weit."
+      }
+    },
+    {
+      "id": "ex-060",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG",
+      "input": "Das Wetter war fertik langweilik.",
+      "expected": {
+        "should_match": true,
+        "matching_rules": ["de-gr-fertig", "de-gr-langweilig"],
+        "correction": "Das Wetter war fertig langweilig.",
+        "note": "Two Auslautverhärtung errors: fertik→fertig (de-gr-fertig) and langweilik→langweilig (de-gr-langweilig)"
+      }
+    },
+    {
+      "id": "ex-061",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG_negative",
+      "input": "Sie war freundlich und ruhig.",
+      "expected": {
+        "should_match": false,
+        "rule_id": "de-gr-freundlich",
+        "note": "Correct spelling — should not be flagged"
+      }
+    },
+    {
+      "id": "ex-062",
+      "category": "grammar",
+      "subcategory": "VERSCHMELZUNG_ADVERB",
+      "input": "Er hat wahr scheinlich recht.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-wahrscheinlich",
+        "correction": "Er hat wahrscheinlich recht."
+      }
+    },
+    {
+      "id": "ex-063",
+      "category": "grammar",
+      "subcategory": "VERSCHMELZUNG_ADVERB",
+      "input": "Das ist selbst verständlich kein Problem.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-selbstverstaendlich",
+        "correction": "Das ist selbstverständlich kein Problem."
+      }
+    },
+    {
+      "id": "ex-064",
+      "category": "grammar",
+      "subcategory": "VERSCHMELZUNG_ADVERB",
+      "input": "Das geschieht möglicher weise am Montag.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-möglicherweise",
+        "correction": "Das geschieht möglicherweise am Montag."
+      }
+    },
+    {
+      "id": "ex-065",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Das Kind ist fleissig und hat Spass am Lernen.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-fleissig",
+        "correction": "Das Kind ist fleißig und hat Spass am Lernen."
+      }
+    },
+    {
+      "id": "ex-066",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Die Kinder spielen draussen im Schnee.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-draussen",
+        "correction": "Die Kinder spielen draußen im Schnee."
+      }
+    },
+    {
+      "id": "ex-067",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Die Regelung gilt zu Gunsten der Mieter.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-zugunsten",
+        "correction": "Die Regelung gilt zugunsten der Mieter."
+      }
+    },
+    {
+      "id": "ex-068",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Er ist in sofern betroffen, als er dort wohnt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-insofern",
+        "correction": "Er ist insofern betroffen, als er dort wohnt."
+      }
+    },
+    {
+      "id": "ex-069",
+      "category": "grammar",
+      "subcategory": "KOMMA_NEBENSATZ",
+      "input": "Wir gehen raus sobald die Sonne scheint.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-nebensatz",
+        "correction": "Wir gehen raus, sobald die Sonne scheint."
+      }
+    },
+    {
+      "id": "ex-070",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Nichtsdesto trotz hat er es geschafft.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-nichtsdestotrotz",
+        "correction": "Nichtsdestotrotz hat er es geschafft."
+      }
+    },
+    {
+      "id": "ex-071",
+      "category": "clause",
+      "subcategory": "simple",
+      "input": "Der Hund läuft durch den Park.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "simple",
+        "subordinating_conjunctions": [],
+        "coordinating_junctions": []
+      }
+    },
+    {
+      "id": "ex-072",
+      "category": "clause",
+      "subcategory": "simple",
+      "input": "Die Sonne scheint hell am Himmel.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "simple",
+        "subordinating_conjunctions": [],
+        "coordinating_junctions": []
+      }
+    },
+    {
+      "id": "ex-073",
+      "category": "clause",
+      "subcategory": "compound",
+      "input": "Der Hund läuft und die Katze schläft.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound",
+        "subordinating_conjunctions": [],
+        "coordinating_junctions": ["und"]
+      }
+    },
+    {
+      "id": "ex-074",
+      "category": "clause",
+      "subcategory": "compound",
+      "input": "Er wollte bleiben, aber sie musste gehen.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound",
+        "subordinating_conjunctions": [],
+        "coordinating_junctions": ["aber"]
+      }
+    },
+    {
+      "id": "ex-075",
+      "category": "clause",
+      "subcategory": "compound",
+      "input": "Wir fahren in den Urlaub oder wir bleiben zu Hause.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound",
+        "subordinating_conjunctions": [],
+        "coordinating_junctions": ["oder"]
+      }
+    },
+    {
+      "id": "ex-076",
+      "category": "clause",
+      "subcategory": "complex",
+      "input": "Ich bleibe drinnen, weil es regnet.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "complex",
+        "subordinating_conjunctions": ["weil"],
+        "coordinating_junctions": []
+      }
+    },
+    {
+      "id": "ex-077",
+      "category": "clause",
+      "subcategory": "complex",
+      "input": "Er sagte, dass er morgen kommt.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "complex",
+        "subordinating_conjunctions": ["dass"],
+        "coordinating_junctions": []
+      }
+    },
+    {
+      "id": "ex-078",
+      "category": "clause",
+      "subcategory": "complex",
+      "input": "Obwohl es kalt war, gingen wir spazieren.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "complex",
+        "subordinating_conjunctions": ["obwohl"],
+        "coordinating_junctions": []
+      }
+    },
+    {
+      "id": "ex-079",
+      "category": "clause",
+      "subcategory": "complex",
+      "input": "Nachdem er gegessen hatte, ging er schlafen.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "complex",
+        "subordinating_conjunctions": ["nachdem"],
+        "coordinating_junctions": []
+      }
+    },
+    {
+      "id": "ex-080",
+      "category": "clause",
+      "subcategory": "compound-complex",
+      "input": "Er ging nach Hause und sie blieb, weil sie arbeiten musste.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound-complex",
+        "subordinating_conjunctions": ["weil"],
+        "coordinating_junctions": ["und"]
+      }
+    },
+    {
+      "id": "ex-081",
+      "category": "clause",
+      "subcategory": "compound-complex",
+      "input": "Obwohl es regnete, gingen wir spazieren und danach tranken wir Kaffee.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound-complex",
+        "subordinating_conjunctions": ["obwohl"],
+        "coordinating_junctions": ["und"]
+      }
+    },
+    {
+      "id": "ex-082",
+      "category": "clause",
+      "subcategory": "compound-complex",
+      "input": "Er sagte, dass er kommt, aber sie glaubte ihm nicht, weil er oft lügt.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound-complex",
+        "subordinating_conjunctions": ["dass", "weil"],
+        "coordinating_junctions": ["aber"]
+      }
+    },
+    {
+      "id": "ex-083",
+      "category": "phonotactics",
+      "subcategory": "illegal_bigram_internal",
+      "input": "Dbstein",
+      "expected": {
+        "should_match": true,
+        "has_suspects": true,
+        "illegal_bigrams": [{"bigram": "db"}],
+        "note": "Contains illegal internal bigram 'db'"
+      }
+    },
+    {
+      "id": "ex-084",
+      "category": "phonotactics",
+      "subcategory": "illegal_bigram_internal",
+      "input": "Abgkeit",
+      "expected": {
+        "should_match": true,
+        "has_suspects": true,
+        "illegal_bigrams": [{"bigram": "bg"}],
+        "note": "Contains illegal internal bigram 'bg'"
+      }
+    },
+    {
+      "id": "ex-085",
+      "category": "phonotactics",
+      "subcategory": "illegal_onset",
+      "input": "ngabe",
+      "expected": {
+        "should_match": true,
+        "has_suspects": true,
+        "illegal_bigrams": [{"bigram": "ng"}],
+        "note": "Illegal onset 'ng' — does not occur at German word beginnings"
+      }
+    },
+    {
+      "id": "ex-086",
+      "category": "phonotactics",
+      "subcategory": "foreign_exception",
+      "input": "Signal",
+      "expected": {
+        "should_match": false,
+        "has_suspects": false,
+        "note": "Contains 'gn' but is a known foreign word exception"
+      }
+    },
+    {
+      "id": "ex-087",
+      "category": "phonotactics",
+      "subcategory": "foreign_exception",
+      "input": "Konzept",
+      "expected": {
+        "should_match": false,
+        "has_suspects": false,
+        "note": "Contains 'pt' but is a known foreign word exception"
+      }
+    },
+    {
+      "id": "ex-088",
+      "category": "phonotactics",
+      "subcategory": "syllable_weight",
+      "input": "Mase",
+      "expected": {
+        "should_match": true,
+        "has_suspects": true,
+        "suspect_type": "single-after-short",
+        "note": "Single consonant between short vowels — doubling expected (Masse vs. Maße)"
+      }
+    },
+    {
+      "id": "ex-089",
+      "category": "phonotactics",
+      "subcategory": "clean_word",
+      "input": "Freundschaft",
+      "expected": {
+        "should_match": false,
+        "has_suspects": false,
+        "note": "Standard German word — no phonotactic violations expected"
+      }
+    },
+    {
+      "id": "ex-090",
+      "category": "phonotactics",
+      "subcategory": "clean_word",
+      "input": "Handlung",
+      "expected": {
+        "should_match": false,
+        "has_suspects": false,
+        "note": "Standard German word with valid consonant clusters"
+      }
+    },
+    {
+      "id": "ex-091",
+      "category": "phonotactics",
+      "subcategory": "illegal_bigram_internal",
+      "input": "Tpferd",
+      "expected": {
+        "should_match": true,
+        "has_suspects": true,
+        "illegal_bigrams": [{"bigram": "tp"}],
+        "note": "Illegal voiceless plosive cluster 'tp'"
+      }
+    },
+    {
+      "id": "ex-092",
+      "category": "phonotactics",
+      "subcategory": "illegal_bigram_double",
+      "input": "Qquadrat",
+      "expected": {
+        "should_match": true,
+        "has_suspects": true,
+        "illegal_bigrams": [{"bigram": "qq"}],
+        "note": "Illegal double consonant 'qq' — does not exist in German"
+      }
+    },
+    {
+      "id": "ex-093",
+      "category": "phonotactics",
+      "subcategory": "clean_word",
+      "input": "Schmetterling",
+      "expected": {
+        "should_match": false,
+        "has_suspects": false,
+        "note": "Complex but valid German word — all clusters are legal"
+      }
+    },
+    {
+      "id": "ex-094",
+      "category": "diagnosis",
+      "subcategory": "performativ_instabil",
+      "input": "Dieser Satz schweigt über seine eigene Bedeutung.",
+      "expected": {
+        "diagnosis_state": "performativ_instabil",
+        "note": "Contains META_MARKER 'satz'+'bedeutung' and NULL_MARKER 'schweigt' — self-referential paradox",
+        "chunks": [
+          {"type": "core.subject", "text": "Dieser Satz"},
+          {"type": "core.predicate", "text": "schweigt"},
+          {"type": "core.object", "text": "über seine eigene Bedeutung"}
+        ]
+      }
+    },
+    {
+      "id": "ex-095",
+      "category": "diagnosis",
+      "subcategory": "performativ_instabil",
+      "input": "Die Sprache verpufft in ihrer eigenen Wahrheit.",
+      "expected": {
+        "diagnosis_state": "performativ_instabil",
+        "note": "META_MARKER 'sprache'+'wahrheit' and NULL_MARKER 'verpufft'",
+        "chunks": [
+          {"type": "core.subject", "text": "Die Sprache"},
+          {"type": "core.predicate", "text": "verpufft"},
+          {"type": "state", "text": "in ihrer eigenen Wahrheit"}
+        ]
+      }
+    },
+    {
+      "id": "ex-096",
+      "category": "diagnosis",
+      "subcategory": "normativ_selbstannullierend",
+      "input": "Diese Regel hat keinerlei Gültigkeit.",
+      "expected": {
+        "diagnosis_state": "normativ_selbstannullierend",
+        "note": "Contains judgement.normative chunk and NORM_NEGATOR 'keinerlei gültigkeit'",
+        "chunks": [
+          {"type": "core.subject", "text": "Diese Regel"},
+          {"type": "core.predicate", "text": "hat"},
+          {"type": "judgement.normative", "text": "keinerlei Gültigkeit"}
+        ]
+      }
+    },
+    {
+      "id": "ex-097",
+      "category": "diagnosis",
+      "subcategory": "normativ_selbstannullierend",
+      "input": "Das Gesetz existiert nicht mehr und hat keine Regeln.",
+      "expected": {
+        "diagnosis_state": "normativ_selbstannullierend",
+        "note": "Contains judgement.normative chunk with NORM_NEGATOR 'existiert nicht' and 'keine regeln'",
+        "chunks": [
+          {"type": "core.subject", "text": "Das Gesetz"},
+          {"type": "core.predicate", "text": "existiert"},
+          {"type": "judgement.normative", "text": "nicht mehr und hat keine Regeln"}
+        ]
+      }
+    },
+    {
+      "id": "ex-098",
+      "category": "diagnosis",
+      "subcategory": "konfliktaer",
+      "input": "Die Lösung ist richtig und zugleich falsch.",
+      "expected": {
+        "diagnosis_state": "konfliktaer",
+        "note": "Two evaluations with opposing polarity: 'richtig' (positive) vs. 'falsch' (negative NEGATIVE_POLARITY)",
+        "chunks": [
+          {"type": "core.subject", "text": "Die Lösung"},
+          {"type": "core.predicate", "text": "ist"},
+          {"type": "judgement.normative", "text": "richtig"},
+          {"type": "judgement.normative", "text": "falsch"}
+        ]
+      }
+    },
+    {
+      "id": "ex-099",
+      "category": "diagnosis",
+      "subcategory": "konfliktaer",
+      "input": "Das Verhalten war vorbildlich, aber untragbar.",
+      "expected": {
+        "diagnosis_state": "konfliktaer",
+        "note": "Two evaluation.social chunks with opposed polarity; 'untragbar' is in NEGATIVE_POLARITY",
+        "chunks": [
+          {"type": "core.subject", "text": "Das Verhalten"},
+          {"type": "core.predicate", "text": "war"},
+          {"type": "evaluation.social", "text": "vorbildlich"},
+          {"type": "evaluation.social", "text": "untragbar"}
+        ]
+      }
+    },
+    {
+      "id": "ex-100",
+      "category": "diagnosis",
+      "subcategory": "formal_stabil_semantisch_leer",
+      "input": "Es ist so.",
+      "expected": {
+        "diagnosis_state": "formal_stabil_semantisch_leer",
+        "note": "Placeholder subject 'es' with no concrete core.object or state chunk",
+        "chunks": [
+          {"type": "core.subject", "text": "Es"},
+          {"type": "core.predicate", "text": "ist"},
+          {"type": "ornament", "text": "so"}
+        ]
+      }
+    },
+    {
+      "id": "ex-101",
+      "category": "diagnosis",
+      "subcategory": "formal_stabil_semantisch_leer",
+      "input": "Das bleibt offen.",
+      "expected": {
+        "diagnosis_state": "formal_stabil_semantisch_leer",
+        "note": "Placeholder subject 'das' with no core.object or state — formally stable but semantically empty",
+        "chunks": [
+          {"type": "core.subject", "text": "Das"},
+          {"type": "core.predicate", "text": "bleibt"},
+          {"type": "ornament", "text": "offen"}
+        ]
+      }
+    },
+    {
+      "id": "ex-102",
+      "category": "diagnosis",
+      "subcategory": "mehrkernig",
+      "input": "Er liest, schreibt, rechnet den ganzen Tag.",
+      "expected": {
+        "diagnosis_state": "mehrkernig",
+        "note": "Multiple predicate cores ('liest', 'schreibt', 'rechnet') without subordination",
+        "chunks": [
+          {"type": "core.subject", "text": "Er"},
+          {"type": "core.predicate", "text": "liest"},
+          {"type": "core.predicate", "text": "schreibt"},
+          {"type": "core.predicate", "text": "rechnet"},
+          {"type": "core.object", "text": "den ganzen Tag"}
+        ]
+      }
+    },
+    {
+      "id": "ex-103",
+      "category": "diagnosis",
+      "subcategory": "mehrkernig",
+      "input": "Die Maschine rattert, stampft, zischt.",
+      "expected": {
+        "diagnosis_state": "mehrkernig",
+        "note": "Three coordinate predicates without subordination — multicore detected",
+        "chunks": [
+          {"type": "core.subject", "text": "Die Maschine"},
+          {"type": "core.predicate", "text": "rattert"},
+          {"type": "core.predicate", "text": "stampft"},
+          {"type": "core.predicate", "text": "zischt"}
+        ]
+      }
+    },
+    {
+      "id": "ex-104",
+      "category": "diagnosis",
+      "subcategory": "stabil",
+      "input": "Der Lehrer erklärt den Schülern die Aufgabe.",
+      "expected": {
+        "diagnosis_state": "stabil",
+        "note": "Standard SVO sentence with concrete subject, single predicate, concrete object — no structural tension",
+        "chunks": [
+          {"type": "core.subject", "text": "Der Lehrer"},
+          {"type": "core.predicate", "text": "erklärt"},
+          {"type": "core.object", "text": "den Schülern die Aufgabe"}
+        ]
+      }
+    },
+    {
+      "id": "ex-105",
+      "category": "diagnosis",
+      "subcategory": "stabil",
+      "input": "Die Katze liegt auf dem Sofa.",
+      "expected": {
+        "diagnosis_state": "stabil",
+        "note": "Simple stable sentence — concrete subject, single predicate, locative state",
+        "chunks": [
+          {"type": "core.subject", "text": "Die Katze"},
+          {"type": "core.predicate", "text": "liegt"},
+          {"type": "state", "text": "auf dem Sofa"}
+        ]
+      }
+    },
+    {
+      "id": "ex-106",
+      "category": "edge",
+      "subcategory": "empty_input",
+      "input": "",
+      "expected": {
+        "should_match": false,
+        "note": "Empty string — all analyzers should return empty or default results without errors"
+      }
+    },
+    {
+      "id": "ex-107",
+      "category": "edge",
+      "subcategory": "whitespace_only",
+      "input": "   \t\n  ",
+      "expected": {
+        "should_match": false,
+        "note": "Whitespace-only input — should be treated as empty"
+      }
+    },
+    {
+      "id": "ex-108",
+      "category": "edge",
+      "subcategory": "special_characters",
+      "input": "!!! ??? --- *** ///",
+      "expected": {
+        "should_match": false,
+        "note": "Only punctuation/special characters — no grammar rules should trigger"
+      }
+    },
+    {
+      "id": "ex-109",
+      "category": "edge",
+      "subcategory": "mixed_language",
+      "input": "Das Meeting wurde gecancelled weil der Manager busy war.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-nebensatz",
+        "correction": "Das Meeting wurde gecancelled, weil der Manager busy war.",
+        "note": "German sentence with English loanwords — comma rule should still apply before 'weil'"
+      }
+    },
+    {
+      "id": "ex-110",
+      "category": "edge",
+      "subcategory": "single_word",
+      "input": "Hallo",
+      "expected": {
+        "should_match": false,
+        "clause_type": "simple",
+        "note": "Single word — clause detector should classify as simple, no grammar errors"
+      }
+    },
+    {
+      "id": "ex-111",
+      "category": "edge",
+      "subcategory": "numbers_and_text",
+      "input": "Er hat 3 Strassen überquert und 5 Brücken passiert.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-strassen",
+        "correction": "Er hat 3 Straßen überquert und 5 Brücken passiert.",
+        "note": "Mixed numbers and text — grammar rule should still fire on 'Strassen'"
+      }
+    },
+    {
+      "id": "ex-112",
+      "category": "edge",
+      "subcategory": "unicode_boundary",
+      "input": "Über's Wochenende fahren wir weg.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-ubers",
+        "correction": "Übers Wochenende fahren wir weg.",
+        "note": "Rule with lookbehind for Umlaut word boundary"
+      }
+    },
+    {
+      "id": "ex-113",
+      "category": "stress",
+      "subcategory": "long_sentence",
+      "input": "Der alte Mann, der seit vielen Jahren in dem kleinen Haus am Ende der langen Straße wohnte und jeden Morgen seinen Hund im Park ausführte und dabei immer die gleiche Bank aufsuchte und dort seine Zeitung las und den Vögeln zuhörte und mit den anderen Spaziergängern plauderte und danach in sein Haus zurückkehrte und sich einen Tee kochte und den Rest des Tages in seinem Garten verbrachte, war ein sehr zufriedener Mensch.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound",
+        "note": "Extremely long sentence with many coordinating conjunctions — stress test for clause detection and regex matching"
+      }
+    },
+    {
+      "id": "ex-114",
+      "category": "stress",
+      "subcategory": "many_errors",
+      "input": "Er hat eigendlich wahr scheinlich irgentwas wichtikes gesagt so dass die Strasse gesperrt wurde weil er ausserdem nochmals wieder daß gemeint hat.",
+      "expected": {
+        "should_match": true,
+        "matching_rules": [
+          "de-gr-eigentlich",
+          "de-gr-wahrscheinlich",
+          "de-gr-irgendwas",
+          "de-gr-sodass",
+          "de-gr-strasse",
+          "de-gr-komma-nebensatz",
+          "de-gr-ausserdem",
+          "de-gr-nochmals-wieder",
+          "de-gr-dass-alt"
+        ],
+        "note": "Sentence with many simultaneous errors from different rule categories — stress test for rule pipeline"
+      }
+    },
+    {
+      "id": "ex-115",
+      "category": "stress",
+      "subcategory": "repetitive_pattern",
+      "input": "Er sagte und und und und und und er wiederholte sich.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-word-repeat",
+        "note": "Many consecutive repeated function words — tests regex backtracking behavior"
+      }
+    },
+    {
+      "id": "ex-116",
+      "category": "stress",
+      "subcategory": "nested_clauses",
+      "input": "Ich glaube, dass er weiß, dass sie hofft, dass wir kommen, obwohl er denkt, dass es regnet, weil der Himmel grau ist.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound-complex",
+        "subordinating_conjunctions": ["dass", "obwohl", "weil"],
+        "note": "Deeply nested subordinate clauses — stress test for clause detector"
+      }
+    },
+    {
+      "id": "ex-117",
+      "category": "stress",
+      "subcategory": "many_commas",
+      "input": "Der Hund, der groß war, und die Katze, die klein war, und der Vogel, der laut sang, lebten zusammen, obwohl sie sich manchmal stritten, weil der Hund zu wild war, und die Katze zu faul war, aber dennoch waren sie glücklich, weil sie einander hatten.",
+      "expected": {
+        "should_match": true,
+        "clause_type": "compound-complex",
+        "note": "Many clauses with multiple subordinating and coordinating conjunctions — comprehensive clause detection stress test"
+      }
+    },
+    {
+      "id": "ex-118",
+      "category": "grammar",
+      "subcategory": "KOMMA_INFINITIV",
+      "input": "Er ging los anstatt zu warten.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-komma-anstatt-zu",
+        "correction": "Er ging los, anstatt zu warten."
+      }
+    },
+    {
+      "id": "ex-119",
+      "category": "grammar",
+      "subcategory": "APOSTROPH_KONTRAKTION",
+      "input": "Wir springen in's Wasser.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-ins",
+        "correction": "Wir springen ins Wasser."
+      }
+    },
+    {
+      "id": "ex-120",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Er hat das Gerät in Stand gesetzt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-instand",
+        "correction": "Er hat das Gerät instand gesetzt."
+      }
+    },
+    {
+      "id": "ex-121",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG",
+      "input": "Der Genuß des Essens war überwältigend.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-genuss-alt",
+        "correction": "Der Genuss des Essens war überwältigend."
+      }
+    },
+    {
+      "id": "ex-122",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Er hat die Grösse des Problems unterschätzt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-groesse",
+        "correction": "Er hat die Größe des Problems unterschätzt."
+      }
+    },
+    {
+      "id": "ex-123",
+      "category": "grammar",
+      "subcategory": "AUSLAUTVERHAERTUNG",
+      "input": "Das war richtik lustik und traurik zugleich.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-richtig",
+        "note": "Multiple Auslautverhärtung errors in one sentence: richtik, lustik, traurik"
+      }
+    },
+    {
+      "id": "ex-124",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "In Folge des Unfalls war die Straße gesperrt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-infolge",
+        "correction": "infolge des Unfalls war die Straße gesperrt."
+      }
+    },
+    {
+      "id": "ex-125",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "In Frage kommt nur die erste Option.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-infrage",
+        "correction": "infrage kommt nur die erste Option."
+      }
+    },
+    {
+      "id": "ex-126",
+      "category": "grammar",
+      "subcategory": "VERSCHMELZUNG_ADVERB",
+      "input": "Er hat zu mindest versucht zu helfen.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-zumindest",
+        "correction": "Er hat zumindest versucht zu helfen."
+      }
+    },
+    {
+      "id": "ex-127",
+      "category": "grammar",
+      "subcategory": "VERSCHMELZUNG_ADVERB",
+      "input": "Das ist beziehungs weise nicht ganz korrekt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-beziehungsweise",
+        "correction": "Das ist beziehungsweise nicht ganz korrekt."
+      }
+    },
+    {
+      "id": "ex-128",
+      "category": "grammar",
+      "subcategory": "SUPERLATIV_FEHLFORM",
+      "input": "Die absolutste Kontrolle über das Projekt hatte der Chef.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-absolutste",
+        "correction": "Die absolute Kontrolle über das Projekt hatte der Chef."
+      }
+    },
+    {
+      "id": "ex-129",
+      "category": "phonotactics",
+      "subcategory": "voicing_pair",
+      "input": "Hund",
+      "expected": {
+        "should_match": false,
+        "has_suspects": false,
+        "note": "Standard word with final devoicing — phonotactically valid in German orthography"
+      }
+    },
+    {
+      "id": "ex-130",
+      "category": "phonotactics",
+      "subcategory": "illegal_bigram_internal",
+      "input": "Pkwert",
+      "expected": {
+        "should_match": true,
+        "has_suspects": true,
+        "illegal_bigrams": [{"bigram": "pk"}],
+        "note": "Illegal voiceless plosive cluster 'pk' — not found in native German words"
+      }
+    },
+    {
+      "id": "ex-131",
+      "category": "diagnosis",
+      "subcategory": "stabil",
+      "input": "Die Firma liefert hochwertige Produkte an internationale Kunden.",
+      "expected": {
+        "diagnosis_state": "stabil",
+        "note": "Concrete subject, single predicate, concrete object — fully stable structure",
+        "chunks": [
+          {"type": "core.subject", "text": "Die Firma"},
+          {"type": "core.predicate", "text": "liefert"},
+          {"type": "core.object", "text": "hochwertige Produkte an internationale Kunden"}
+        ]
+      }
+    },
+    {
+      "id": "ex-132",
+      "category": "stress",
+      "subcategory": "all_getrenntschreibung",
+      "input": "An statt auf Grund des Wetters mit Hilfe eines Regenschirms neben einander zu laufen, gingen sie unter einander auf und nahmen den Bus statt dessen.",
+      "expected": {
+        "should_match": true,
+        "matching_rules": [
+          "de-gr-anstatt",
+          "de-gr-aufgrund",
+          "de-gr-mithilfe",
+          "de-gr-nebeneinander",
+          "de-gr-untereinander",
+          "de-gr-stattdessen"
+        ],
+        "note": "Sentence packed with multiple Getrenntschreibung errors — stress test for rule pipeline ordering"
+      }
+    },
+    {
+      "id": "ex-133",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Er musste gemäss den Regeln handeln.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-gemaess",
+        "correction": "Er musste gemäß den Regeln handeln."
+      }
+    },
+    {
+      "id": "ex-134",
+      "category": "grammar",
+      "subcategory": "SS_ESZETT",
+      "input": "Sie hat das Zimmer regelmässig aufgeräumt.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-regelmaessig",
+        "correction": "Sie hat das Zimmer regelmäßig aufgeräumt."
+      }
+    },
+    {
+      "id": "ex-135",
+      "category": "grammar",
+      "subcategory": "ALTE_RECHTSCHREIBUNG",
+      "input": "Der Kuß war unerwartet.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-kuss-alt",
+        "correction": "Der Kuss war unerwartet."
+      }
+    },
+    {
+      "id": "ex-136",
+      "category": "grammar",
+      "subcategory": "REDUNDANZ",
+      "input": "Er ging weg, aber trotzdem blieb sie ruhig.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-aber-trotzdem",
+        "correction": "Er ging weg, trotzdem blieb sie ruhig."
+      }
+    },
+    {
+      "id": "ex-137",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Er hat so wie so keine Chance mehr.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-sowieso",
+        "correction": "Er hat sowieso keine Chance mehr."
+      }
+    },
+    {
+      "id": "ex-138",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Die Entscheidung wurde zu Lasten der Mieter getroffen.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-zulasten",
+        "correction": "Die Entscheidung wurde zulasten der Mieter getroffen."
+      }
+    },
+    {
+      "id": "ex-139",
+      "category": "grammar",
+      "subcategory": "GETRENNTSCHREIBUNG",
+      "input": "Von Seiten der Behörde gab es keine Einwände.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-vonseiten",
+        "correction": "vonseiten der Behörde gab es keine Einwände."
+      }
+    },
+    {
+      "id": "ex-140",
+      "category": "grammar",
+      "subcategory": "SUPERLATIV_FEHLFORM",
+      "input": "Das war die minimalste Anstrengung.",
+      "expected": {
+        "should_match": true,
+        "rule_id": "de-gr-minimalste",
+        "correction": "Das war die minimale Anstrengung."
+      }
+    }
+  ]
+}

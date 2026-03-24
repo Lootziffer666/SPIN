@@ -1,0 +1,11 @@
+{
+  "suite_id": "SUITE-DEFAULT",
+  "suite_version": "1.0.0",
+  "components": [
+    { "id": "syntax", "name": "Syntax Benchmark", "kind": "quality" },
+    { "id": "determinism", "name": "Determinism Replay", "kind": "integrity" },
+    { "id": "regression", "name": "Regression Guard", "kind": "integrity" },
+    { "id": "efficiency", "name": "Efficiency Metrics", "kind": "efficiency" },
+    { "id": "slices", "name": "Slice Report", "kind": "analysis" }
+  ]
+}

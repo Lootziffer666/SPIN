@@ -1,0 +1,36 @@
+{
+  "actor": "test",
+  "started_at": "2026-03-02T04:38:14.851Z",
+  "artifact_id": "ART-TEST-EXAMPLE",
+  "classification": "private_dev",
+  "source_run_id": "RUN-TEST",
+  "anchors": {
+    "protocol_hash": "PH-TEST",
+    "benchmark_suite_hash": "SUITE-TEST",
+    "env_fingerprint": "ENV-TEST",
+    "code_version": "commit:test"
+  },
+  "policy": {
+    "policy_path": "policies/eval_policy.yaml",
+    "policy_hash": "8b774ec53074ea583aa9af344eec9b0608361a6e1afdab3b12163337fbf55ded"
+  },
+  "suite": {
+    "suite_path": "benchmarks/suite.json",
+    "suite_hash": "f7483faf23ac1a791a0bb1cd28b6f7e3b41f4712f5f95cb51860a31535af13f8"
+  },
+  "host_env_snapshot": {
+    "os": {
+      "platform": "linux",
+      "release": "4.4.0",
+      "arch": "x64"
+    },
+    "node": "v22.16.0",
+    "cpu": "unknown",
+    "cores": 56,
+    "timestamp": "2026-03-02T04:38:14.850Z"
+  },
+  "host_env_snapshot_hash": "5c1835e91c89510bb8ab9d611e57f2b572dff15db6792e3594b35ae4e14d2b53",
+  "seed": 3220643325,
+  "protocol_version": "1.2.0",
+  "protocol_id": "PROTO-A"
+}

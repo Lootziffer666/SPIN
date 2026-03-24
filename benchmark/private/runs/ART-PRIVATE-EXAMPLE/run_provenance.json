@@ -1,0 +1,36 @@
+{
+  "actor": "ci",
+  "started_at": "2026-03-02T04:38:21.571Z",
+  "artifact_id": "ART-PRIVATE-EXAMPLE",
+  "classification": "private_dev",
+  "source_run_id": "RUN-1044",
+  "anchors": {
+    "protocol_hash": "PH-7F2B8E1C9A11",
+    "benchmark_suite_hash": "SUITE-9C3F2A1D7B44",
+    "env_fingerprint": "ENV-0A91C3D8",
+    "code_version": "commit:ci"
+  },
+  "policy": {
+    "policy_path": "policies/eval_policy.yaml",
+    "policy_hash": "8b774ec53074ea583aa9af344eec9b0608361a6e1afdab3b12163337fbf55ded"
+  },
+  "suite": {
+    "suite_path": "benchmarks/suite.json",
+    "suite_hash": "f7483faf23ac1a791a0bb1cd28b6f7e3b41f4712f5f95cb51860a31535af13f8"
+  },
+  "host_env_snapshot": {
+    "os": {
+      "platform": "linux",
+      "release": "4.4.0",
+      "arch": "x64"
+    },
+    "node": "v22.16.0",
+    "cpu": "unknown",
+    "cores": 56,
+    "timestamp": "2026-03-02T04:38:21.571Z"
+  },
+  "host_env_snapshot_hash": "83a87a0842b0c6a98930e64d7fa01bb672aa383bb3fb732cb6a563494c110a3f",
+  "seed": 4126684043,
+  "protocol_version": "1.2.0",
+  "protocol_id": "PROTO-A"
+}

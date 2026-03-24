@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="mode-suite" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ScoreDock</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skiplink" href="#app">Skip to content</a>
+    <header class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <div class="title">ScoreDock</div>
+          <div class="subtitle">Research-Grade Bench &amp; Tweak</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="navlink" href="#/suite" data-route="suite">Suite</a>
+        <a class="navlink" href="#/lab" data-route="lab">Lab</a>
+      </nav>
+
+      <div class="right">
+        <mode-switch></mode-switch>
+        <density-switch></density-switch>
+      </div>
+    </header>
+
+    <main class="container">
+      <div id="app"></div>
+    </main>
+
+    <footer class="footer">
+      <span class="muted">Zero-dependency UI • Served by runner</span>
+      <span class="muted">API: <code>/api/*</code></span>
+    </footer>
+
+    <toast-host></toast-host>
+
+    <script type="module" src="/app.mjs"></script
+  </body>
+</html>
