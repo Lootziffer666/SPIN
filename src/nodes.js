@@ -236,8 +236,7 @@ export function link(graph, sourceId, targetId, spec = {}) {
  */
 export function getLinks(graph, nodeId) {
   return graph.links.filter(
-    l => l.source === nodeId || l.target === nodeId ||
-         (l.bidirectional && (l.source === nodeId || l.target === nodeId))
+    l => l.source === nodeId || l.target === nodeId
   );
 }
 
@@ -302,10 +301,10 @@ export function getNeighbors(graph, nodeId) {
   for (const l of graph.links) {
     if (l.source === nodeId) {
       const target = graph.nodes[l.target];
-      if (target) neighbors.push({ node: target, link: l, direction: 'outgoing' });
+      if (target) neighbors.push({ node: target, link: l, direction: l.bidirectional ? 'both' : 'outgoing' });
     }
-    if (l.target === nodeId || (l.bidirectional && l.source === nodeId)) {
-      const source = l.target === nodeId ? graph.nodes[l.source] : graph.nodes[l.target];
+    if (l.target === nodeId) {
+      const source = graph.nodes[l.source];
       if (source) neighbors.push({ node: source, link: l, direction: l.bidirectional ? 'both' : 'incoming' });
     }
   }

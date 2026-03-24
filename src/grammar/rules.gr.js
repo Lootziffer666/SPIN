@@ -603,15 +603,15 @@ export const GR_RULES = [
   // „einzigste" ist kein Superlativ — „einzig" hat keine Steigerung
   {
     id: 'de-gr-einzigste',
-    from: /\beinzigste[rsnm]?\b/gi,
-    to: 'einzige',
+    from: /\beinzigst(e[rsnm]?)\b/gi,
+    to: 'einzig$1',
     confidence: 0.94,
   },
   // „optimalste" — „optimal" ist bereits Superlativ
   {
     id: 'de-gr-optimalste',
-    from: /\boptimalste[rsnm]?\b/gi,
-    to: 'optimale',
+    from: /\boptimalst(e[rsnm]?)\b/gi,
+    to: 'optimal$1',
     confidence: 0.91,
   },
 ];

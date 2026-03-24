@@ -154,6 +154,7 @@ export const EN_GR_RULES = [
     from: /\bwere\b(?=\s+(?:going|gonna|not|never|always|still|just|also|probably|definitely|certainly|about))/gi,
     to: "we're",
     confidence: 0.86,
+    disabledByDefault: true,
   },
   {
     id: 'en-gr-ive',
