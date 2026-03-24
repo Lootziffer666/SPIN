@@ -1,0 +1,20 @@
+{
+  "name": "spin",
+  "version": "0.5.0",
+  "description": "SPIN — Diagnostisches Schreibinstrument. Satz-Problematiken Identifizieren, Nutzergesteuert.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "keywords": [
+    "writing",
+    "diagnosis",
+    "sentence-structure",
+    "neurodivergent",
+    "german"
+  ],
+  "author": "Lootziffer666",
+  "license": "UNLICENSED",
+  "private": true
+}
