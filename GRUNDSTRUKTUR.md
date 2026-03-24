@@ -129,19 +129,60 @@ SMASH ist eine **WarioWare-inspirierte Microgame-Sammlung** für kognitive Pause
 - **Touch + Pointer + Vibration**: läuft auf Desktop UND Mobil
 - **Kein Windows-Only**: browser-based, cross-platform
 
-### Design-Sprache SMASH
+### Design-Sprache SMASH — Tokens (korrekt)
 
-SMASH verwendet **exakt dieselben Design-Tokens** wie FLOW/SPIN/LOOM:
+SMASH verwendet **dieselben Design-Tokens** wie FLOW/SPIN/LOOM:
 
 ```
---teal:   #00c0c0    (Primärfarbe, Hintergrund)
+--teal:   #00c0c0    (Akzent, nicht Primärfläche)
 --navy:   #000030    (Text, Rahmen, Zeichenelemente)
 --red:    #e01020    (Akzent, Erfolg, Gauge-Füllung)
---cream:  #f2f0e8    (Hintergrund Karten)
+--cream:  #f2f0e8    (Hintergrund — dominante Fläche)
 Fonts: Bebas Neue (Überschriften) + Inter (Text)
 ```
 
-Das ist kein Zufall — dieselbe Tokenstruktur wie in FLOW (AutoHotKey Tooltip-Farben) und SPIN (in spin.html).
+### Design-Konflikt und Kurskorrektur ⚠
+
+**Was der Prototyp hat (und was falsch ist):**
+
+Der aktuelle Prototyp `smash_warioware_minimalhud_nocountdown.html` hat eine **Editorial-Poster-Ästhetik**:
+- Vollflächiger Teal-Hintergrund über den ganzen Screen
+- Diagonale Rot-Streifen als dekorative Overlay-Elemente
+- Wiederholendes Linienraster als Hintergrundtextur
+- Hohe visuelle Dichte und "Aufregungsniveau"
+- WarioWare-Spielgefühl durch maximalen visuellen Kontrast
+
+**Warum das nicht passt:**
+
+Das widerspricht der Design-Bibel der Tool-Familie auf allen Ebenen:
+
+| Design-Bibel | Editorial Poster (aktueller Prototyp) |
+|---|---|
+| Cream/Weiß als primäre Fläche | Teal als primäre Fläche |
+| Farbe nur als Akzent | Farbe als Struktur und Dekoration |
+| Keine dekorativen Elemente | Diagonale Streifen, Gitterlinien |
+| Reizminderung | Reizstimulation |
+| Stille Oberfläche | Visuelle Energie |
+
+**Das ist kein ästhetisches Problem — es ist ein Funktionsproblem:**  
+SMASH ist für ND-Nutzer gebaut, die kognitive Regulation brauchen. Eine überstimulierte Shell wirkt dem Ziel entgegen, bevor das erste Spiel gestartet ist.
+
+**Die korrekte Richtung:**
+
+```
+Shell (Topbar, Navigation, Karten, Home-Screen)
+  → Cream-Hintergrund, Navy-Text, minimale Ränder
+  → Identisch zu FLOW/SPIN: "Sie fallen auf, weil sie nicht auffallen"
+  → Teal und Rot NUR als Aktions-Akzente (Buttons, Statusanzeigen)
+
+Spielarena (was innerhalb des Stage-Containers passiert)
+  → Darf mehr visuelle Energie haben — das IST der Spielinhalt
+  → Die Spiele selbst sind die Ausnahme, nicht die Regel
+  → Analog: SPIN zeigt Diagnosezustände farbig, aber die UI-Chrome ist reduktiv
+```
+
+**Was das für den Prototypen bedeutet:**  
+Die Shell muss neu aufgebaut werden. Die Spiellogik und der Spielinhalt (die 23 Microgames) bleiben unverändert. Nur der Rahmen drum herum — das, was du siehst, wenn du nicht spielst — muss der Design-Bibel folgen.
 
 ### SMASH-Earcon
 
@@ -163,18 +204,19 @@ SMASH ist das einzige Tool der Familie, das **kein Text-Interface** hat. Es ist 
 
 ---
 
-## 6. Design-Prinzipien (alle drei Tools)
+## 6. Design-Prinzipien (alle vier Tools)
 
 ```
 Sie fallen auf, weil sie nicht auffallen.
 ```
 
 - Extreme Reduktion — Leeraum als Luxus
-- Reizminderung für LRS/ND-Nutzer
-- Keine unnötigen UI-Elemente
+- Reizminderung für LRS/ND-Nutzer — **auch in SMASH** (obwohl SMASH ein Spiel ist)
+- Keine dekorativen Elemente in der Shell (Streifen, Raster, Overlays gehören nicht zur Chrome)
 - Sound als UX, nicht als Dekoration
-- Das Settings-Menü ist die sichtbare "Klammer" — daran erkennt man, dass alle drei zusammengehören
+- Das Settings-Menü ist die sichtbare "Klammer" — daran erkennt man, dass alle vier zusammengehören
 - Akzentfarben differenzieren die Tools; Designsprache bleibt dieselbe
+- **Ausnahme Spielinhalt**: Was *innerhalb* einer Spielarena passiert, darf visuell energetischer sein — das ist der Spielinhalt, nicht die UI-Chrome
 
 ---
 
@@ -245,6 +287,7 @@ Keine externen Audiodateien. Keine Musik. Keine Stimme. Keine persistenten Sound
 | "LOOM hat eigenes Repo" | Kein LOOM-Repo vorhanden (Stand März 2026). LOOM nutzt SPIN-Komponenten. |
 | "SMASH ist leer / undefiniert" | SMASH ist eine vollständige WarioWare-Microgame-Sammlung (23 Spiele, HTML5, cross-platform). Rolle klar: kognitives Break-Tool für ND-Nutzer. |
 | "Es gibt drei Tools" | Es gibt drei **Schreibwerkzeuge** (FLOW/SPIN/LOOM, alle Windows-only) + SMASH als viertes, eigenständiges Begleit-Tool (browser-based, cross-platform). |
+| "Der SMASH-Prototyp folgt der Design-Bibel" | Der aktuelle Prototyp hat eine Editorial-Poster-Ästhetik (vollflächiges Teal, Diagonal-Stripes, Gitterraster) — das ist das Gegenteil der Design-Bibel. Die Shell muss neu gebaut werden. Die Spiellogik bleibt. |
 
 ### Was korrekt war und bleibt:
 - SPIN ist ein diagnostisches Instrument, kein Editor, kein Assistent
