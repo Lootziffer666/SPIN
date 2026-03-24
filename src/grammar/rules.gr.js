@@ -614,4 +614,411 @@ export const GR_RULES = [
     to: 'optimal$1',
     confidence: 0.91,
   },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // GETRENNTSCHREIBUNG_ERWEITERT – weitere falsch getrennte Zusammensetzungen
+  // Ergänzt die GETRENNTSCHREIBUNG-Kategorie um Adverbien, Konjunktionen
+  // und Pronominalkonnektoren, die häufig falsch getrennt werden.
+  // ═══════════════════════════════════════════════════════════════════════
+  {
+    id: 'de-gr-stattdessen',
+    from: /\bstatt\s+dessen\b/gi,
+    to: 'stattdessen',
+    confidence: 0.94,
+  },
+  {
+    id: 'de-gr-indessen',
+    from: /\bin\s+dessen\b/gi,
+    to: 'indessen',
+    confidence: 0.91,
+  },
+  {
+    id: 'de-gr-keinesfalls',
+    from: /\bkeines\s+falls\b/gi,
+    to: 'keinesfalls',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-jedenfalls',
+    from: /\bjeden\s+falls\b/gi,
+    to: 'jedenfalls',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-ebenfalls',
+    from: /\beben\s+falls\b/gi,
+    to: 'ebenfalls',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-gleichfalls',
+    from: /\bgleich\s+falls\b/gi,
+    to: 'gleichfalls',
+    confidence: 0.94,
+  },
+  {
+    id: 'de-gr-nichtsdestotrotz',
+    from: /\bnichtsdesto\s+trotz\b/gi,
+    to: 'nichtsdestotrotz',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-deswegen',
+    from: /\bdes\s+wegen\b/gi,
+    to: 'deswegen',
+    confidence: 0.93,
+  },
+  {
+    id: 'de-gr-untereinander',
+    from: /\bunter\s+einander\b/gi,
+    to: 'untereinander',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-nebeneinander',
+    from: /\bneben\s+einander\b/gi,
+    to: 'nebeneinander',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-uebereinander',
+    from: /(?<=\s|^)über\s+einander\b/gi,
+    to: 'übereinander',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-auseinander',
+    from: /\baus\s+einander\b/gi,
+    to: 'auseinander',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-gegeneinander',
+    from: /\bgegen\s+einander\b/gi,
+    to: 'gegeneinander',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-miteinander',
+    from: /\bmit\s+einander\b/gi,
+    to: 'miteinander',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-nacheinander',
+    from: /\bnach\s+einander\b/gi,
+    to: 'nacheinander',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-zueinander',
+    from: /\bzu\s+einander\b/gi,
+    to: 'zueinander',
+    confidence: 0.95,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // ZUSAMMENSCHREIBUNG – falsch zusammengeschriebene Wortgruppen
+  // Kehrseite der Getrenntschreibung: Wörter, die getrennt stehen müssen,
+  // aber fälschlicherweise zusammengeschrieben werden.
+  // ═══════════════════════════════════════════════════════════════════════
+  {
+    id: 'de-gr-vor-allem',
+    from: /\bvorallem\b/gi,
+    to: 'vor allem',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-zum-beispiel',
+    from: /\bzumbeispiel\b/gi,
+    to: 'zum Beispiel',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-zu-hause',
+    from: /\bzuhause\b/gi,
+    to: 'zu Hause',
+    confidence: 0.87,
+  },
+  {
+    id: 'de-gr-zur-zeit',
+    from: /\bzur\s+[Zz]eit\b/g,
+    to: 'zurzeit',
+    confidence: 0.87,
+    disabledByDefault: true,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // DAS_DASS – häufigste LRS-Verwechslung im Deutschen
+  // Kontextbasierte Unterscheidung: „das" (Artikel/Relativpronomen)
+  // vs. „dass" (Konjunktion).
+  // ═══════════════════════════════════════════════════════════════════════
+  // „das" nach Verben des Sagens/Denkens → sehr wahrscheinlich „dass"
+  {
+    id: 'de-gr-dass-nach-verb',
+    from: /\b(sagt|sagte|meint|meinte|glaubt|glaubte|denkt|dachte|weiß|wusste|zeigt|zeigte|behauptet|behauptete|erklärt|erklärte|hofft|hoffte|findet|fand|bedeutet|bedeutete|merkt|merkte|fühlt|fühlte|spürt|spürte|versteht|verstand)\s+das\b/gi,
+    to: '$1 dass',
+    confidence: 0.88,
+    disabledByDefault: true,
+  },
+  // „das" nach Komma → wahrscheinlich Relativpronomen, NICHT korrigieren.
+  // Aber: „, das" am Satzende ohne Verb → wahrscheinlich „, dass"
+  {
+    id: 'de-gr-dass-nach-komma-ohne-verb',
+    from: /,\s+das\s+(nicht|nie|kein|immer|auch|sehr|so|zu|wirklich|eigentlich|leider|vielleicht|wohl|bestimmt|sicher|wahrscheinlich)\b/gi,
+    to: ', dass $1',
+    confidence: 0.82,
+    disabledByDefault: true,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // KOMMA_RELATIVSATZ – Komma vor Relativpronomen
+  // Im Deutschen steht vor Relativsätzen IMMER ein Komma.
+  // ═══════════════════════════════════════════════════════════════════════
+  {
+    id: 'de-gr-komma-relativ',
+    from: /\b(\w{3,})\s+(der|die|das|dem|den|dessen|deren)\s+(nicht|sich|es|ihn|ihr|ihm|sie|mich|mir|dich|dir|uns|euch|auch|schon|noch|sehr|ganz|immer|nie|nur|bereits|wohl|vielleicht|eigentlich)\b/gi,
+    to: '$1, $2 $3',
+    confidence: 0.78,
+    disabledByDefault: true,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // AUSLAUTVERHAERTUNG_LEXICAL – Wortspezifische Korrekturen für
+  // Auslautverhärtungsfehler (d→t, b→p, g→k am Wortende).
+  //
+  // Exotischer Ansatz basierend auf phonologischer Feature Geometry:
+  // Alle diese Verwechslungen haben Feature-Distanz = 1 (nur [±voice]).
+  //
+  // Nur Wörter OHNE Homographen-Risiko (kein „Rat" → „Rad", da „Rat" existiert).
+  // Hochfrequente LRS-Fehler, klinisch belegt.
+  // ═══════════════════════════════════════════════════════════════════════
+  {
+    id: 'de-gr-irgendwie',
+    from: /\birgentwie\b/gi,
+    to: 'irgendwie',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-irgendwann',
+    from: /\birgentwann\b/gi,
+    to: 'irgendwann',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-irgendwo',
+    from: /\birgentwo\b/gi,
+    to: 'irgendwo',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-irgendwas',
+    from: /\birgentwas\b/gi,
+    to: 'irgendwas',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-irgendwer',
+    from: /\birgentwer\b/gi,
+    to: 'irgendwer',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-irgendein',
+    from: /\birgentein\b/gi,
+    to: 'irgendein',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-eigentlich',
+    from: /\beigendlich\b/gi,
+    to: 'eigentlich',
+    confidence: 0.98,
+  },
+  {
+    id: 'de-gr-endgueltig',
+    from: /\bentgültig\b/gi,
+    to: 'endgültig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-endlich',
+    from: /\bentlich\b/gi,
+    to: 'endlich',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-aehnlich',
+    from: /(?<=\s|^)ähnlig\b/gi,
+    to: 'ähnlich',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-noetig',
+    from: /\bnötik\b/gi,
+    to: 'nötig',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-voellig',
+    from: /\bvöllik\b/gi,
+    to: 'völlig',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-fertig',
+    from: /\bfertik\b/gi,
+    to: 'fertig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-wichtig',
+    from: /\bwichtik\b/gi,
+    to: 'wichtig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-richtig',
+    from: /\brichtik\b/gi,
+    to: 'richtig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-lustig',
+    from: /\blustik\b/gi,
+    to: 'lustig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-traurig',
+    from: /\btraurik\b/gi,
+    to: 'traurig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-ruhig',
+    from: /\bruhik\b/gi,
+    to: 'ruhig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-langweilig',
+    from: /\blangweilik\b/gi,
+    to: 'langweilig',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-freundlich',
+    from: /\bfreuntlich\b/gi,
+    to: 'freundlich',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-ordentlich',
+    from: /\bordentlig\b/gi,
+    to: 'ordentlich',
+    confidence: 0.96,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // VERSCHMELZUNG_ADVERB – häufig fehlende Zusammenschreibung
+  // bei adverbialen Verschmelzungen
+  // ═══════════════════════════════════════════════════════════════════════
+  {
+    id: 'de-gr-heutzutage',
+    from: /\bheut\s+zu\s+[Tt]age\b/g,
+    to: 'heutzutage',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-zumindest',
+    from: /\bzu\s+mindest\b/gi,
+    to: 'zumindest',
+    confidence: 0.95,
+  },
+  {
+    id: 'de-gr-beziehungsweise',
+    from: /\bbeziehungs\s+weise\b/gi,
+    to: 'beziehungsweise',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-gewissermaszen',
+    from: /\bgewisser\s+maßen\b/gi,
+    to: 'gewissermaßen',
+    confidence: 0.96,
+  },
+  {
+    id: 'de-gr-selbstverstaendlich',
+    from: /\bselbst\s+verständlich\b/gi,
+    to: 'selbstverständlich',
+    confidence: 0.93,
+  },
+  {
+    id: 'de-gr-wahrscheinlich',
+    from: /\bwahr\s+scheinlich\b/gi,
+    to: 'wahrscheinlich',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-möglicherweise',
+    from: /\bmöglicher\s+weise\b/gi,
+    to: 'möglicherweise',
+    confidence: 0.97,
+  },
+  {
+    id: 'de-gr-notwendigerweise',
+    from: /\bnotwendiger\s+weise\b/gi,
+    to: 'notwendigerweise',
+    confidence: 0.97,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // SUPERLATIV_FEHLFORM – fehlerhafte Superlativbildungen
+  // Ergänzt die REDUNDANZ-Kategorie um weitere nicht-steigbare Adjektive.
+  // ═══════════════════════════════════════════════════════════════════════
+  {
+    id: 'de-gr-maximalste',
+    from: /\bmaximalst(e[rsnm]?)\b/gi,
+    to: 'maximal$1',
+    confidence: 0.91,
+  },
+  {
+    id: 'de-gr-minimalste',
+    from: /\bminimalst(e[rsnm]?)\b/gi,
+    to: 'minimal$1',
+    confidence: 0.91,
+  },
+  {
+    id: 'de-gr-idealste',
+    from: /\bidealst(e[rsnm]?)\b/gi,
+    to: 'ideal$1',
+    confidence: 0.89,
+  },
+  {
+    id: 'de-gr-totalste',
+    from: /\btotalst(e[rsnm]?)\b/gi,
+    to: 'total$1',
+    confidence: 0.89,
+  },
+  {
+    id: 'de-gr-absolutste',
+    from: /\babsolutst(e[rsnm]?)\b/gi,
+    to: 'absolut$1',
+    confidence: 0.91,
+  },
+  {
+    id: 'de-gr-vollste',
+    from: /\bvollst(e[rsnm]?)\b/gi,
+    to: 'voll$1',
+    confidence: 0.85,
+    disabledByDefault: true,
+  },
+  {
+    id: 'de-gr-leerste',
+    from: /\bleerst(e[rsnm]?)\b/gi,
+    to: 'leer$1',
+    confidence: 0.85,
+    disabledByDefault: true,
+  },
 ];

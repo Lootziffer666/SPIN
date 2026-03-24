@@ -16,6 +16,11 @@ export {
   GR_RULES,
   EN_GR_RULES,
   contextWindowRules,
+  checkPhonotactics,
+  analyzeTextPhonotactics,
+  sonorityProfile,
+  featureDistance,
+  VOICING_PAIRS,
 } from './grammar/index.js';
 
 export {
