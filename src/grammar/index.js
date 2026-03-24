@@ -9,6 +9,7 @@
  * Komponenten:
  *   clauseDetector     — Satz- und Teilsatz-Analyse (Satzstruktur-Topologie)
  *   GR_RULES           — Deutsche Grammatik-Normalisierungsregeln
+ *   EN_GR_RULES        — Englische Grammatik-Normalisierungsregeln
  *   contextWindowRules — Multi-Token-Kontextregeln
  */
 
@@ -22,5 +23,7 @@ export {
 } from './clauseDetector.js';
 
 export { GR_RULES } from './rules.gr.js';
+
+export { EN_GR_RULES } from './rules.en.gr.js';
 
 export { contextWindowRules } from './contextWindowRules.js';

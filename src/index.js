@@ -14,5 +14,6 @@ export {
   detectClauses,
   splitSentences,
   GR_RULES,
+  EN_GR_RULES,
   contextWindowRules,
 } from './grammar/index.js';
