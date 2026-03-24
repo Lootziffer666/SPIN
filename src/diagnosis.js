@@ -19,6 +19,8 @@ import {
   NORM_NEGATORS,
 } from './config.js';
 
+import { SUBORDINATING_DE } from './grammar/index.js';
+
 /**
  * Gibt den Text eines Chunks als String zurück.
  * @param {object} chunk - Chunk-Objekt mit tokenIds
@@ -97,10 +99,10 @@ function isFormallyStableSemanticallyEmpty(orderedChunks, tokens) {
 function isMulticore(orderedChunks, tokens) {
   const predicates = orderedChunks.filter(c => c.type === 'core.predicate');
   if (predicates.length <= 1) return false;
-  const subordinators = ['dass', 'weil', 'während', 'um zu', 'obwohl', 'wenn', 'als'];
-  const subordinated = predicates.some(p =>
-    subordinators.some(k => chunkTextLower(p, tokens).includes(k))
-  );
+  const subordinated = predicates.some(p => {
+    const text = chunkTextLower(p, tokens);
+    return [...SUBORDINATING_DE].some(k => text.includes(k));
+  });
   return !subordinated;
 }
 
