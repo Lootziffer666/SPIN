@@ -56,7 +56,21 @@
     </main>
 
     <script>
-        // --- 0. Earcon-System (Ton als UX, kein persistenter Sound) ---
+        // ═══════════════════════════════════════════════════════════════════
+        // ⚠ EARCON-SYSTEM — SPEC / PHASE 4 — NOCH NICHT PRODUKTIONSREIF ⚠
+        //
+        // Dieser Code wurde vor Fertigstellung der App-Grundstruktur
+        // implementiert. Er ist ein synthetischer Proof of Concept für
+        // die Earcon-Spezifikation aus GRUNDSTRUKTUR.md (Abschnitt 8).
+        //
+        // Gehört NICHT in den Prototyp, sondern in die spätere App-Shell
+        // (Tauri-Phase). Hier aufbewahrt als dokumentierte Spezifikation.
+        //
+        // Spezifikation:
+        //   jingle()     — einmaliger Startup-Sweep (120→4800 Hz)
+        //   whoosh()     — Drehungsgeräusch bei erfolgreicher Analyse
+        //   zerbroseln() — Struktur zerfällt bei Regelverletzung / nicht_renderbar
+        // ═══════════════════════════════════════════════════════════════════
         const earcon = (() => {
             let _ctx = null;
             let _jinglePlayed = false;
