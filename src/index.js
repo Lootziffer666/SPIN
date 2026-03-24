@@ -1,0 +1,37 @@
+/**
+ * SPIN — Hauptmodul
+ *
+ * Exportiert alle öffentlichen APIs des SPIN-Systems.
+ * Einstiegspunkt für programmatische Nutzung und LOOM-Anbindung.
+ */
+
+export { CHUNK_TYPES, DOGMA_RULES, META_MARKERS, NULL_MARKERS } from './config.js';
+export { runDiagnosis, getChunkText } from './diagnosis.js';
+export { earcon } from './earcons.js';
+export { initSpin, parseSentence } from './ui.js';
+
+export {
+  detectClauses,
+  splitSentences,
+  GR_RULES,
+  EN_GR_RULES,
+  contextWindowRules,
+} from './grammar/index.js';
+
+export {
+  NODE_TYPES,
+  LINK_TYPES,
+  createGraph,
+  addNode,
+  getNode,
+  setProperty,
+  removeNode,
+  link,
+  getLinks,
+  removeLink,
+  findNodes,
+  getNeighbors,
+  exportGraph,
+  importGraph,
+  mergeGraph,
+} from './nodes.js';
