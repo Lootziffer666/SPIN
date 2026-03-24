@@ -17,3 +17,21 @@ export {
   EN_GR_RULES,
   contextWindowRules,
 } from './grammar/index.js';
+
+export {
+  NODE_TYPES,
+  LINK_TYPES,
+  createGraph,
+  addNode,
+  getNode,
+  setProperty,
+  removeNode,
+  link,
+  getLinks,
+  removeLink,
+  findNodes,
+  getNeighbors,
+  exportGraph,
+  importGraph,
+  mergeGraph,
+} from './nodes.js';

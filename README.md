@@ -25,10 +25,12 @@ SPIN/
 │   ├── diagnosis.js          # Diagnose-Engine (6 Zustände)
 │   ├── earcons.js            # Earcon-System (Phase 4, noch nicht aktiv)
 │   ├── ui.js                 # UI-Rendering, Workbench, Toast
+│   ├── nodes.js              # Node-Graph für multimodale Story-Entwicklung
 │   └── grammar/              # Grammatik-Modul (aus Flow2)
 │       ├── index.js           # Grammar-Einstiegspunkt
 │       ├── clauseDetector.js  # Satz-/Teilsatzanalyse
-│       ├── rules.gr.js        # Deutsche Grammatikregeln
+│       ├── rules.gr.js        # Deutsche Grammatikregeln (86 Regeln)
+│       ├── rules.en.gr.js     # Englische Grammatikregeln (83 Regeln)
 │       └── contextWindowRules.js  # Multi-Token-Kontextregeln
 ├── index.html                # Strukturierte App (ES-Module)
 ├── spin.html                 # Ursprünglicher Prototyp v0.4 (Referenz)
@@ -65,6 +67,22 @@ Das Grammatik-Modul stammt aus dem [Flow2-Repository](https://github.com/Lootzif
 - **contextWindowRules** — Multi-Token-Kontextregeln
 
 > **Shared-Module-Prinzip:** Dieses Modul gehört langfristig in ein eigenes Shared-Package, das von FLOW und SPIN gleichermaßen konsumiert wird. „Eine Erweiterung, zwei Nutzen."
+
+## Node Graph — Multimodale Story-Entwicklung
+
+Alles, was zur Entwicklung einer multimodalen Story beiträgt, existiert als **Node** in einem offenen Graphen. Nodes sind nie „voll belegt" — Properties und Links können jederzeit ergänzt werden, auch über Dokument- und Projektgrenzen hinweg.
+
+```
+createGraph() → addNode(character|location|event|sensation|...) → link() → „Fäden spinnen"
+```
+
+**23 vordefinierte Node-Typen** (offen erweiterbar): `character`, `location`, `event`, `scene`, `object`, `dialogue`, `chapter`, `arc`, `theme`, `motif`, `conflict`, `sensation`, `medium`, `atmosphere`, `rhythm`, `rule`, `lore`, `faction`, `system`, `concept`, `reference`, `annotation`, `question`
+
+**12 Link-Typen**: `relates_to`, `causes`, `follows`, `contains`, `opposes`, `transforms`, `references`, `depends_on`, `resembles`, `belongs_to`, `inspires`, `contradicts`
+
+**Projektübergreifend**: `mergeGraph()` führt Graphen aus verschiedenen Projekten zusammen (SPIN ↔ FLOW ↔ LOOM ↔ SMASH).
+
+> Dieses Modul ist die Grundlage für LOOM — Zoom-out von der Satzebene ins narrative Gewebe.
 
 ## Buildplan
 
