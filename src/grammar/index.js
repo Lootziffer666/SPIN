@@ -11,6 +11,7 @@
  *   GR_RULES           — Deutsche Grammatik-Normalisierungsregeln
  *   EN_GR_RULES        — Englische Grammatik-Normalisierungsregeln
  *   contextWindowRules — Multi-Token-Kontextregeln
+ *   phonotactics       — Phonotaktischer Validator (exotischer Analyseansatz)
  */
 
 export {
@@ -27,3 +28,15 @@ export { GR_RULES } from './rules.gr.js';
 export { EN_GR_RULES } from './rules.en.gr.js';
 
 export { contextWindowRules } from './contextWindowRules.js';
+
+export {
+  checkPhonotactics,
+  analyzeTextPhonotactics,
+  sonorityProfile,
+  findSonorityViolations,
+  checkSyllableWeight,
+  featureDistance,
+  VOICING_PAIRS,
+  ILLEGAL_BIGRAMS_INTERNAL,
+  ILLEGAL_ONSETS,
+} from './phonotactics.js';
