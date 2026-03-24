@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPIN | Diagnostisches Schreibinstrument</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #1a1a1a; }
+        .chunk { cursor: grab; background: white; border: 1px solid #e5e7eb; transition: all 0.2s; }
+        .chunk:active { cursor: grabbing; }
+        .sortable-ghost { opacity: 0.3; background: #f3f4f6; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Diagnosis state colors */
+        .diagnosis-stabil                     { border-color: #22c55e; color: #22c55e; }
+        .diagnosis-mehrkernig                 { border-color: #f59e0b; color: #f59e0b; }
+        .diagnosis-performativ_instabil       { border-color: #a855f7; color: #a855f7; }
+        .diagnosis-normativ_selbstannullierend { border-color: #ef4444; color: #ef4444; }
+        .diagnosis-konfliktaer                { border-color: #dc2626; color: #dc2626; }
+        .diagnosis-formal_stabil_semantisch_leer { border-color: #64748b; color: #64748b; }
+        .diagnosis-nicht_renderbar            { border-color: #1e293b; color: #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-8 md:p-24">
+
+    <header class="w-full max-w-3xl mb-16">
+        <h1 class="text-xs uppercase tracking-widest text-gray-400 font-semibold mb-2">SPIN v0.4 MVP</h1>
+        <p class="text-sm text-gray-500 italic">Diagnose durch Widerstand. Infrastruktur für komplexes Denken.</p>
+    </header>
+
+    <main class="w-full max-w-3xl space-y-12">
+        <section id="input-section">
+            <input type="text" id="sentence-input"
+                class="w-full text-xl bg-transparent border-b border-gray-200 focus:border-black outline-none pb-2 transition-colors"
+                placeholder="Satz eingeben und mit Enter zerlegen...">
+        </section>
+
+        <section id="workbench" class="hidden space-y-8">
+            <div id="chunk-container" class="flex flex-wrap gap-3 p-6 bg-gray-50 rounded-sm border border-dashed border-gray-200 min-h-[100px]"></div>
+            <button id="render-btn" class="px-6 py-2 bg-black text-white text-sm font-medium hover:bg-gray-800 transition-colors">
+                Neu linearisieren
+            </button>
+        </section>
+
+        <section id="output-area" class="hidden pt-8 border-t border-gray-100 space-y-6">
+            <div>
+                <span class="text-xs uppercase text-gray-400">Rekonstruktion</span>
+                <p id="rendered-sentence" class="text-xl leading-relaxed mt-2"></p>
+            </div>
+            <div id="diagnosis-tag" class="inline-block px-3 py-1 text-xs font-mono uppercase tracking-wider border rounded-full"></div>
+            <ul id="diagnosis-notes" class="text-sm text-gray-600 space-y-1 list-disc list-inside"></ul>
+        </section>
+    </main>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════
+        // ⚠ EARCON-SYSTEM — SPEC / PHASE 4 — NOCH NICHT PRODUKTIONSREIF ⚠
+        //
+        // Dieser Code wurde vor Fertigstellung der App-Grundstruktur
+        // implementiert. Er ist ein synthetischer Proof of Concept für
+        // die Earcon-Spezifikation aus GRUNDSTRUKTUR.md (Abschnitt 8).
+        //
+        // Gehört NICHT in den Prototyp, sondern in die spätere App-Shell
+        // (Tauri-Phase). Hier aufbewahrt als dokumentierte Spezifikation.
+        //
+        // Spezifikation:
+        //   jingle()     — einmaliger Startup-Sweep (120→4800 Hz)
+        //   whoosh()     — Drehungsgeräusch bei erfolgreicher Analyse
+        //   zerbroseln() — Struktur zerfällt bei Regelverletzung / nicht_renderbar
+        // ═══════════════════════════════════════════════════════════════════
+        const earcon = (() => {
+            let _ctx = null;
+            let _jinglePlayed = false;
+
+            function ctx() {
+                if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
+                if (_ctx.state === 'suspended') _ctx.resume();
+                return _ctx;
+            }
+
+            function noiseSource(c, durationSec) {
+                const len = Math.ceil(c.sampleRate * durationSec);
+                const buf = c.createBuffer(1, len, c.sampleRate);
+                const d = buf.getChannelData(0);
+                for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+                const src = c.createBufferSource();
+                src.buffer = buf;
+                return src;
+            }
+
+            return {
+                // Drehungsgeräusch: Bandpass-Noise-Sweep aufwärts → Gefühl von Spin
+                whoosh(delay = 0) {
+                    try {
+                        const c = ctx();
+                        const src = noiseSource(c, 0.45);
+                        const filter = c.createBiquadFilter();
+                        filter.type = 'bandpass';
+                        filter.Q.value = 2.8;
+                        const gain = c.createGain();
+                        src.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(c.destination);
+                        const t = c.currentTime + delay;
+                        filter.frequency.setValueAtTime(180, t);
+                        filter.frequency.exponentialRampToValueAtTime(3200, t + 0.32);
+                        gain.gain.setValueAtTime(0, t);
+                        gain.gain.linearRampToValueAtTime(0.38, t + 0.04);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
+                        src.start(t);
+                        src.stop(t + 0.46);
+                    } catch (_) {}
+                },
+
+                // Zerbröseln: mehrere rasche, abklingende Rauschstöße — Struktur fällt auseinander
+                zerbroseln() {
+                    try {
+                        const c = ctx();
+                        [0, 0.055, 0.115, 0.175, 0.235, 0.295].forEach((delay, i) => {
+                            const src = noiseSource(c, 0.06);
+                            const filter = c.createBiquadFilter();
+                            filter.type = 'highpass';
+                            filter.frequency.value = 900 + i * 280;
+                            const gain = c.createGain();
+                            src.connect(filter);
+                            filter.connect(gain);
+                            gain.connect(c.destination);
+                            const t = c.currentTime + delay;
+                            const vol = 0.36 * Math.pow(0.72, i);
+                            gain.gain.setValueAtTime(vol, t);
+                            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.055);
+                            src.start(t);
+                            src.stop(t + 0.065);
+                        });
+                    } catch (_) {}
+                },
+
+                // Startup-Jingle: beschleunigender Whoosh-Sweep — SPIN erwacht
+                jingle() {
+                    if (_jinglePlayed) return;
+                    _jinglePlayed = true;
+                    try {
+                        const c = ctx();
+                        const src = noiseSource(c, 0.6);
+                        const filter = c.createBiquadFilter();
+                        filter.type = 'bandpass';
+                        filter.Q.value = 3.5;
+                        const gain = c.createGain();
+                        src.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(c.destination);
+                        const t = c.currentTime;
+                        filter.frequency.setValueAtTime(120, t);
+                        filter.frequency.exponentialRampToValueAtTime(4800, t + 0.5);
+                        gain.gain.setValueAtTime(0, t);
+                        gain.gain.linearRampToValueAtTime(0.32, t + 0.03);
+                        gain.gain.setValueAtTime(0.32, t + 0.35);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+                        src.start(t);
+                        src.stop(t + 0.6);
+                    } catch (_) {}
+                }
+            };
+        })();
+
+        // --- 1. Konfiguration & Marker ---
+
+        // Alle Chunk-Typen gemäß PRD (inkl. evaluation.social)
+        const CHUNK_TYPES = [
+            'ornament',
+            'core.subject',
+            'core.predicate',
+            'core.object',
+            'apposition',
+            'relation',
+            'state',
+            'evaluation.social',
+            'judgement.normative'
+        ];
+
+        // Selbstreferenz-Marker (für performativ_instabil)
+        const META_MARKERS = ["satz", "sprache", "bedeutung", "wahrheit", "ausdruck"];
+
+        // Negations-/Nullifikations-Marker (für performativ_instabil)
+        const NULL_MARKERS = ["schweigt", "zerfällt", "verpufft", "unlesbar", "ohne bedeutung", "schweigen"];
+
+        // Negations-Marker für Polarität (für konfliktaer & normativ_selbstannullierend)
+        const NEGATIVE_POLARITY = ["nicht", "kein", "nie", "verweigert", "scheitert", "unmöglich", "falsch", "schlecht", "untragbar"];
+
+        // Marker für normativ_selbstannullierend
+        const NORM_NEGATORS = ["nicht gültig", "nichtig", "ohne grundlage", "existiert nicht", "keinerlei gültigkeit", "keine regeln"];
+
+        const DOGMA_RULES = [
+            {
+                id: 'subj_before_pred',
+                from: 'core.predicate',
+                condition: (targetIdx, currentChunks) => {
+                    const subjIdx = currentChunks.findIndex(c => c.type === 'core.subject');
+                    return subjIdx !== -1 && targetIdx < subjIdx;
+                },
+                reason: "Ein Prädikat vor dem Subjekt unterbricht den Handlungsfluss."
+            },
+            {
+                id: 'obj_after_subj',
+                from: 'core.object',
+                condition: (targetIdx, currentChunks) => {
+                    const subjIdx = currentChunks.findIndex(c => c.type === 'core.subject');
+                    return subjIdx !== -1 && targetIdx < subjIdx;
+                },
+                reason: "Das Objekt darf nicht vor dem handelnden Subjekt stehen."
+            },
+            {
+                id: 'no_obj_without_pred',
+                from: 'core.object',
+                condition: (targetIdx, currentChunks) => !currentChunks.some(c => c.type === 'core.predicate'),
+                reason: "Ein Objekt ohne Prädikat ist bedeutungslos."
+            }
+        ];
+
+        let tokens = [];
+        let chunks = [];
+        let originalTokenOrder = "";
+        let sortableInstance = null;
+
+        const input = document.getElementById('sentence-input');
+        const container = document.getElementById('chunk-container');
+        const renderBtn = document.getElementById('render-btn');
+
+        // --- 2. Initialisierung ---
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && input.value.trim()) {
+                earcon.jingle();
+                // Kommas entfernen, in Tokens aufteilen
+                const words = input.value.trim().replace(/,/g, '').split(/\s+/).filter(w => w.length > 0);
+                tokens = words.map((w, i) => ({ id: `t-${i}`, text: w }));
+                originalTokenOrder = tokens.map(t => t.text).sort().join('|');
+                chunks = tokens.map((t, i) => ({
+                    id: `c-${i}`,
+                    type: 'ornament',
+                    _initialType: 'ornament',
+                    tokenIds: [t.id],
+                    initialOrder: i
+                }));
+                document.getElementById('output-area').classList.add('hidden');
+                initWorkbench();
+            }
+        });
+
+        function initWorkbench() {
+            renderChunksInDOM();
+            document.getElementById('workbench').classList.remove('hidden');
+            if (!sortableInstance) {
+                sortableInstance = new Sortable(container, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    onMove: validateMove
+                });
+            }
+        }
+
+        function validateMove(evt) {
+            const draggedChunk = chunks.find(c => c.id === evt.dragged.dataset.chunkId);
+            const currentChunks = Array.from(container.children).map(el => chunks.find(c => c.id === el.dataset.chunkId));
+
+            const realIdx = Array.from(container.children).indexOf(evt.related);
+            if (realIdx === -1) return true;
+
+            const violatedRule = DOGMA_RULES.find(rule =>
+                rule.from === draggedChunk.type && rule.condition(realIdx, currentChunks)
+            );
+
+            if (violatedRule) {
+                earcon.zerbroseln();
+                showToast(violatedRule.reason);
+                return false;
+            }
+            return true;
+        }
+
+        // --- 3. UI & Zuweisung ---
+        function renderChunksInDOM() {
+            container.innerHTML = '';
+            chunks.forEach(chunk => {
+                const el = document.createElement('div');
+                el.className = `chunk shadow-sm border-b-2 p-3 flex flex-col gap-2 ${chunk.type.startsWith('core') ? 'border-black' : 'border-gray-200'}`;
+                el.dataset.chunkId = chunk.id;
+
+                const label = document.createElement('span');
+                label.className = 'font-medium text-lg';
+                label.textContent = chunk.tokenIds.map(tId => tokens.find(t => t.id === tId).text).join(' ');
+
+                const select = document.createElement('select');
+                select.className = 'text-[10px] uppercase tracking-tighter bg-transparent outline-none text-gray-400 focus:text-black cursor-pointer';
+                CHUNK_TYPES.forEach(type => {
+                    const opt = document.createElement('option');
+                    opt.value = type;
+                    opt.textContent = type.replace('core.', '').replace('evaluation.', '').replace('judgement.', '');
+                    if (chunk.type === type) opt.selected = true;
+                    select.appendChild(opt);
+                });
+
+                select.addEventListener('change', (e) => {
+                    chunk.type = e.target.value;
+                    renderChunksInDOM();
+                });
+
+                el.appendChild(label);
+                el.appendChild(select);
+                container.appendChild(el);
+            });
+        }
+
+        // --- 4. Re-Render & Diagnose ---
+        function performReRender() {
+            const currentOrderIds = Array.from(container.children).map(el => el.dataset.chunkId);
+            const hasOrderChanged = currentOrderIds.some((id, index) => chunks.find(c => c.id === id).initialOrder !== index);
+            const hasTypeChanged = chunks.some(c => c.type !== c._initialType);
+
+            if (!hasOrderChanged && !hasTypeChanged) return;
+
+            const newOrderedChunks = currentOrderIds.map(id => chunks.find(c => c.id === id));
+            newOrderedChunks.forEach((chunk, index) => {
+                chunk.initialOrder = index;
+                chunk._initialType = chunk.type;
+            });
+
+            // Prädikat-Check: ohne Prädikat → nicht_renderbar
+            const hasPredicate = newOrderedChunks.some(c => c.type === 'core.predicate');
+            if (!hasPredicate) {
+                earcon.zerbroseln();
+                displayDiagnosis({ state: 'nicht_renderbar', note: 'Kein Prädikatskern vorhanden. Rekonstruktion nicht möglich.' });
+                document.getElementById('rendered-sentence').textContent = '';
+                document.getElementById('output-area').classList.remove('hidden');
+                return;
+            }
+
+            const renderedTokens = newOrderedChunks.flatMap(c => c.tokenIds.map(tId => tokens.find(t => t.id === tId).text));
+
+            // Invarianz-Check: Wortbestand muss identisch bleiben
+            if (originalTokenOrder !== [...renderedTokens].sort().join('|')) {
+                earcon.zerbroseln();
+                displayDiagnosis({ state: 'nicht_renderbar', note: 'Token-Invarianz verletzt. Rekonstruktion abgebrochen.' });
+                document.getElementById('rendered-sentence').textContent = '';
+                document.getElementById('output-area').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('rendered-sentence').textContent = renderedTokens.join(' ');
+            displayDiagnosis(runDiagnosis(newOrderedChunks));
+            earcon.whoosh();
+            document.getElementById('output-area').classList.remove('hidden');
+        }
+
+        // --- 5. Diagnose-Engine (alle 6 Zustände, Prioritätsreihenfolge gemäß Spec) ---
+
+        function getChunkText(chunk) {
+            return chunk.tokenIds.map(tId => tokens.find(t => t.id === tId).text).join(' ');
+        }
+
+        function chunkTextLower(chunk) {
+            return getChunkText(chunk).toLowerCase();
+        }
+
+        function polarity(chunk) {
+            const text = chunkTextLower(chunk);
+            return NEGATIVE_POLARITY.some(k => text.includes(k)) ? 'negative' : 'positive';
+        }
+
+        // 1. Performativ-instabil: Selbstreferenz + Negation/Nullifikation
+        function isPerformativeInstable(orderedChunks) {
+            const fullText = orderedChunks.map(chunkTextLower).join(' ');
+            const hasSelfRef = META_MARKERS.some(m => fullText.includes(m));
+            const hasNegation = NULL_MARKERS.some(n => fullText.includes(n));
+            return hasSelfRef && hasNegation;
+        }
+
+        // 2. Normativ selbstannullierend: judgement.normative vorhanden + Norm-Negation im Text
+        function isNormativeSelfAnnulling(orderedChunks) {
+            const hasNorm = orderedChunks.some(c => c.type === 'judgement.normative');
+            if (!hasNorm) return false;
+            const fullText = orderedChunks.map(chunkTextLower).join(' ');
+            return NORM_NEGATORS.some(k => fullText.includes(k));
+        }
+
+        // 3. Konfliktär: 2+ judgement.normative oder 2+ evaluation.social mit entgegengesetzter Polarität
+        function isConflictual(orderedChunks) {
+            const norms = orderedChunks.filter(c => c.type === 'judgement.normative');
+            const socials = orderedChunks.filter(c => c.type === 'evaluation.social');
+
+            if (norms.length >= 2 && polarity(norms[0]) !== polarity(norms[1])) return true;
+            if (socials.length >= 2 && polarity(socials[0]) !== polarity(socials[1])) return true;
+            return false;
+        }
+
+        // 4. Formal stabil / semantisch leer: Platzhalter-Subjekt ohne konkretes Objekt/Zustand
+        function isFormallyStableSemanticallyEmpty(orderedChunks) {
+            const subject = orderedChunks.find(c => c.type === 'core.subject');
+            if (!subject) return false;
+            const subjectText = chunkTextLower(subject).trim();
+            if (['es', 'dies', 'das'].includes(subjectText)) {
+                const hasConcrete = orderedChunks.some(c => ['core.object', 'state'].includes(c.type));
+                return !hasConcrete;
+            }
+            return false;
+        }
+
+        // 5. Mehrkernig: 2+ core.predicate ohne Subordination
+        function isMulticore(orderedChunks) {
+            const predicates = orderedChunks.filter(c => c.type === 'core.predicate');
+            if (predicates.length <= 1) return false;
+            const subordinators = ["dass", "weil", "während", "um zu", "obwohl", "wenn", "als"];
+            const subordinated = predicates.some(p =>
+                subordinators.some(k => chunkTextLower(p).includes(k))
+            );
+            return !subordinated;
+        }
+
+        function runDiagnosis(orderedChunks) {
+            // Prioritätsreihenfolge gemäß Spec (hart)
+            if (isPerformativeInstable(orderedChunks)) {
+                return {
+                    state: 'performativ_instabil',
+                    note: 'Der Satz referenziert auf seine eigene Unmöglichkeit. Selbstreferenz und Auflösung gleichzeitig.'
+                };
+            }
+
+            if (isNormativeSelfAnnulling(orderedChunks)) {
+                return {
+                    state: 'normativ_selbstannullierend',
+                    note: 'Eine normative Aussage wird im gleichen Satz durch sich selbst außer Kraft gesetzt.'
+                };
+            }
+
+            if (isConflictual(orderedChunks)) {
+                return {
+                    state: 'konfliktaer',
+                    note: 'Zwei Bewertungen mit entgegengesetzter Polarität stehen unaufgelöst nebeneinander.'
+                };
+            }
+
+            if (isFormallyStableSemanticallyEmpty(orderedChunks)) {
+                return {
+                    state: 'formal_stabil_semantisch_leer',
+                    note: 'Der Satz ist grammatisch korrekt, aber das Subjekt ist ein Platzhalter ohne externe Referenz.'
+                };
+            }
+
+            if (isMulticore(orderedChunks)) {
+                return {
+                    state: 'mehrkernig',
+                    note: 'Mehrere gleichrangige Prädikatskerne ohne Subordination identifiziert.'
+                };
+            }
+
+            return {
+                state: 'stabil',
+                note: 'Keine strukturellen Spannungen erkannt.'
+            };
+        }
+
+        function displayDiagnosis(diag) {
+            const tag = document.getElementById('diagnosis-tag');
+            tag.textContent = diag.state.replace(/_/g, ' ');
+            tag.className = `inline-block px-3 py-1 text-xs font-mono uppercase border rounded-full diagnosis-${diag.state}`;
+            document.getElementById('diagnosis-notes').innerHTML = `<li>${diag.note}</li>`;
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('spin-toast') || document.createElement('div');
+            toast.id = 'spin-toast';
+            toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 bg-white border border-black text-[10px] uppercase tracking-widest shadow-xl transition-opacity duration-500 z-50';
+            document.body.appendChild(toast);
+            toast.textContent = msg;
+            toast.style.opacity = '1';
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+        }
+
+        renderBtn.addEventListener('click', performReRender);
+    </script>
+</body>
+</html>
