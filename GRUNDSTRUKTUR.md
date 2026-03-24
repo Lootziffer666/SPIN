@@ -250,6 +250,13 @@ Phase 4 — Sound / Earcons (SPEC: dokumentiert, noch nicht aktiv)
   → zerbroseln() — Struktur zerfällt bei Regelverletzung / nicht_renderbar
   (Implementierungsstand: in spin.html als Web Audio API Code vorhanden,
    aber als PREMATURE markiert — gehört in die finale App-Shell, nicht in den Prototyp)
+
+Phase 5 — SPIN→SMASH Bridge (SPEC: dokumentiert in §11, noch nicht aktiv)
+  → Blockadeerkennung in SPIN (Heuristik: Wiederholungsschleifen, DOGMA-Eskalation, Inaktivität)
+  → nicht-aufdringliches Popup: "SMASH starten? [Hotkey]" — verschwindet automatisch, ignorierbar
+  → Tür-Animations-Sequenz: zerbröseln → Tür erscheint → Übergang in SMASH
+  → Rückkehr-Sequenz: Tür wird zugemauert → zurück zu SPIN
+  (Implementierungsreihenfolge: erst App-Shell + Earcons fertig, dann Bridge)
 ```
 
 ---
@@ -288,6 +295,7 @@ Keine externen Audiodateien. Keine Musik. Keine Stimme. Keine persistenten Sound
 | "SMASH ist leer / undefiniert" | SMASH ist eine vollständige WarioWare-Microgame-Sammlung (23 Spiele, HTML5, cross-platform). Rolle klar: kognitives Break-Tool für ND-Nutzer. |
 | "Es gibt drei Tools" | Es gibt drei **Schreibwerkzeuge** (FLOW/SPIN/LOOM, alle Windows-only) + SMASH als viertes, eigenständiges Begleit-Tool (browser-based, cross-platform). |
 | "Der SMASH-Prototyp folgt der Design-Bibel" | Der aktuelle Prototyp hat eine Editorial-Poster-Ästhetik (vollflächiges Teal, Diagonal-Stripes, Gitterraster) — das ist das Gegenteil der Design-Bibel. Die Shell muss neu gebaut werden. Die Spiellogik bleibt. |
+| "SPIN und SMASH sind isolierte Tools ohne Verbindung" | SPIN kann eigenständig Blockaden erkennen und SMASH empfehlen. Die Bridge ist eine definierte Phase (5) im Buildplan — nicht jetzt, aber konzeptionell verbindlich. |
 
 ### Was korrekt war und bleibt:
 - SPIN ist ein diagnostisches Instrument, kein Editor, kein Assistent
@@ -296,6 +304,113 @@ Keine externen Audiodateien. Keine Musik. Keine Stimme. Keine persistenten Sound
 - Shared logic gehört in ein gemeinsames Modul, nicht in SPIN oder FLOW allein
 - Design-System: Extreme Reduktion, alle vier Tools teilen dieselbe Designsprache
 - "zerbröseln"-Klang ist metaphorisch korrekt für sowohl SMASH (MISS-Event) als auch SPIN (Regelverletzung)
+- "zerbröseln" ist auch der Bridge-Sound (Tür bricht auf / wird zugemauert) — dieselbe Klangtextur, dreifache Verwendung, konsequente Metapher
+
+---
+
+## 11. SPIN→SMASH Bridge — Konzept (SPEC — nicht aktiv)
+
+### Das Prinzip
+
+SPIN erkennt eigenständig, wenn eine Schreibsession in eine Blockade übergeht — und empfiehlt diskret eine Pause mit SMASH. Das ist kein Alarm, kein erzwungener Unterbruch. Es ist ein leiser Hinweis, der wartet und dann verschwindet.
+
+```
+SPIN beobachtet → Blockade erkannt → Popup erscheint → Nutzer entscheidet
+     ↓                                                        ↓
+(ignoriert)                                           Bestätigung per Hotkey
+Popup verschwindet                                          ↓
+                                                   Tür-Animation beginnt
+                                                          ↓
+                                                   SMASH öffnet sich
+                                                          ↓
+                                                   (Session läuft)
+                                                          ↓
+                                                   SMASH-Rückkehr
+                                                          ↓
+                                                   Tür wird zugemauert
+                                                          ↓
+                                                   SPIN ist wieder aktiv
+```
+
+### Phase 1 — Blockadeerkennung (Heuristik)
+
+SPIN hat durch seine Diagnose-Engine bereits Zugang zu Satzstruktur-Daten. Eine Blockade wird erkannt durch das Zusammentreffen mehrerer Signale:
+
+| Signal | Schwelle (vorläufig) |
+|--------|---------------------|
+| Wiederholungsschleife | Dieselben Chunks werden ≥3× umgebaut ohne Fortschritt |
+| DOGMA-Eskalation | Diagnosezustand bleibt auf `nicht_renderbar` oder `erzwungen` |
+| Inaktivität | Keine neue Eingabe für X Sekunden (konfigurierbar) |
+| Manuelle Auslösung | Nutzer kann Bridge auch manuell triggern (Fallback) |
+
+**Diese Heuristik ist nicht deterministisch — sie schlägt vor, sie zwingt nicht.**  
+Wenn der Nutzer das Popup ignoriert, passiert gar nichts. SPIN läuft einfach weiter.
+
+### Phase 2 — Das Popup
+
+Das Popup erscheint in einem freien Whitespace-Bereich der SPIN-Oberfläche — nicht als modales Fenster, nicht als Banner, nicht als Notification. Es ist ein integriertes UI-Element, das auf die Reizminimierungs-Philosophie der Design-Bibel abgestimmt ist.
+
+**Spec:**
+- Position: freier Whitespace (z.B. Sidebar oder unterhalb der Analyse-Area)
+- Inhalt: kurze Zeile — z.B. `SMASH? [Alt+S]`
+- Schriftgröße: klein, Navy auf Cream
+- Keine Animation beim Erscheinen (sanftes Einblenden maximal)
+- Kein Ton beim Erscheinen
+- Verschwindet nach ~8 Sekunden automatisch — oder sofort bei Interaktion
+- Wenn ignoriert: keine erneute Anzeige für die nächste Schreibphase (kein Spam)
+
+### Phase 3 — Die Tür-Animation
+
+Die Metapher ist die Kernidee dieser Bridge: Man geht durch eine Tür. Man kommt durch dieselbe Tür zurück. Die Tür wird zugemauert — die Pause ist vorbei, es gibt kein Zurückschauen.
+
+**Eingangs-Sequenz (Bestätigung → SMASH):**
+
+```
+1. zerbröseln-Sound + Animation
+   → Im Whitespace beginnt Bildmaterial zu "bröckeln": Navy-Partikel lösen sich
+     aus einer stillen Fläche (wie Putz, der von einer Wand fällt)
+   → Dahinter: eine Tür-Silhouette in Teal wird sichtbar
+   → Dauer: ~600ms
+
+2. Tür öffnet sich (einfache CSS-Transformation: Perspective + rotateY)
+   → Kein Fotorealismus, kein 3D-Rendering — geometrisch, reduktiv
+   → Hinter der Tür: die SMASH-Shell (cream, navy, reduziert)
+   → Dauer: ~400ms
+
+3. SMASH-UI erscheint im Vordergrund oder als Overlay-Panel
+```
+
+**Rückkehr-Sequenz (SMASH → SPIN):**
+
+```
+1. SMASH-Session endet (alle Microgames gespielt, oder manueller Exit)
+
+2. Dieselbe Tür erscheint kurz
+
+3. zerbröseln-Sound + Animation: Die Tür wird zugemauert
+   → Partikel füllen die Öffnung von innen (Mauerwerk-Metapher)
+   → Teal wird wieder von Navy verdeckt
+   → Dauer: ~600ms
+
+4. SPIN tritt in den Vordergrund, Whitespace ist wieder leer und still
+```
+
+**Wichtig:** Der Sound `zerbröseln` wird in beiden Richtungen verwendet — aber mit entgegengesetzter Metapher:
+- **Öffnung:** Zerbröseln = Wand bricht auf, Weg entsteht
+- **Schließung:** Zerbröseln = Mauerwerk füllt sich, Weg ist zu
+
+Das ist dieselbe Klangtextur, zweimal mit anderer Absicht. Keine neuen Sounds.
+
+### Phase 4 — Implementierungsreihenfolge (verbindlich)
+
+Die Bridge ist **Phase 5** im Buildplan — sie setzt voraus:
+
+1. SPIN App-Shell (Tauri) ist stabil ✓ (in Phase 2)
+2. Earcons sind implementiert ✓ (in Phase 4)
+3. SMASH-Shell ist nach Design-Bibel neu gebaut ✓ (in SMASH-Repo)
+4. Dann erst: Bridge-Code + Animation + Heuristik
+
+**Keine Abkürzungen.** Die Animation macht keinen Sinn ohne die Shell. Die Heuristik macht keinen Sinn ohne die Diagnose-Engine im Tauri-Kontext.
 
 ---
 
