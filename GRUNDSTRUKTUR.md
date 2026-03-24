@@ -2,13 +2,16 @@
 
 **Status:** Verbindlich  
 **Zweck:** Korrekte architektonische Grundlage für alle weiteren Entwicklungsschritte  
-**Erstellt nach:** Vollständiger GitHub-Recherche (FLOW, Flow2, SPIN, SMASH, VENT — Stand März 2026)
+**Erstellt nach:** Vollständiger GitHub-Recherche (FLOW, Flow2, SPIN, SMASH, VENT — Stand März 2026)  
+**Zuletzt aktualisiert:** SMASH-Analyse nach Veröffentlichung der Rohfassung
 
 ---
 
 ## 1. Das Ökosystem
 
-Drei Tools. Alle **Windows only**. Kein Tool ersetzt ein anderes. Alle sprechen dieselbe Designsprache — auf unterschiedlichen Ebenen.
+Drei Schreibwerkzeuge + ein Begleit-Tool. Alle teilen dieselbe Designsprache. Kein Tool ersetzt ein anderes.
+
+### Die drei Schreibwerkzeuge — Windows only
 
 | Tool | Ebene | Metapher | Zielgruppe |
 |------|-------|----------|------------|
@@ -18,6 +21,17 @@ Drei Tools. Alle **Windows only**. Kein Tool ersetzt ein anderes. Alle sprechen 
 
 **Keine dieser Ebenen darf die andere ersetzen oder übernehmen.**  
 FLOW korrigiert Buchstaben. SPIN dreht Bedeutung. LOOM webt Muster.
+
+### SMASH — das Begleit-Tool (nicht Windows-only)
+
+| Tool | Ebene | Metapher | Zielgruppe |
+|------|-------|----------|------------|
+| **SMASH** | Kognitive Regulation | WarioWare / Micro-Break | ND-Nutzer, die zwischen Arbeitsphasen ein Focus-Reset brauchen |
+
+SMASH ist kein Schreibwerkzeug. Es ist das, was du zwischen Schreibsessions machst.  
+Während FLOW/SPIN/LOOM den Schreibprozess stützen, stützt SMASH den **Schreiber selbst** — kurze Handlungsmomente, die Blockaden lösen, ohne Text zu berühren.
+
+Die ursprüngliche Formulierung "alle drei Tools" (aus früheren Sessions) bezog sich auf **FLOW, SPIN, LOOM**. SMASH ist ein viertes, eigenständiges Objekt mit anderem Charakter.
 
 ---
 
@@ -99,10 +113,53 @@ Man zoomt herein → SPIN. Man zoomt heraus → LOOM.
 
 ---
 
-## 5. SMASH — Status
+## 5. SMASH — aktueller Stand (GitHub-verifiziert)
 
-**Repo:** `Lootziffer666/SMASH` — **leer** (Stand März 2026)  
-Rolle im Ökosystem noch nicht definiert. Nicht blockierend für SPIN.
+**Repo:** `Lootziffer666/SMASH`  
+**Datei:** `smash_warioware_minimalhud_nocountdown.html` — eine einzelne HTML-Datei (wie spin.html = Prototyp-Ansatz)
+
+### Was SMASH ist
+
+SMASH ist eine **WarioWare-inspirierte Microgame-Sammlung** für kognitive Pausen.
+
+- **23 Mini-Spiele**: 20 Pack-Games (HTML5 iframes, in base64 eingebettet) + 3 Core-Gesten (MASH / SWIPE / PULL)
+- **Zwei Modi**: Run (unsichtbarer Zeitdruck, eskaliert mit Streak) / Üben (kein Zeitlimit)
+- **Einziges Interface**: ein Kommando-Popup (z.B. `TAP!`, `SWIPE!`, `PULL!`) — kein Countdown, kein Score-Display während des Spiels
+- **Metaphernreiche Spieltitel**: Break the Chain / Hold the Thread / Gather / Stabilize the Reflection / Cut Through / Set It Straight / Reveal the Face / Find the Exit — alle kognitiv-regulatorische Metaphern
+- **Touch + Pointer + Vibration**: läuft auf Desktop UND Mobil
+- **Kein Windows-Only**: browser-based, cross-platform
+
+### Design-Sprache SMASH
+
+SMASH verwendet **exakt dieselben Design-Tokens** wie FLOW/SPIN/LOOM:
+
+```
+--teal:   #00c0c0    (Primärfarbe, Hintergrund)
+--navy:   #000030    (Text, Rahmen, Zeichenelemente)
+--red:    #e01020    (Akzent, Erfolg, Gauge-Füllung)
+--cream:  #f2f0e8    (Hintergrund Karten)
+Fonts: Bebas Neue (Überschriften) + Inter (Text)
+```
+
+Das ist kein Zufall — dieselbe Tokenstruktur wie in FLOW (AutoHotKey Tooltip-Farben) und SPIN (in spin.html).
+
+### SMASH-Earcon
+
+Der früher genannte Klangname **"zerbröseln"** — `"ein zerbröseln für smash"` — passt perfekt zur SMASH-Mechanik:  
+Wenn eine Microgame-Runde mit MISS endet, bricht etwas. Das `MISS`-Stamp ist visuell, das Zerbröseln wäre der akustische Zwilling.
+
+**WICHTIG:** In `spin.html` gibt es ebenfalls einen `zerbroseln()`-Earcon für Regelverletzungen — das ist eine andere Verwendung desselben Klangtypus. SPIN und SMASH können denselben Klang-Charakter teilen, weil sie ihn für dasselbe Konzept verwenden: etwas bricht / passt nicht zusammen.
+
+### Verhältnis zu den drei Schreibwerkzeugen
+
+```
+FLOW   → im Hintergrund, während du tippst
+SPIN   → wenn du an einem Satz festhängst
+LOOM   → wenn du den Überblick über den Text brauchst
+SMASH  → wenn du den Überblick über dich selbst brauchst
+```
+
+SMASH ist das einzige Tool der Familie, das **kein Text-Interface** hat. Es ist rein kinetisch und temporal.
 
 ---
 
@@ -186,13 +243,16 @@ Keine externen Audiodateien. Keine Musik. Keine Stimme. Keine persistenten Sound
 | "Earcon-Code in spin.html ist ein Feature" | Der Earcon-Code ist ein voreilig implementierter Proof of Concept. Er gehört in Phase 4, nicht in den Prototyp. |
 | "Sound ist erstes UI-Element" | Sound kommt nach Logik-Engine, App-Struktur und UX-Verfeinerung. |
 | "LOOM hat eigenes Repo" | Kein LOOM-Repo vorhanden (Stand März 2026). LOOM nutzt SPIN-Komponenten. |
+| "SMASH ist leer / undefiniert" | SMASH ist eine vollständige WarioWare-Microgame-Sammlung (23 Spiele, HTML5, cross-platform). Rolle klar: kognitives Break-Tool für ND-Nutzer. |
+| "Es gibt drei Tools" | Es gibt drei **Schreibwerkzeuge** (FLOW/SPIN/LOOM, alle Windows-only) + SMASH als viertes, eigenständiges Begleit-Tool (browser-based, cross-platform). |
 
 ### Was korrekt war und bleibt:
 - SPIN ist ein diagnostisches Instrument, kein Editor, kein Assistent
 - Anti-Feature-Charta ist verbindlich
-- Zielplattform: Tauri (.exe)
+- Zielplattform SPIN: Tauri (.exe)
 - Shared logic gehört in ein gemeinsames Modul, nicht in SPIN oder FLOW allein
-- Design-System: Extreme Reduktion, alle drei Tools teilen dieselbe Sprache
+- Design-System: Extreme Reduktion, alle vier Tools teilen dieselbe Designsprache
+- "zerbröseln"-Klang ist metaphorisch korrekt für sowohl SMASH (MISS-Event) als auch SPIN (Regelverletzung)
 
 ---
 
