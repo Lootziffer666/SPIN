@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run grammar tests (Jest)
+        run: npm test
+
+      - name: Run benchmark tests (node:test)
+        run: npm run bench:test
+
+      - name: Run CI verification (full benchmark pipeline)
+        run: cd benchmark && node scripts/ci_verify.mjs

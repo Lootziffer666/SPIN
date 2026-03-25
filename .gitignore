@@ -29,6 +29,7 @@ npm-debug.log*
 # Benchmark generated outputs (do not commit)
 benchmark/private/runs/**
 benchmark/private/tweaks/**
+benchmark/private/_test_tmp/**
 benchmark/lab/artifacts/**
 benchmark/public/releases/**
 # Keep folder structure via README placeholders

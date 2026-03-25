@@ -13,7 +13,7 @@
     "bench:promote": "cd benchmark && node scripts/generate_artifact.mjs",
     "bench:release": "cd benchmark && node scripts/export_public.mjs",
     "bench:hash": "cd benchmark && node scripts/hash_protocol.mjs",
-    "bench:test": "cd benchmark && node --test tests/",
+    "bench:test": "cd benchmark && node --test tests/*.mjs",
     "bench:runner": "cd benchmark && node runner/server.mjs"
   },
   "keywords": [
@@ -27,6 +27,12 @@
   "author": "Lootziffer666",
   "license": "UNLICENSED",
   "private": true,
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/benchmark/"
+    ]
+  },
   "devDependencies": {
     "@jest/globals": "^30.3.0",
     "jest": "^30.3.0"
