@@ -1,6 +1,6 @@
 {
   "actor": "ci",
-  "started_at": "2026-03-02T04:38:21.571Z",
+  "started_at": "2026-03-25T17:54:45.738Z",
   "artifact_id": "ART-PRIVATE-EXAMPLE",
   "classification": "private_dev",
   "source_run_id": "RUN-1044",
@@ -16,20 +16,20 @@
   },
   "suite": {
     "suite_path": "benchmarks/suite.json",
-    "suite_hash": "f7483faf23ac1a791a0bb1cd28b6f7e3b41f4712f5f95cb51860a31535af13f8"
+    "suite_hash": "b5aebb72cc48a748653cc987a331aeeff48b89ee3b9e91964d2c1e1710eba687"
   },
   "host_env_snapshot": {
     "os": {
       "platform": "linux",
-      "release": "4.4.0",
+      "release": "6.14.0-1017-azure",
       "arch": "x64"
     },
-    "node": "v22.16.0",
-    "cpu": "unknown",
-    "cores": 56,
-    "timestamp": "2026-03-02T04:38:21.571Z"
+    "node": "v24.14.0",
+    "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+    "cores": 4,
+    "timestamp": "2026-03-25T17:54:45.738Z"
   },
-  "host_env_snapshot_hash": "83a87a0842b0c6a98930e64d7fa01bb672aa383bb3fb732cb6a563494c110a3f",
+  "host_env_snapshot_hash": "bec7c27f470a2d0bb0d87fd4176294700985743886859f4580de1230c71434f5",
   "seed": 4126684043,
   "protocol_version": "1.2.0",
   "protocol_id": "PROTO-A"

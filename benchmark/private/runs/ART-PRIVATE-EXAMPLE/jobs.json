@@ -1,12 +1,30 @@
 [
   {
-    "job_id": "JOB-9EC8730081",
-    "component_id": "syntax",
-    "name": "Syntax Benchmark",
+    "job_id": "JOB-A2D6234729",
+    "component_id": "grammar",
+    "name": "Grammar Rule Detection",
     "kind": "quality",
     "status": "Complete",
-    "started_at": "2026-03-02T04:38:21.573Z",
-    "ended_at": "2026-03-02T04:38:22.504Z"
+    "started_at": "2026-03-25T17:54:45.740Z",
+    "ended_at": "2026-03-25T17:54:51.058Z"
+  },
+  {
+    "job_id": "JOB-5C5C612A14",
+    "component_id": "clauses",
+    "name": "Clause Structure Analysis",
+    "kind": "quality",
+    "status": "Complete",
+    "started_at": "2026-03-25T17:54:51.058Z",
+    "ended_at": "2026-03-25T17:54:56.287Z"
+  },
+  {
+    "job_id": "JOB-B4A2DE95F9",
+    "component_id": "phonotactics",
+    "name": "Phonotactic Validation",
+    "kind": "quality",
+    "status": "Complete",
+    "started_at": "2026-03-25T17:54:56.287Z",
+    "ended_at": "2026-03-25T17:55:01.511Z"
   },
   {
     "job_id": "JOB-02DC6CC3DF",
@@ -14,17 +32,8 @@
     "name": "Determinism Replay",
     "kind": "integrity",
     "status": "Complete",
-    "started_at": "2026-03-02T04:38:22.504Z",
-    "ended_at": "2026-03-02T04:38:23.304Z"
-  },
-  {
-    "job_id": "JOB-A5DA3F9420",
-    "component_id": "regression",
-    "name": "Regression Guard",
-    "kind": "integrity",
-    "status": "Complete",
-    "started_at": "2026-03-02T04:38:23.305Z",
-    "ended_at": "2026-03-02T04:38:24.019Z"
+    "started_at": "2026-03-25T17:55:01.511Z",
+    "ended_at": "2026-03-25T17:55:06.854Z"
   },
   {
     "job_id": "JOB-BEDB6BAB3A",
@@ -32,8 +41,8 @@
     "name": "Efficiency Metrics",
     "kind": "efficiency",
     "status": "Complete",
-    "started_at": "2026-03-02T04:38:24.019Z",
-    "ended_at": "2026-03-02T04:38:24.896Z"
+    "started_at": "2026-03-25T17:55:06.854Z",
+    "ended_at": "2026-03-25T17:55:12.079Z"
   },
   {
     "job_id": "JOB-515DECB9CC",
@@ -41,7 +50,7 @@
     "name": "Slice Report",
     "kind": "analysis",
     "status": "Complete",
-    "started_at": "2026-03-02T04:38:24.897Z",
-    "ended_at": "2026-03-02T04:38:25.648Z"
+    "started_at": "2026-03-25T17:55:12.079Z",
+    "ended_at": "2026-03-25T17:55:17.392Z"
   }
 ]

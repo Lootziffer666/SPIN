@@ -22,3 +22,17 @@
 {"actor":"ci","timestamp":"2026-03-02T04:38:24.897Z","event":"JOB_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-515DECB9CC","component_id":"slices"}
 {"actor":"ci","timestamp":"2026-03-02T04:38:25.648Z","event":"JOB_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-515DECB9CC","component_id":"slices"}
 {"actor":"ci","timestamp":"2026-03-02T04:38:25.651Z","event":"BENCHMARK_RUN_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","classification":"private_dev","metrics_summary_hash":"1765aea230fd1a1746b51f7849fa27f66f7441f487997c1e6a510837916a5df4","slices_hash":"94f2d1389b82ea9d63a3afe2c74db0bd7f29f3a118c4fcd67f646d183ed170e9","efficiency_hash":"ff724cf0f50775c1fd7c2f3ff37ebfe80a3ce91271fbe1e8285ec096d48f1ce2"}
+{"actor":"ci","timestamp":"2026-03-25T17:54:45.739Z","event":"BENCHMARK_RUN_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","classification":"private_dev","source_run_id":"RUN-1044","protocol_hash":"PH-7F2B8E1C9A11","benchmark_suite_hash":"SUITE-9C3F2A1D7B44"}
+{"actor":"ci","timestamp":"2026-03-25T17:54:45.740Z","event":"JOB_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-A2D6234729","component_id":"grammar"}
+{"actor":"ci","timestamp":"2026-03-25T17:54:51.058Z","event":"JOB_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-A2D6234729","component_id":"grammar"}
+{"actor":"ci","timestamp":"2026-03-25T17:54:51.059Z","event":"JOB_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-5C5C612A14","component_id":"clauses"}
+{"actor":"ci","timestamp":"2026-03-25T17:54:56.287Z","event":"JOB_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-5C5C612A14","component_id":"clauses"}
+{"actor":"ci","timestamp":"2026-03-25T17:54:56.288Z","event":"JOB_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-B4A2DE95F9","component_id":"phonotactics"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:01.511Z","event":"JOB_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-B4A2DE95F9","component_id":"phonotactics"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:01.514Z","event":"JOB_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-02DC6CC3DF","component_id":"determinism"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:06.854Z","event":"JOB_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-02DC6CC3DF","component_id":"determinism"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:06.855Z","event":"JOB_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-BEDB6BAB3A","component_id":"efficiency"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:12.079Z","event":"JOB_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-BEDB6BAB3A","component_id":"efficiency"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:12.079Z","event":"JOB_STARTED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-515DECB9CC","component_id":"slices"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:17.392Z","event":"JOB_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","job_id":"JOB-515DECB9CC","component_id":"slices"}
+{"actor":"ci","timestamp":"2026-03-25T17:55:17.396Z","event":"BENCHMARK_RUN_COMPLETED","artifact_id":"ART-PRIVATE-EXAMPLE","classification":"private_dev","metrics_summary_hash":"7b1ada339337fb7bf9530c4aa5fedd1446a096fd0a01edbb4d8aa74af161f8a5","slices_hash":"684dfe727b20444e266deef1ef5ef3a0d93d8996f7d90872e4ac90d243118321","efficiency_hash":"2f13dcd6bd58bba8ec39bf20f0057d9f4f733e9612087c7aecf204c4fec3c48f"}
