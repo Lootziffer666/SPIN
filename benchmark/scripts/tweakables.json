@@ -1,0 +1,35 @@
+{
+  "variables": [
+    {
+      "name": "max_steps",
+      "type": "int",
+      "min": 1,
+      "max": 8
+    },
+    {
+      "name": "beam_width",
+      "type": "int",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "name": "temperature",
+      "type": "float",
+      "min": 0.0,
+      "max": 0.9
+    },
+    {
+      "name": "strictness",
+      "type": "enum",
+      "values": [
+        "low",
+        "medium",
+        "high"
+      ]
+    }
+  ],
+  "mutation": {
+    "p_resample": 0.35,
+    "step_scale": 0.25
+  }
+}

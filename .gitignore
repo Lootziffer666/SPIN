@@ -25,3 +25,16 @@ Desktop.ini
 # Logs
 *.log
 npm-debug.log*
+
+# Benchmark generated outputs (do not commit)
+benchmark/private/runs/**
+benchmark/private/tweaks/**
+benchmark/lab/artifacts/**
+benchmark/public/releases/**
+# Keep folder structure via README placeholders
+!benchmark/private/**/README.md
+!benchmark/lab/**/README.md
+!benchmark/public/**/README.md
+!benchmark/private/runs/example_runbundle.verified.json
+!benchmark/private/_inbox/artifact.json
+!benchmark/private/runs/ART-PRIVATE-EXAMPLE/

@@ -1,0 +1,147 @@
+{
+  "artifact_id": "ART-PRIVATE-EXAMPLE",
+  "classification": "private_dev",
+  "generated_at": "2026-03-02T04:38:25.650Z",
+  "slices": [
+    {
+      "component_id": "syntax",
+      "slice_id": "core|short",
+      "n": 2,
+      "score_mean": 0.6939500000000001,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "syntax",
+      "slice_id": "edge|short",
+      "n": 1,
+      "score_mean": 0.141,
+      "pass_rate": 0
+    },
+    {
+      "component_id": "syntax",
+      "slice_id": "edge|long",
+      "n": 1,
+      "score_mean": 0.6391,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "syntax",
+      "slice_id": "stress|long",
+      "n": 1,
+      "score_mean": 0.6375,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "core|short",
+      "n": 2,
+      "score_mean": 0.6939500000000001,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "edge|short",
+      "n": 1,
+      "score_mean": 0.141,
+      "pass_rate": 0
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "edge|long",
+      "n": 1,
+      "score_mean": 0.6391,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "stress|long",
+      "n": 1,
+      "score_mean": 0.6375,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "regression",
+      "slice_id": "core|short",
+      "n": 2,
+      "score_mean": 0.6939500000000001,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "regression",
+      "slice_id": "edge|short",
+      "n": 1,
+      "score_mean": 0.141,
+      "pass_rate": 0
+    },
+    {
+      "component_id": "regression",
+      "slice_id": "edge|long",
+      "n": 1,
+      "score_mean": 0.6391,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "regression",
+      "slice_id": "stress|long",
+      "n": 1,
+      "score_mean": 0.6375,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "core|short",
+      "n": 2,
+      "score_mean": 0.6939500000000001,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "edge|short",
+      "n": 1,
+      "score_mean": 0.141,
+      "pass_rate": 0
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "edge|long",
+      "n": 1,
+      "score_mean": 0.6391,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "stress|long",
+      "n": 1,
+      "score_mean": 0.6375,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "core|short",
+      "n": 2,
+      "score_mean": 0.6939500000000001,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "edge|short",
+      "n": 1,
+      "score_mean": 0.141,
+      "pass_rate": 0
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "edge|long",
+      "n": 1,
+      "score_mean": 0.6391,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "stress|long",
+      "n": 1,
+      "score_mean": 0.6375,
+      "pass_rate": 1
+    }
+  ]
+}

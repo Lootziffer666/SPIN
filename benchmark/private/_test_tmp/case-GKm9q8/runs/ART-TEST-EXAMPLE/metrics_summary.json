@@ -1,0 +1,52 @@
+{
+  "artifact_id": "ART-TEST-EXAMPLE",
+  "classification": "private_dev",
+  "generated_at": "2026-03-02T04:38:19.146Z",
+  "summary": {
+    "syntax": {
+      "n": 5,
+      "score": {
+        "mean": 0.61234,
+        "min": 0.1128,
+        "max": 0.8146
+      },
+      "pass_rate": 0.8
+    },
+    "determinism": {
+      "n": 5,
+      "score": {
+        "mean": 0.61234,
+        "min": 0.1128,
+        "max": 0.8146
+      },
+      "pass_rate": 0.8
+    },
+    "regression": {
+      "n": 5,
+      "score": {
+        "mean": 0.61234,
+        "min": 0.1128,
+        "max": 0.8146
+      },
+      "pass_rate": 0.8
+    },
+    "efficiency": {
+      "n": 5,
+      "score": {
+        "mean": 0.61234,
+        "min": 0.1128,
+        "max": 0.8146
+      },
+      "pass_rate": 0.8
+    },
+    "slices": {
+      "n": 5,
+      "score": {
+        "mean": 0.61234,
+        "min": 0.1128,
+        "max": 0.8146
+      },
+      "pass_rate": 0.8
+    }
+  }
+}
