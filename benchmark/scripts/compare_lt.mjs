@@ -281,7 +281,6 @@ async function main() {
     active_context_rules: activeRules.context,
     unique_rules_triggered: uniqueRulesTriggered.size,
     detections_per_rule: activeRules.total > 0 ? Number((spinMetrics.tp / activeRules.total).toFixed(4)) : 0,
-    true_positives_per_active_rule: activeRules.total > 0 ? Number((spinMetrics.tp / activeRules.total).toFixed(4)) : 0,
     rule_utilization: activeRules.total > 0 ? Number((uniqueRulesTriggered.size / activeRules.total).toFixed(4)) : 0,
     layer_contribution: aggregateLayerHits,
   };
@@ -383,7 +382,7 @@ async function main() {
   console.log("\n  ─── Approach Efficiency ───");
   console.log(`    Active rules:         ${efficiency.active_rules} (${efficiency.active_grammar_rules} grammar + ${efficiency.active_context_rules} context)`);
   console.log(`    Rules triggered:      ${efficiency.unique_rules_triggered} of ${efficiency.active_rules} (${(efficiency.rule_utilization * 100).toFixed(1)}% utilization)`);
-  console.log(`    TP per rule:          ${efficiency.true_positives_per_active_rule}`);
+  console.log(`    TP per rule:          ${efficiency.detections_per_rule}`);
   console.log(`    Layer contributions:  grammar=${aggregateLayerHits.grammar}  context=${aggregateLayerHits.context}  phonotactics=${aggregateLayerHits.phonotactics}  clause=${aggregateLayerHits.clause}`);
 
   if (ltMetrics) {
