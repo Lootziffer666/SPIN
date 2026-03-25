@@ -1,6 +1,6 @@
 {
   "actor": "ci",
-  "started_at": "2026-03-25T17:54:45.738Z",
+  "started_at": "2026-03-25T19:26:29.315Z",
   "artifact_id": "ART-PRIVATE-EXAMPLE",
   "classification": "private_dev",
   "source_run_id": "RUN-1044",
@@ -25,11 +25,11 @@
       "arch": "x64"
     },
     "node": "v24.14.0",
-    "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
     "cores": 4,
-    "timestamp": "2026-03-25T17:54:45.738Z"
+    "timestamp": "2026-03-25T19:26:29.314Z"
   },
-  "host_env_snapshot_hash": "bec7c27f470a2d0bb0d87fd4176294700985743886859f4580de1230c71434f5",
+  "host_env_snapshot_hash": "26f48aff2249f3785116927ff2fd246838033eaa235ed2a026792aff4aa12efa",
   "seed": 4126684043,
   "protocol_version": "1.2.0",
   "protocol_id": "PROTO-A"
