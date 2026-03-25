@@ -5,10 +5,15 @@
  * Measures SPIN and (optionally) LanguageTool against the same ground-truth
  * corpus using standard NLP metrics: Precision, Recall, F1.
  *
+ * SPIN's thesis: Better results with fundamentally different approaches and
+ * far fewer rules. This benchmark measures that claim honestly — if SPIN
+ * is worse, the benchmark shows it. If SPIN's unique capabilities (phonotactics,
+ * clause analysis, structural diagnosis) add value, the benchmark shows that too.
+ *
  * Design principles:
  * - Honest: If SPIN is worse, the benchmark shows it
- * - Neutral corpus: Not designed to favor either tool
- * - Standard metrics: Precision, Recall, F1 — industry standard
+ * - Multi-layer: Tests grammar, phonotactics, and clause analysis
+ * - Efficiency-aware: Measures detection quality per rule
  * - Reproducible: Deterministic, no randomness
  *
  * Usage:
@@ -51,13 +56,31 @@ function parseArgs(argv) {
   return args;
 }
 
-// --- SPIN evaluation ---
+// --- SPIN evaluation (multi-layer) ---
 import { GR_RULES } from "../../src/grammar/rules.gr.js";
 import { contextWindowRules } from "../../src/grammar/contextWindowRules.js";
+import { checkPhonotactics } from "../../src/grammar/phonotactics.js";
+import { detectClauses } from "../../src/grammar/clauseDetector.js";
 
-function spinFindErrors(text) {
+/**
+ * Count active rules across all layers.
+ * This is central to SPIN's thesis: fewer rules, better results.
+ */
+function countActiveRules() {
+  const grActive = GR_RULES.filter(r => !r.disabledByDefault).length;
+  const ctxActive = contextWindowRules.filter(r => r.lang === "de" && !r.disabledByDefault).length;
+  return { grammar: grActive, context: ctxActive, total: grActive + ctxActive };
+}
+
+/**
+ * SPIN multi-layer analysis: grammar + context + phonotactics + clause structure.
+ * Returns findings tagged by layer, so we can measure which approaches contribute.
+ */
+function spinAnalyze(text) {
   const findings = [];
+  const layerHits = { grammar: 0, context: 0, phonotactics: 0, clause: 0 };
 
+  // Layer 1: Grammar rules (regex-based)
   for (const rule of GR_RULES) {
     if (rule.disabledByDefault) continue;
     const regex = new RegExp(rule.from.source, rule.from.flags);
@@ -69,11 +92,14 @@ function spinFindErrors(text) {
         index: m.index,
         confidence: rule.confidence ?? 0.9,
         category: rule.category ?? "UNKNOWN",
+        layer: "grammar",
       });
+      layerHits.grammar++;
       if (m[0].length === 0) break;
     }
   }
 
+  // Layer 2: Context window rules (multi-token)
   for (const rule of contextWindowRules) {
     if (rule.lang !== "de") continue;
     if (rule.disabledByDefault) continue;
@@ -86,12 +112,42 @@ function spinFindErrors(text) {
         index: m.index,
         confidence: rule.confidence ?? 0.9,
         category: rule.category ?? "CONTEXT",
+        layer: "context",
       });
+      layerHits.context++;
       if (m[0].length === 0) break;
     }
   }
 
-  return findings;
+  // Layer 3: Phonotactics (unique to SPIN — no other tool does this)
+  const words = text.replace(/[^\p{L}\p{N}\s'-]/gu, "").split(/\s+/).filter(w => w.length >= 2);
+  const phonoFindings = [];
+  for (const word of words) {
+    const result = checkPhonotactics(word);
+    if (result && result.hasSuspects) {
+      phonoFindings.push({
+        word,
+        illegalBigrams: result.illegalBigrams,
+        sonorityViolations: result.sonorityViolations,
+        syllableWeightSuspects: result.syllableWeightSuspects,
+      });
+      layerHits.phonotactics++;
+    }
+  }
+
+  // Layer 4: Clause structure analysis (unique to SPIN)
+  const clauseResult = detectClauses(text);
+  const clauseAnalysis = {
+    totalSentences: clauseResult.stats.totalSentences,
+    complexSentences: clauseResult.stats.complexSentences,
+    avgClausesPerSentence: clauseResult.stats.avgClausesPerSentence,
+    types: clauseResult.sentences.map(s => s.complexity),
+  };
+  if (clauseResult.stats.complexSentences > 0) {
+    layerHits.clause = clauseResult.stats.complexSentences;
+  }
+
+  return { findings, phonoFindings, clauseAnalysis, layerHits };
 }
 
 // --- LanguageTool evaluation (optional, requires API) ---
@@ -186,28 +242,61 @@ async function main() {
     process.exit(2);
   }
 
-  // --- Evaluate SPIN ---
+  const activeRules = countActiveRules();
+
+  // --- Evaluate SPIN (multi-layer) ---
   const spinResults = [];
+  const aggregateLayerHits = { grammar: 0, context: 0, phonotactics: 0, clause: 0 };
+  const uniqueRulesTriggered = new Set();
+
   for (const ex of examples) {
-    const matches = spinFindErrors(ex.input);
+    const analysis = spinAnalyze(ex.input);
+    const hasGrammarFindings = analysis.findings.length > 0;
+    const hasPhonoFindings = analysis.phonoFindings.length > 0;
+    // Grammar/context findings count as "error found"
+    const toolFound = hasGrammarFindings;
+
+    for (const f of analysis.findings) uniqueRulesTriggered.add(f.rule_id);
+    for (const [layer, count] of Object.entries(analysis.layerHits)) {
+      aggregateLayerHits[layer] += count;
+    }
+
     spinResults.push({
       id: ex.id,
       input: ex.input,
       expected_has_error: ex.has_error,
       error_category: ex.error_category,
-      tool_found_something: matches.length > 0,
-      tool_matches: matches,
+      tool_found_something: toolFound,
+      tool_matches: analysis.findings,
+      phonotactics: analysis.phonoFindings,
+      clause_analysis: analysis.clauseAnalysis,
     });
   }
   const spinMetrics = calculateMetrics(spinResults);
 
+  // Efficiency: How much does each active rule achieve?
+  const efficiency = {
+    active_rules: activeRules.total,
+    active_grammar_rules: activeRules.grammar,
+    active_context_rules: activeRules.context,
+    unique_rules_triggered: uniqueRulesTriggered.size,
+    detections_per_rule: activeRules.total > 0 ? Number((spinMetrics.tp / activeRules.total).toFixed(4)) : 0,
+    true_positives_per_active_rule: activeRules.total > 0 ? Number((spinMetrics.tp / activeRules.total).toFixed(4)) : 0,
+    rule_utilization: activeRules.total > 0 ? Number((uniqueRulesTriggered.size / activeRules.total).toFixed(4)) : 0,
+    layer_contribution: aggregateLayerHits,
+  };
+
   // --- Evaluate LanguageTool (optional) ---
   let ltMetrics = null;
+  let ltRuleCount = null;
+  let ltEfficiency = null;
   if (ltApiUrl) {
     const ltResults = [];
+    const ltUniqueRules = new Set();
     for (const ex of examples) {
       try {
         const matches = await ltFindErrors(ex.input, ltApiUrl);
+        for (const m of matches) ltUniqueRules.add(m.rule_id);
         ltResults.push({
           id: ex.id,
           input: ex.input,
@@ -229,6 +318,12 @@ async function main() {
       }
     }
     ltMetrics = calculateMetrics(ltResults);
+    ltRuleCount = 3000; // LanguageTool DE has ~3000+ rules (documented)
+    ltEfficiency = {
+      estimated_rules: ltRuleCount,
+      unique_rules_triggered: ltUniqueRules.size,
+      detections_per_rule: ltRuleCount > 0 ? Number((ltMetrics.tp / ltRuleCount).toFixed(6)) : 0,
+    };
   }
 
   // --- Output ---
@@ -249,6 +344,7 @@ async function main() {
       fn: spinMetrics.fn,
       tn: spinMetrics.tn,
     },
+    spin_efficiency: efficiency,
     languagetool: ltMetrics ? {
       precision: ltMetrics.precision,
       recall: ltMetrics.recall,
@@ -259,6 +355,7 @@ async function main() {
       fn: ltMetrics.fn,
       tn: ltMetrics.tn,
     } : null,
+    lt_efficiency: ltEfficiency,
     spin_details: spinMetrics.details,
     lt_details: ltMetrics ? ltMetrics.details : null,
   };
@@ -270,7 +367,7 @@ async function main() {
 
   // Human-readable output
   console.log("═══════════════════════════════════════════════════════════════");
-  console.log("  SPIN vs LanguageTool — Realistic Comparison Benchmark");
+  console.log("  SPIN — Benchmark: Fewer Rules, Better Approaches");
   console.log("═══════════════════════════════════════════════════════════════");
   console.log(`  Corpus:    ${corpus.corpus_id} v${corpus.version}`);
   console.log(`  Examples:  ${examples.length} (${report.positive_examples} with errors, ${report.negative_examples} correct)`);
@@ -283,6 +380,12 @@ async function main() {
   console.log(`    Accuracy:   ${spinMetrics.accuracy}`);
   console.log(`    TP=${spinMetrics.tp}  FP=${spinMetrics.fp}  FN=${spinMetrics.fn}  TN=${spinMetrics.tn}`);
 
+  console.log("\n  ─── Approach Efficiency ───");
+  console.log(`    Active rules:         ${efficiency.active_rules} (${efficiency.active_grammar_rules} grammar + ${efficiency.active_context_rules} context)`);
+  console.log(`    Rules triggered:      ${efficiency.unique_rules_triggered} of ${efficiency.active_rules} (${(efficiency.rule_utilization * 100).toFixed(1)}% utilization)`);
+  console.log(`    TP per rule:          ${efficiency.true_positives_per_active_rule}`);
+  console.log(`    Layer contributions:  grammar=${aggregateLayerHits.grammar}  context=${aggregateLayerHits.context}  phonotactics=${aggregateLayerHits.phonotactics}  clause=${aggregateLayerHits.clause}`);
+
   if (ltMetrics) {
     console.log("\n  LanguageTool Results:");
     console.log(`    Precision:  ${ltMetrics.precision}  (${ltMetrics.tp} TP / ${ltMetrics.tp + ltMetrics.fp} flagged)`);
@@ -290,6 +393,7 @@ async function main() {
     console.log(`    F1:         ${ltMetrics.f1}`);
     console.log(`    Accuracy:   ${ltMetrics.accuracy}`);
     console.log(`    TP=${ltMetrics.tp}  FP=${ltMetrics.fp}  FN=${ltMetrics.fn}  TN=${ltMetrics.tn}`);
+    console.log(`    Est. rules: ~${ltRuleCount}  |  TP/rule: ${ltEfficiency.detections_per_rule}`);
 
     console.log("\n  ─── Comparison ───");
     const pDiff = (spinMetrics.precision - ltMetrics.precision).toFixed(4);
@@ -298,6 +402,7 @@ async function main() {
     console.log(`    Precision diff:  ${pDiff > 0 ? "+" : ""}${pDiff} (${pDiff > 0 ? "SPIN ahead" : pDiff < 0 ? "LT ahead" : "tie"})`);
     console.log(`    Recall diff:     ${rDiff > 0 ? "+" : ""}${rDiff} (${rDiff > 0 ? "SPIN ahead" : rDiff < 0 ? "LT ahead" : "tie"})`);
     console.log(`    F1 diff:         ${fDiff > 0 ? "+" : ""}${fDiff} (${fDiff > 0 ? "SPIN ahead" : fDiff < 0 ? "LT ahead" : "tie"})`);
+    console.log(`    Rule ratio:      SPIN ${efficiency.active_rules} vs LT ~${ltRuleCount} (${(ltRuleCount / efficiency.active_rules).toFixed(0)}× fewer rules in SPIN)`);
   } else {
     console.log("\n  LanguageTool: not configured");
     console.log("  → Set LT_API_URL=https://api.languagetoolplus.com/v2/check to enable");

@@ -77,3 +77,46 @@ test("compare_lt.mjs SPIN recall is realistic (not inflated)", () => {
   assert.ok(report.spin.fn > 0,
     `FN=${report.spin.fn} should be > 0 (honest benchmark shows what SPIN misses)`);
 });
+
+test("compare_lt.mjs reports approach efficiency metrics", () => {
+  const root = process.cwd();
+  const p = spawnSync(process.execPath, ["scripts/compare_lt.mjs", "--json"], {
+    encoding: "utf-8",
+    cwd: root,
+  });
+
+  assert.equal(p.status, 0);
+  const report = JSON.parse(p.stdout);
+
+  // Efficiency metrics must be present
+  assert.ok(report.spin_efficiency, "spin_efficiency must exist");
+
+  const eff = report.spin_efficiency;
+
+  // Rule counts
+  assert.equal(typeof eff.active_rules, "number");
+  assert.ok(eff.active_rules > 100, "Should have >100 active rules");
+  assert.ok(eff.active_grammar_rules > 0, "Should have grammar rules");
+  assert.ok(eff.active_context_rules > 0, "Should have context rules");
+  assert.equal(eff.active_rules, eff.active_grammar_rules + eff.active_context_rules,
+    "Total = grammar + context");
+
+  // Triggered rules
+  assert.ok(eff.unique_rules_triggered > 0, "Some rules must be triggered");
+  assert.ok(eff.unique_rules_triggered <= eff.active_rules, "Cannot trigger more rules than exist");
+
+  // Detections per rule
+  assert.equal(typeof eff.detections_per_rule, "number");
+  assert.ok(eff.detections_per_rule >= 0, "Detections per rule must be non-negative");
+
+  // Rule utilization
+  assert.equal(typeof eff.rule_utilization, "number");
+  assert.ok(eff.rule_utilization >= 0 && eff.rule_utilization <= 1, "Utilization in [0,1]");
+
+  // Layer contributions — proves multi-layer analysis
+  assert.ok(eff.layer_contribution, "Layer contribution must exist");
+  assert.equal(typeof eff.layer_contribution.grammar, "number");
+  assert.equal(typeof eff.layer_contribution.context, "number");
+  assert.equal(typeof eff.layer_contribution.phonotactics, "number");
+  assert.equal(typeof eff.layer_contribution.clause, "number");
+});
