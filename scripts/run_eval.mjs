@@ -139,21 +139,22 @@ function spinAnalyze(inputText) {
 /**
  * Apply SPIN corrections to produce output text.
  * Applies corrections in reverse order (right-to-left) to preserve indices.
+ * Uses positional replacement when index is available for precision.
  */
 function spinCorrect(inputText, corrections) {
   let result = inputText;
   // Sort by index descending to apply from end to start
   const sorted = [...corrections].sort((a, b) => (b.index || 0) - (a.index || 0));
   for (const c of sorted) {
-    const regex = new RegExp(c.from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-    // Only replace first occurrence at the expected position
-    const before = result;
-    result = result.replace(regex, c.to);
-    if (result === before && c.index !== undefined) {
-      // If regex didn't work, try positional replacement
+    if (c.index !== undefined) {
+      // Positional replacement: directly splice at the known index
       const prefix = result.slice(0, c.index);
       const suffix = result.slice(c.index + c.from.length);
       result = prefix + c.to + suffix;
+    } else {
+      // Fallback: regex-based replacement for the first occurrence
+      const escaped = c.from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      result = result.replace(new RegExp(escaped), c.to);
     }
   }
   return result;

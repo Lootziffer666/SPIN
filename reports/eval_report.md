@@ -1,6 +1,6 @@
 # SPIN Benchmark — Evaluation Report
 
-> **Generated:** 2026-03-25T19:43:10.407Z
+> **Generated:** 2026-03-25T19:46:40.694Z
 > **Policy:** See BENCHMARK_POLICY.md for fairness rules
 > **Sources:** See BENCHMARK_SOURCES.md for data provenance
 
