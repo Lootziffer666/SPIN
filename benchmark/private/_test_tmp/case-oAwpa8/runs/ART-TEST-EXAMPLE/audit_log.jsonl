@@ -1,0 +1,12 @@
+{"actor":"test","timestamp":"2026-03-25T17:22:39.113Z","event":"BENCHMARK_RUN_STARTED","artifact_id":"ART-TEST-EXAMPLE","classification":"private_dev","source_run_id":"RUN-TEST","protocol_hash":"PH-TEST","benchmark_suite_hash":"SUITE-TEST"}
+{"actor":"test","timestamp":"2026-03-25T17:22:39.114Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-102D141EA9","component_id":"grammar"}
+{"actor":"test","timestamp":"2026-03-25T17:22:44.626Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-102D141EA9","component_id":"grammar"}
+{"actor":"test","timestamp":"2026-03-25T17:22:44.626Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-659106E308","component_id":"clauses"}
+{"actor":"test","timestamp":"2026-03-25T17:22:50.098Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-659106E308","component_id":"clauses"}
+{"actor":"test","timestamp":"2026-03-25T17:22:50.099Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-22E9E9E57B","component_id":"phonotactics"}
+{"actor":"test","timestamp":"2026-03-25T17:22:55.623Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-22E9E9E57B","component_id":"phonotactics"}
+{"actor":"test","timestamp":"2026-03-25T17:22:55.623Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-39CD78F443","component_id":"determinism"}
+{"actor":"test","timestamp":"2026-03-25T17:23:01.145Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-39CD78F443","component_id":"determinism"}
+{"actor":"test","timestamp":"2026-03-25T17:23:01.145Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-6645E492DF","component_id":"efficiency"}
+{"actor":"test","timestamp":"2026-03-25T17:23:06.677Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-6645E492DF","component_id":"efficiency"}
+{"actor":"test","timestamp":"2026-03-25T17:23:06.677Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-08BD08C1B1","component_id":"slices"}

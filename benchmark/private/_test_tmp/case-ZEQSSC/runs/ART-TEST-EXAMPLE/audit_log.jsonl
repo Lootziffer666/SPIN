@@ -1,0 +1,14 @@
+{"actor":"test","timestamp":"2026-03-25T17:26:11.848Z","event":"BENCHMARK_RUN_STARTED","artifact_id":"ART-TEST-EXAMPLE","classification":"private_dev","source_run_id":"RUN-TEST","protocol_hash":"PH-TEST","benchmark_suite_hash":"SUITE-TEST"}
+{"actor":"test","timestamp":"2026-03-25T17:26:11.848Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-102D141EA9","component_id":"grammar"}
+{"actor":"test","timestamp":"2026-03-25T17:26:17.333Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-102D141EA9","component_id":"grammar"}
+{"actor":"test","timestamp":"2026-03-25T17:26:17.333Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-659106E308","component_id":"clauses"}
+{"actor":"test","timestamp":"2026-03-25T17:26:22.853Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-659106E308","component_id":"clauses"}
+{"actor":"test","timestamp":"2026-03-25T17:26:22.854Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-22E9E9E57B","component_id":"phonotactics"}
+{"actor":"test","timestamp":"2026-03-25T17:26:28.363Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-22E9E9E57B","component_id":"phonotactics"}
+{"actor":"test","timestamp":"2026-03-25T17:26:28.364Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-39CD78F443","component_id":"determinism"}
+{"actor":"test","timestamp":"2026-03-25T17:26:33.886Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-39CD78F443","component_id":"determinism"}
+{"actor":"test","timestamp":"2026-03-25T17:26:33.887Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-6645E492DF","component_id":"efficiency"}
+{"actor":"test","timestamp":"2026-03-25T17:26:39.419Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-6645E492DF","component_id":"efficiency"}
+{"actor":"test","timestamp":"2026-03-25T17:26:39.419Z","event":"JOB_STARTED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-08BD08C1B1","component_id":"slices"}
+{"actor":"test","timestamp":"2026-03-25T17:26:44.953Z","event":"JOB_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","job_id":"JOB-08BD08C1B1","component_id":"slices"}
+{"actor":"test","timestamp":"2026-03-25T17:26:44.957Z","event":"BENCHMARK_RUN_COMPLETED","artifact_id":"ART-TEST-EXAMPLE","classification":"private_dev","metrics_summary_hash":"3a5e811d3772fecefaeff0dafed9d2ce035ddc3f00d48c63f96658eba8fc447a","slices_hash":"ad90834da12b61de95d878e15b50625bf5883395c7d2f0f44935a902505286d5","efficiency_hash":"50db2eb9385da3a370e5a9af7f28418bfea7d905012745d00b1bb40a831cfd77"}

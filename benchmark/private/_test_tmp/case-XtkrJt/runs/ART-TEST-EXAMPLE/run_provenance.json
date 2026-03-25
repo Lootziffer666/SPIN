@@ -1,0 +1,36 @@
+{
+  "actor": "test",
+  "started_at": "2026-03-25T17:23:16.186Z",
+  "artifact_id": "ART-TEST-EXAMPLE",
+  "classification": "private_dev",
+  "source_run_id": "RUN-TEST",
+  "anchors": {
+    "protocol_hash": "PH-TEST",
+    "benchmark_suite_hash": "SUITE-TEST",
+    "env_fingerprint": "ENV-TEST",
+    "code_version": "commit:test"
+  },
+  "policy": {
+    "policy_path": "policies/eval_policy.yaml",
+    "policy_hash": "8b774ec53074ea583aa9af344eec9b0608361a6e1afdab3b12163337fbf55ded"
+  },
+  "suite": {
+    "suite_path": "benchmarks/suite.json",
+    "suite_hash": "b5aebb72cc48a748653cc987a331aeeff48b89ee3b9e91964d2c1e1710eba687"
+  },
+  "host_env_snapshot": {
+    "os": {
+      "platform": "linux",
+      "release": "6.14.0-1017-azure",
+      "arch": "x64"
+    },
+    "node": "v24.14.0",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 4,
+    "timestamp": "2026-03-25T17:23:16.186Z"
+  },
+  "host_env_snapshot_hash": "c839fcde7121b96a0dc139babb7a6608f9b32533a51522b65b452c9a13eefe66",
+  "seed": 3220643325,
+  "protocol_version": "1.0.0",
+  "protocol_id": "SPIN-PROTO-1"
+}

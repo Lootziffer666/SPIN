@@ -1,0 +1,56 @@
+[
+  {
+    "job_id": "JOB-102D141EA9",
+    "component_id": "grammar",
+    "name": "Grammar Rule Detection",
+    "kind": "quality",
+    "status": "Complete",
+    "started_at": "2026-03-25T17:22:39.114Z",
+    "ended_at": "2026-03-25T17:22:44.625Z"
+  },
+  {
+    "job_id": "JOB-659106E308",
+    "component_id": "clauses",
+    "name": "Clause Structure Analysis",
+    "kind": "quality",
+    "status": "Complete",
+    "started_at": "2026-03-25T17:22:44.626Z",
+    "ended_at": "2026-03-25T17:22:50.098Z"
+  },
+  {
+    "job_id": "JOB-22E9E9E57B",
+    "component_id": "phonotactics",
+    "name": "Phonotactic Validation",
+    "kind": "quality",
+    "status": "Complete",
+    "started_at": "2026-03-25T17:22:50.098Z",
+    "ended_at": "2026-03-25T17:22:55.622Z"
+  },
+  {
+    "job_id": "JOB-39CD78F443",
+    "component_id": "determinism",
+    "name": "Determinism Replay",
+    "kind": "integrity",
+    "status": "Complete",
+    "started_at": "2026-03-25T17:22:55.623Z",
+    "ended_at": "2026-03-25T17:23:01.144Z"
+  },
+  {
+    "job_id": "JOB-6645E492DF",
+    "component_id": "efficiency",
+    "name": "Efficiency Metrics",
+    "kind": "efficiency",
+    "status": "Complete",
+    "started_at": "2026-03-25T17:23:01.145Z",
+    "ended_at": "2026-03-25T17:23:06.676Z"
+  },
+  {
+    "job_id": "JOB-08BD08C1B1",
+    "component_id": "slices",
+    "name": "Slice Report",
+    "kind": "analysis",
+    "status": "Running",
+    "started_at": "2026-03-25T17:23:06.677Z",
+    "ended_at": null
+  }
+]
