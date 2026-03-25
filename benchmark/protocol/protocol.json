@@ -1,7 +1,7 @@
 {
   "protocol_id": "SPIN-PROTO-1",
-  "protocol_version": "1.0.0",
-  "notes": "SPIN Evaluation Protocol — deterministic, rule-based German language analysis benchmark. Evaluates grammar rule detection, clause structure analysis, phonotactic validation, and diagnosis state classification. All components are zero-dependency, regex/rule-based, and fully reproducible.",
+  "protocol_version": "1.1.0",
+  "notes": "SPIN Evaluation Protocol — deterministic, multi-layer German language analysis benchmark. SPIN's thesis: better results with fewer rules and fundamentally different approaches (phonotactics, clause analysis, structural diagnosis). The benchmark measures this claim honestly.",
   "metric_contract": {
     "primary": "grammar.pass_rate",
     "components": [
@@ -10,7 +10,8 @@
       { "id": "phonotactics", "description": "Phonotactic analysis quality — detection of illegal bigrams, sonority violations, syllable weight anomalies." },
       { "id": "determinism", "description": "Replay stability — identical outputs on identical inputs across runs." },
       { "id": "efficiency", "description": "Runtime performance — throughput, memory usage, processing time per example." },
-      { "id": "slices", "description": "Slice reporting — performance breakdown across error categories, input lengths, and difficulty levels." }
+      { "id": "slices", "description": "Slice reporting — performance breakdown across error categories, input lengths, and difficulty levels." },
+      { "id": "approach_efficiency", "description": "Approach quality — true positives per active rule, layer contribution analysis, rule utilization rate. Measures the 'fewer rules, better results' thesis." }
     ]
   },
   "dataset_contract": {
@@ -19,15 +20,23 @@
     "language": "de"
   },
   "evaluation_method": {
-    "type": "deterministic_regex_rules",
-    "description": "All evaluations use deterministic regex-based rules with no stochastic components. Results are fully reproducible and auditable.",
-    "comparison_baseline": "LanguageTool DE categories",
+    "type": "deterministic_multi_layer",
+    "layers": [
+      "grammar_rules — regex-based German grammar (GR_RULES)",
+      "context_window — multi-token contextual analysis (contextWindowRules)",
+      "phonotactics — phonological constraint validation (SSP, feature geometry)",
+      "clause_detection — sentence topology analysis (constraint grammar)"
+    ],
+    "description": "All evaluations use deterministic multi-layer analysis with no stochastic components. Four analysis layers work together to achieve high precision with minimal rules.",
+    "comparison_baseline": "LanguageTool DE categories (~3000+ rules, single-layer pattern matching)",
     "unique_differentiators": [
+      "Multi-layer analysis (4 layers vs. single-layer pattern matching)",
       "Zero-dependency architecture (no external NLP models)",
-      "Phonotactic analysis layer (SSP-based, unique to SPIN)",
+      "Phonotactic analysis layer (SSP-based, feature-geometric — unique to SPIN)",
       "Six-state diagnosis engine for sentence-level structural analysis",
       "Deterministic by design — no randomness in evaluation",
-      "Designed for neurodivergent users (LRS-optimized rules)"
+      "Designed for neurodivergent users (LRS-optimized rules)",
+      "Precision-first approach — fewer rules, near-zero false positives"
     ]
   }
 }

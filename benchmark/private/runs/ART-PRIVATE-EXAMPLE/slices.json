@@ -1,147 +1,469 @@
 {
   "artifact_id": "ART-PRIVATE-EXAMPLE",
   "classification": "private_dev",
-  "generated_at": "2026-03-02T04:38:25.650Z",
+  "generated_at": "2026-03-25T17:55:17.396Z",
   "slices": [
     {
-      "component_id": "syntax",
-      "slice_id": "core|short",
-      "n": 2,
-      "score_mean": 0.6939500000000001,
+      "component_id": "grammar",
+      "slice_id": "grammar|short",
+      "n": 84,
+      "score_mean": 0.9307047619047617,
+      "pass_rate": 0.15476190476190477
+    },
+    {
+      "component_id": "grammar",
+      "slice_id": "grammar|medium",
+      "n": 5,
+      "score_mean": 0.9409599999999999,
+      "pass_rate": 0.2
+    },
+    {
+      "component_id": "grammar",
+      "slice_id": "clause|short",
+      "n": 8,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
-      "component_id": "syntax",
+      "component_id": "grammar",
+      "slice_id": "clause|medium",
+      "n": 4,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "grammar",
+      "slice_id": "phonotactics|short",
+      "n": 13,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "grammar",
+      "slice_id": "diagnosis|short",
+      "n": 11,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "grammar",
+      "slice_id": "diagnosis|medium",
+      "n": 2,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "grammar",
       "slice_id": "edge|short",
-      "n": 1,
-      "score_mean": 0.141,
+      "n": 5,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "grammar",
+      "slice_id": "edge|medium",
+      "n": 2,
+      "score_mean": 0.9259999999999999,
       "pass_rate": 0
     },
     {
-      "component_id": "syntax",
-      "slice_id": "edge|long",
-      "n": 1,
-      "score_mean": 0.6391,
+      "component_id": "grammar",
+      "slice_id": "stress|long",
+      "n": 4,
+      "score_mean": 0.7612,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "grammar",
+      "slice_id": "stress|medium",
+      "n": 2,
+      "score_mean": 0.8848,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "grammar|short",
+      "n": 84,
+      "score_mean": 0.9307047619047617,
+      "pass_rate": 0.15476190476190477
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "grammar|medium",
+      "n": 5,
+      "score_mean": 0.9409599999999999,
+      "pass_rate": 0.2
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "clause|short",
+      "n": 8,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
-      "component_id": "syntax",
+      "component_id": "clauses",
+      "slice_id": "clause|medium",
+      "n": 4,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "phonotactics|short",
+      "n": 13,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "diagnosis|short",
+      "n": 11,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "diagnosis|medium",
+      "n": 2,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "edge|short",
+      "n": 5,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "edge|medium",
+      "n": 2,
+      "score_mean": 0.9259999999999999,
+      "pass_rate": 0
+    },
+    {
+      "component_id": "clauses",
       "slice_id": "stress|long",
-      "n": 1,
-      "score_mean": 0.6375,
+      "n": 4,
+      "score_mean": 0.7612,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "clauses",
+      "slice_id": "stress|medium",
+      "n": 2,
+      "score_mean": 0.8848,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "grammar|short",
+      "n": 84,
+      "score_mean": 0.9307047619047617,
+      "pass_rate": 0.15476190476190477
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "grammar|medium",
+      "n": 5,
+      "score_mean": 0.9409599999999999,
+      "pass_rate": 0.2
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "clause|short",
+      "n": 8,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "clause|medium",
+      "n": 4,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "phonotactics|short",
+      "n": 13,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "diagnosis|short",
+      "n": 11,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "diagnosis|medium",
+      "n": 2,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "edge|short",
+      "n": 5,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "edge|medium",
+      "n": 2,
+      "score_mean": 0.9259999999999999,
+      "pass_rate": 0
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "stress|long",
+      "n": 4,
+      "score_mean": 0.7612,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "phonotactics",
+      "slice_id": "stress|medium",
+      "n": 2,
+      "score_mean": 0.8848,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "grammar|short",
+      "n": 84,
+      "score_mean": 0.9307047619047617,
+      "pass_rate": 0.15476190476190477
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "grammar|medium",
+      "n": 5,
+      "score_mean": 0.9409599999999999,
+      "pass_rate": 0.2
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "clause|short",
+      "n": 8,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
       "component_id": "determinism",
-      "slice_id": "core|short",
+      "slice_id": "clause|medium",
+      "n": 4,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "phonotactics|short",
+      "n": 13,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "diagnosis|short",
+      "n": 11,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "determinism",
+      "slice_id": "diagnosis|medium",
       "n": 2,
-      "score_mean": 0.6939500000000001,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
       "component_id": "determinism",
       "slice_id": "edge|short",
-      "n": 1,
-      "score_mean": 0.141,
-      "pass_rate": 0
-    },
-    {
-      "component_id": "determinism",
-      "slice_id": "edge|long",
-      "n": 1,
-      "score_mean": 0.6391,
+      "n": 5,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
       "component_id": "determinism",
-      "slice_id": "stress|long",
-      "n": 1,
-      "score_mean": 0.6375,
-      "pass_rate": 1
-    },
-    {
-      "component_id": "regression",
-      "slice_id": "core|short",
+      "slice_id": "edge|medium",
       "n": 2,
-      "score_mean": 0.6939500000000001,
-      "pass_rate": 1
-    },
-    {
-      "component_id": "regression",
-      "slice_id": "edge|short",
-      "n": 1,
-      "score_mean": 0.141,
+      "score_mean": 0.9259999999999999,
       "pass_rate": 0
     },
     {
-      "component_id": "regression",
-      "slice_id": "edge|long",
-      "n": 1,
-      "score_mean": 0.6391,
-      "pass_rate": 1
+      "component_id": "determinism",
+      "slice_id": "stress|long",
+      "n": 4,
+      "score_mean": 0.7612,
+      "pass_rate": 0.5
     },
     {
-      "component_id": "regression",
-      "slice_id": "stress|long",
-      "n": 1,
-      "score_mean": 0.6375,
+      "component_id": "determinism",
+      "slice_id": "stress|medium",
+      "n": 2,
+      "score_mean": 0.8848,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "grammar|short",
+      "n": 84,
+      "score_mean": 0.9307047619047617,
+      "pass_rate": 0.15476190476190477
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "grammar|medium",
+      "n": 5,
+      "score_mean": 0.9409599999999999,
+      "pass_rate": 0.2
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "clause|short",
+      "n": 8,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
       "component_id": "efficiency",
-      "slice_id": "core|short",
+      "slice_id": "clause|medium",
+      "n": 4,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "phonotactics|short",
+      "n": 13,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "diagnosis|short",
+      "n": 11,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "diagnosis|medium",
       "n": 2,
-      "score_mean": 0.6939500000000001,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
       "component_id": "efficiency",
       "slice_id": "edge|short",
-      "n": 1,
-      "score_mean": 0.141,
+      "n": 5,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "efficiency",
+      "slice_id": "edge|medium",
+      "n": 2,
+      "score_mean": 0.9259999999999999,
       "pass_rate": 0
     },
     {
       "component_id": "efficiency",
-      "slice_id": "edge|long",
-      "n": 1,
-      "score_mean": 0.6391,
-      "pass_rate": 1
+      "slice_id": "stress|long",
+      "n": 4,
+      "score_mean": 0.7612,
+      "pass_rate": 0.5
     },
     {
       "component_id": "efficiency",
-      "slice_id": "stress|long",
-      "n": 1,
-      "score_mean": 0.6375,
+      "slice_id": "stress|medium",
+      "n": 2,
+      "score_mean": 0.8848,
+      "pass_rate": 0.5
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "grammar|short",
+      "n": 84,
+      "score_mean": 0.9307047619047617,
+      "pass_rate": 0.15476190476190477
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "grammar|medium",
+      "n": 5,
+      "score_mean": 0.9409599999999999,
+      "pass_rate": 0.2
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "clause|short",
+      "n": 8,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
       "component_id": "slices",
-      "slice_id": "core|short",
+      "slice_id": "clause|medium",
+      "n": 4,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "phonotactics|short",
+      "n": 13,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "diagnosis|short",
+      "n": 11,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "diagnosis|medium",
       "n": 2,
-      "score_mean": 0.6939500000000001,
+      "score_mean": 1,
       "pass_rate": 1
     },
     {
       "component_id": "slices",
       "slice_id": "edge|short",
-      "n": 1,
-      "score_mean": 0.141,
+      "n": 5,
+      "score_mean": 1,
+      "pass_rate": 1
+    },
+    {
+      "component_id": "slices",
+      "slice_id": "edge|medium",
+      "n": 2,
+      "score_mean": 0.9259999999999999,
       "pass_rate": 0
     },
     {
       "component_id": "slices",
-      "slice_id": "edge|long",
-      "n": 1,
-      "score_mean": 0.6391,
-      "pass_rate": 1
+      "slice_id": "stress|long",
+      "n": 4,
+      "score_mean": 0.7612,
+      "pass_rate": 0.5
     },
     {
       "component_id": "slices",
-      "slice_id": "stress|long",
-      "n": 1,
-      "score_mean": 0.6375,
-      "pass_rate": 1
+      "slice_id": "stress|medium",
+      "n": 2,
+      "score_mean": 0.8848,
+      "pass_rate": 0.5
     }
   ]
 }
