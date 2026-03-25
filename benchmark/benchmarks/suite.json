@@ -1,11 +1,13 @@
 {
-  "suite_id": "SUITE-DEFAULT",
+  "suite_id": "SPIN-SUITE-v1",
   "suite_version": "1.0.0",
+  "description": "SPIN Benchmark Suite — comprehensive evaluation of deterministic German language analysis",
   "components": [
-    { "id": "syntax", "name": "Syntax Benchmark", "kind": "quality" },
-    { "id": "determinism", "name": "Determinism Replay", "kind": "integrity" },
-    { "id": "regression", "name": "Regression Guard", "kind": "integrity" },
-    { "id": "efficiency", "name": "Efficiency Metrics", "kind": "efficiency" },
-    { "id": "slices", "name": "Slice Report", "kind": "analysis" }
+    { "id": "grammar", "name": "Grammar Rule Detection", "kind": "quality", "description": "Tests GR_RULES against annotated German text — precision, recall, and F1." },
+    { "id": "clauses", "name": "Clause Structure Analysis", "kind": "quality", "description": "Tests clause detection accuracy across sentence topology types." },
+    { "id": "phonotactics", "name": "Phonotactic Validation", "kind": "quality", "description": "Tests phonotactic constraint checker against known violations and clean text." },
+    { "id": "determinism", "name": "Determinism Replay", "kind": "integrity", "description": "Verifies identical outputs on identical inputs across runs." },
+    { "id": "efficiency", "name": "Efficiency Metrics", "kind": "efficiency", "description": "Measures throughput, memory usage, and processing time." },
+    { "id": "slices", "name": "Slice Report", "kind": "analysis", "description": "Performance breakdown across error categories, input lengths, and difficulty levels." }
   ]
 }

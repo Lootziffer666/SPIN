@@ -5,14 +5,24 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "bench": "cd benchmark && node scripts/run_benchmarks.mjs",
+    "bench:spin": "cd benchmark && FLOW_CMD=\"node flow/flow_cli.mjs\" node scripts/run_benchmarks.mjs --artifact private/_inbox/artifact.json --out private/runs",
+    "bench:bootstrap": "cd benchmark && node scripts/bootstrap_folders.mjs",
+    "bench:tweak": "cd benchmark && node scripts/auto_tweak.mjs",
+    "bench:promote": "cd benchmark && node scripts/generate_artifact.mjs",
+    "bench:release": "cd benchmark && node scripts/export_public.mjs",
+    "bench:hash": "cd benchmark && node scripts/hash_protocol.mjs",
+    "bench:test": "cd benchmark && node --test tests/",
+    "bench:runner": "cd benchmark && node runner/server.mjs"
   },
   "keywords": [
     "writing",
     "diagnosis",
     "sentence-structure",
     "neurodivergent",
-    "german"
+    "german",
+    "benchmark"
   ],
   "author": "Lootziffer666",
   "license": "UNLICENSED",

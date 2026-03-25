@@ -2,10 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import os from "node:os";
 import { spawnSync } from "node:child_process";
 
-test("run_benchmarks produces complete status (private)", () => {
+test("run_benchmarks produces complete status with SPIN FLOW CLI (private)", () => {
   const root = process.cwd();
 
   // Create a temp workspace inside private/ so classification guards still apply.
@@ -21,8 +20,8 @@ test("run_benchmarks produces complete status (private)", () => {
   const artifact = {
     artifact_id: "ART-TEST-EXAMPLE",
     source_run_id: "RUN-TEST",
-    protocol_id: "PROTO-A",
-    protocol_version: "1.2.0",
+    protocol_id: "SPIN-PROTO-1",
+    protocol_version: "1.0.0",
     protocol_hash: "PH-TEST",
     env_fingerprint: "ENV-TEST",
     code_version: "commit:test",
@@ -44,7 +43,23 @@ test("run_benchmarks produces complete status (private)", () => {
   assert.equal(p.status, 0);
 
   const statusPath = path.join(runsDir, artifact.artifact_id, "run_status.json");
-  assert.ok(fs.existsSync(statusPath));
+  assert.ok(fs.existsSync(statusPath), "run_status.json should exist");
   const status = JSON.parse(fs.readFileSync(statusPath, "utf-8"));
   assert.equal(status.status, "complete");
+
+  // Verify metrics summary exists and has expected components
+  const summaryPath = path.join(runsDir, artifact.artifact_id, "metrics_summary.json");
+  assert.ok(fs.existsSync(summaryPath), "metrics_summary.json should exist");
+  const summary = JSON.parse(fs.readFileSync(summaryPath, "utf-8"));
+  assert.ok(summary.summary, "summary object should exist");
+
+  // Verify slices exist
+  const slicesPath = path.join(runsDir, artifact.artifact_id, "slices.json");
+  assert.ok(fs.existsSync(slicesPath), "slices.json should exist");
+
+  // Verify efficiency data exists
+  const effPath = path.join(runsDir, artifact.artifact_id, "efficiency.json");
+  assert.ok(fs.existsSync(effPath), "efficiency.json should exist");
+  const eff = JSON.parse(fs.readFileSync(effPath, "utf-8"));
+  assert.ok(eff.runtime_ms > 0, "runtime should be positive");
 });

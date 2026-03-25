@@ -1,15 +1,33 @@
 {
-  "protocol_id": "PROTO-A",
-  "protocol_version": "1.2.0",
-  "notes": "Example protocol contract placeholder. Replace with your FLOW contract.",
+  "protocol_id": "SPIN-PROTO-1",
+  "protocol_version": "1.0.0",
+  "notes": "SPIN Evaluation Protocol — deterministic, rule-based German language analysis benchmark. Evaluates grammar rule detection, clause structure analysis, phonotactic validation, and diagnosis state classification. All components are zero-dependency, regex/rule-based, and fully reproducible.",
   "metric_contract": {
-    "primary": "syntax.pass_rate",
+    "primary": "grammar.pass_rate",
     "components": [
-      { "id": "syntax", "description": "Syntax validity under FLOW contract." },
-      { "id": "determinism", "description": "Replay stability under fixed inputs." },
-      { "id": "regression", "description": "No regressions vs baseline." },
-      { "id": "efficiency", "description": "Runtime/cost tracking." },
-      { "id": "slices", "description": "Slice reporting across categories and lengths." }
+      { "id": "grammar", "description": "Grammar rule detection accuracy — precision and recall of GR_RULES against annotated German text." },
+      { "id": "clauses", "description": "Clause detection accuracy — correct identification of sentence topology (simple/compound/complex/compound-complex)." },
+      { "id": "phonotactics", "description": "Phonotactic analysis quality — detection of illegal bigrams, sonority violations, syllable weight anomalies." },
+      { "id": "determinism", "description": "Replay stability — identical outputs on identical inputs across runs." },
+      { "id": "efficiency", "description": "Runtime performance — throughput, memory usage, processing time per example." },
+      { "id": "slices", "description": "Slice reporting — performance breakdown across error categories, input lengths, and difficulty levels." }
+    ]
+  },
+  "dataset_contract": {
+    "required_categories": ["grammar", "clause", "phonotactics", "diagnosis", "edge", "stress"],
+    "minimum_examples": 80,
+    "language": "de"
+  },
+  "evaluation_method": {
+    "type": "deterministic_regex_rules",
+    "description": "All evaluations use deterministic regex-based rules with no stochastic components. Results are fully reproducible and auditable.",
+    "comparison_baseline": "LanguageTool DE categories",
+    "unique_differentiators": [
+      "Zero-dependency architecture (no external NLP models)",
+      "Phonotactic analysis layer (SSP-based, unique to SPIN)",
+      "Six-state diagnosis engine for sentence-level structural analysis",
+      "Deterministic by design — no randomness in evaluation",
+      "Designed for neurodivergent users (LRS-optimized rules)"
     ]
   }
 }

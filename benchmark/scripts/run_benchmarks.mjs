@@ -163,14 +163,25 @@ function aggregate(values) {
   return { mean: sum / values.length, min: mn, max: mx };
 }
 
-// Mock dataset for now
-function mockDataset() {
+// Load dataset from file or fall back to minimal mock
+function loadDataset(datasetPath) {
+  if (datasetPath && fs.existsSync(datasetPath)) {
+    const ds = readJson(datasetPath);
+    return ds.examples || [];
+  }
+  // Default: load SPIN German dataset
+  const defaultPath = path.join(path.dirname(new URL(import.meta.url).pathname), "..", "datasets", "spin_de.json");
+  if (fs.existsSync(defaultPath)) {
+    const ds = readJson(defaultPath);
+    return ds.examples || [];
+  }
+  // Minimal fallback
   return [
-    { id: "ex-001", category: "core", input: "alpha beta gamma", expected: "OK" },
-    { id: "ex-002", category: "core", input: "delta epsilon zeta eta theta iota kappa", expected: "OK" },
-    { id: "ex-003", category: "edge", input: "<<< MALFORMED >>>", expected: "FAIL" },
-    { id: "ex-004", category: "edge", input: "a".repeat(160), expected: "OK" },
-    { id: "ex-005", category: "stress", input: "x".repeat(420), expected: "OK" }
+    { id: "ex-001", category: "grammar", input: "Er hat so dass alles funktioniert.", expected: { should_match: true } },
+    { id: "ex-002", category: "grammar", input: "Der Satz ist korrekt.", expected: { should_match: false } },
+    { id: "ex-003", category: "edge", input: "<<< MALFORMED >>>", expected: { should_match: false } },
+    { id: "ex-004", category: "edge", input: "a".repeat(160), expected: { should_match: false } },
+    { id: "ex-005", category: "stress", input: "x".repeat(420), expected: { should_match: false } }
   ];
 }
 
@@ -207,6 +218,7 @@ async function main() {
 
   const policyPath = args.policy || "policies/eval_policy.yaml";
   const suitePath = args.suite || "benchmarks/suite.json";
+  const datasetPath = args.dataset || null;
   const outRoot = args.out || "lab/artifacts";
 
   const artifact = readJson(artifactPath);
@@ -315,7 +327,7 @@ async function main() {
     benchmark_suite_hash: artifact.benchmark_suite_hash
   });
 
-  const dataset = mockDataset();
+  const dataset = loadDataset(datasetPath);
 
   const metricsJsonlPath = path.join(outDir, "metrics.jsonl");
   if (fs.existsSync(metricsJsonlPath)) fs.unlinkSync(metricsJsonlPath);
