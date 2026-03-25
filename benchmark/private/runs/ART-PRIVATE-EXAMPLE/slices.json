@@ -1,7 +1,7 @@
 {
   "artifact_id": "ART-PRIVATE-EXAMPLE",
   "classification": "private_dev",
-  "generated_at": "2026-03-25T19:27:04.931Z",
+  "generated_at": "2026-03-25T19:44:30.680Z",
   "slices": [
     {
       "component_id": "grammar",
