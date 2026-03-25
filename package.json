@@ -14,6 +14,7 @@
     "bench:release": "cd benchmark && node scripts/export_public.mjs",
     "bench:hash": "cd benchmark && node scripts/hash_protocol.mjs",
     "bench:test": "cd benchmark && node --test tests/*.mjs",
+    "bench:compare": "cd benchmark && node scripts/compare_lt.mjs",
     "bench:runner": "cd benchmark && node runner/server.mjs"
   },
   "keywords": [

@@ -1,0 +1,460 @@
+{
+  "corpus_id": "SPIN-LT-COMPARE-v1",
+  "version": "1.0.0",
+  "description": "Ground-truth corpus for fair comparison between SPIN and LanguageTool. Each example has a known error state (has_error) and annotated error categories. Neutral — not designed to favor either tool.",
+  "language": "de",
+  "created_at": "2026-03-25T00:00:00Z",
+  "methodology": "Examples drawn from common German error patterns across categories that both tools claim to cover. Mix of positive (has error) and negative (correct sentence) cases for precision/recall calculation.",
+  "examples": [
+    {
+      "id": "cmp-001",
+      "input": "Er hat das gemacht, so dass alles funktioniert.",
+      "has_error": true,
+      "error_category": "GETRENNTSCHREIBUNG",
+      "error_span": "so dass",
+      "correction": "sodass",
+      "notes": "Getrenntschreibung nach neuer Rechtschreibung falsch"
+    },
+    {
+      "id": "cmp-002",
+      "input": "Der Hund läuft durch den Park.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz, kein Tool sollte hier flaggen"
+    },
+    {
+      "id": "cmp-003",
+      "input": "Er sagte, daß er kommt.",
+      "has_error": true,
+      "error_category": "ALTE_RECHTSCHREIBUNG",
+      "error_span": "daß",
+      "correction": "dass",
+      "notes": "Alte Rechtschreibung — beide Tools sollten flaggen"
+    },
+    {
+      "id": "cmp-004",
+      "input": "Sie ist größer wie ihre Schwester.",
+      "has_error": true,
+      "error_category": "ALS_WIE",
+      "error_span": "größer wie",
+      "correction": "größer als",
+      "notes": "Vergleich mit 'wie' statt 'als' — häufiger Fehler"
+    },
+    {
+      "id": "cmp-005",
+      "input": "Die Kinder spielen im Garten und lachen laut.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz mit Koordination"
+    },
+    {
+      "id": "cmp-006",
+      "input": "Er wollte unbedingt Karl's Buch lesen.",
+      "has_error": true,
+      "error_category": "APOSTROPH",
+      "error_span": "Karl's",
+      "correction": "Karls",
+      "notes": "Englischer Genitiv-Apostroph im Deutschen falsch"
+    },
+    {
+      "id": "cmp-007",
+      "input": "Auf Grund der Verspätung kam er zu spät.",
+      "has_error": true,
+      "error_category": "GETRENNTSCHREIBUNG",
+      "error_span": "Auf Grund",
+      "correction": "Aufgrund",
+      "notes": "Getrenntschreibung — zusammen korrekt"
+    },
+    {
+      "id": "cmp-008",
+      "input": "Die Sonne scheint und es ist warm draußen.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter zusammengesetzter Satz"
+    },
+    {
+      "id": "cmp-009",
+      "input": "Er wusste nicht, das er kommen soll.",
+      "has_error": true,
+      "error_category": "DAS_DASS",
+      "error_span": "das er",
+      "correction": "dass er",
+      "notes": "das/dass-Verwechslung — häufigster LRS-Fehler"
+    },
+    {
+      "id": "cmp-010",
+      "input": "Er hat irgentwie Recht damit.",
+      "has_error": true,
+      "error_category": "AUSLAUTVERHAERTUNG",
+      "error_span": "irgentwie",
+      "correction": "irgendwie",
+      "notes": "Auslautverhärtung d→t — typischer LRS-Fehler"
+    },
+    {
+      "id": "cmp-011",
+      "input": "Das Ergebnis war das maximalste, was wir erreichen konnten.",
+      "has_error": true,
+      "error_category": "SUPERLATIV_FEHLFORM",
+      "error_span": "maximalste",
+      "correction": "maximale",
+      "notes": "Superlativ von Absolutadjektiv — grammatisch falsch"
+    },
+    {
+      "id": "cmp-012",
+      "input": "Die Blumen blühen wunderschön im Frühling.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz"
+    },
+    {
+      "id": "cmp-013",
+      "input": "Sie hat das bereits schon gestern erledigt.",
+      "has_error": true,
+      "error_category": "REDUNDANZ",
+      "error_span": "bereits schon",
+      "correction": "bereits",
+      "notes": "Pleonasmus — doppelte Zeitangabe"
+    },
+    {
+      "id": "cmp-014",
+      "input": "Er heisst Hans und kommt aus der Schweiz.",
+      "has_error": true,
+      "error_category": "SS_ESZETT",
+      "error_span": "heisst",
+      "correction": "heißt",
+      "notes": "Schweizer ss → deutsches ß nach langem Vokal"
+    },
+    {
+      "id": "cmp-015",
+      "input": "Ich bin müde, weil ich schlecht geschlafen habe.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter komplexer Satz mit Nebensatz"
+    },
+    {
+      "id": "cmp-016",
+      "input": "Das ist vorallem wichtig für die Prüfung.",
+      "has_error": true,
+      "error_category": "ZUSAMMENSCHREIBUNG",
+      "error_span": "vorallem",
+      "correction": "vor allem",
+      "notes": "Zusammenschreibung falsch — muss getrennt stehen"
+    },
+    {
+      "id": "cmp-017",
+      "input": "Er hat das das Buch gelesen.",
+      "has_error": true,
+      "error_category": "WORD_REPEAT",
+      "error_span": "das das",
+      "correction": "das",
+      "notes": "Wortwiederholung — Funktionswort verdoppelt"
+    },
+    {
+      "id": "cmp-018",
+      "input": "Der Professor hält morgen einen Vortrag über Quantenphysik.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz, gehobenes Register"
+    },
+    {
+      "id": "cmp-019",
+      "input": "Statt dessen ging er nach Hause.",
+      "has_error": true,
+      "error_category": "GETRENNTSCHREIBUNG",
+      "error_span": "Statt dessen",
+      "correction": "Stattdessen",
+      "notes": "Getrenntschreibung — zusammen korrekt"
+    },
+    {
+      "id": "cmp-020",
+      "input": "Ich musste ihm sagen dass er gehen soll.",
+      "has_error": true,
+      "error_category": "KOMMA",
+      "error_span": "sagen dass",
+      "correction": "sagen, dass",
+      "notes": "Fehlendes Komma vor Nebensatz"
+    },
+    {
+      "id": "cmp-021",
+      "input": "Die Straße ist nass wegen dem Regen.",
+      "has_error": true,
+      "error_category": "KASUS",
+      "error_span": "wegen dem",
+      "correction": "wegen des",
+      "notes": "Dativ statt Genitiv nach 'wegen' — umgangssprachlich verbreitet, aber grammatisch Genitiv korrekt"
+    },
+    {
+      "id": "cmp-022",
+      "input": "Er geht in die Schule obwohl er krank ist.",
+      "has_error": true,
+      "error_category": "KOMMA",
+      "error_span": "Schule obwohl",
+      "correction": "Schule, obwohl",
+      "notes": "Fehlendes Komma vor konzessivem Nebensatz"
+    },
+    {
+      "id": "cmp-023",
+      "input": "Der Lehrer erklärte den Schülern die Aufgabe geduldig.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz mit indirektem Objekt"
+    },
+    {
+      "id": "cmp-024",
+      "input": "Ich habe seit drei Jahren kein Fleisch mehr gegessen.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz mit Zeitangabe"
+    },
+    {
+      "id": "cmp-025",
+      "input": "Er hat mir dem Buch ein Geschenk gemacht.",
+      "has_error": true,
+      "error_category": "KASUS",
+      "error_span": "mir dem",
+      "correction": "mit dem",
+      "notes": "Tippfehler/Kasusfehler — mir statt mit"
+    },
+    {
+      "id": "cmp-026",
+      "input": "Trotzdem war er glücklich.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz mit Adverb"
+    },
+    {
+      "id": "cmp-027",
+      "input": "Das Wetter wird besser wenn der Frühling kommt.",
+      "has_error": true,
+      "error_category": "KOMMA",
+      "error_span": "besser wenn",
+      "correction": "besser, wenn",
+      "notes": "Fehlendes Komma vor konditionalem Nebensatz"
+    },
+    {
+      "id": "cmp-028",
+      "input": "Sie las den Brief und weinte leise.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz mit und-Verknüpfung"
+    },
+    {
+      "id": "cmp-029",
+      "input": "Er draussen spielen wollte.",
+      "has_error": true,
+      "error_category": "SS_ESZETT",
+      "error_span": "draussen",
+      "correction": "draußen",
+      "notes": "ss → ß nach langem Vokal"
+    },
+    {
+      "id": "cmp-030",
+      "input": "Das ist das einzigste Exemplar.",
+      "has_error": true,
+      "error_category": "SUPERLATIV_FEHLFORM",
+      "error_span": "einzigste",
+      "correction": "einzige",
+      "notes": "Superlativ eines absoluten Adjektivs — nicht steigerbar"
+    },
+    {
+      "id": "cmp-031",
+      "input": "Der Arzt verschrieb ihm Medikamente gegen den Husten.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz"
+    },
+    {
+      "id": "cmp-032",
+      "input": "Wir muessen morgen früh aufstehen.",
+      "has_error": true,
+      "error_category": "SS_ESZETT",
+      "error_span": "muessen",
+      "correction": "müssen",
+      "notes": "ue → ü — typischer Fehler bei fehlender Tastatur"
+    },
+    {
+      "id": "cmp-033",
+      "input": "Der Zug kommt um acht Uhr an.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz mit trennbarem Verb"
+    },
+    {
+      "id": "cmp-034",
+      "input": "Er hat wider Erwarten gewonnen.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekt: 'wider Erwarten' (wider = gegen) — NICHT wieder. Beide Tools müssen das korrekt als richtig erkennen."
+    },
+    {
+      "id": "cmp-035",
+      "input": "Sie ging einkaufen um Brot zu holen.",
+      "has_error": true,
+      "error_category": "KOMMA",
+      "error_span": "einkaufen um",
+      "correction": "einkaufen, um",
+      "notes": "Fehlendes Komma vor finaler Infinitivgruppe mit 'um zu'"
+    },
+    {
+      "id": "cmp-036",
+      "input": "Mit Hilfe des Lehrers hat er die Prüfung bestanden.",
+      "has_error": true,
+      "error_category": "GETRENNTSCHREIBUNG",
+      "error_span": "Mit Hilfe",
+      "correction": "Mithilfe",
+      "notes": "Getrenntschreibung — zusammen empfohlen"
+    },
+    {
+      "id": "cmp-037",
+      "input": "Der Film hat mir gut gefallen, obwohl er lang war.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter komplexer Satz mit Komma"
+    },
+    {
+      "id": "cmp-038",
+      "input": "Es gab Probleme nichtsdestotrotz haben wir es geschafft.",
+      "has_error": true,
+      "error_category": "KOMMA",
+      "error_span": "Probleme nichtsdestotrotz",
+      "correction": "Probleme, nichtsdestotrotz",
+      "notes": "Fehlende Interpunktion zwischen Hauptsätzen"
+    },
+    {
+      "id": "cmp-039",
+      "input": "Er isst gerne Kuchen und und Eis.",
+      "has_error": true,
+      "error_category": "WORD_REPEAT",
+      "error_span": "und und",
+      "correction": "und",
+      "notes": "Funktionswort-Wiederholung"
+    },
+    {
+      "id": "cmp-040",
+      "input": "Die Katze saß auf der Mauer und beobachtete die Vögel.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz"
+    },
+    {
+      "id": "cmp-041",
+      "input": "Er war wichtik für das Team.",
+      "has_error": true,
+      "error_category": "AUSLAUTVERHAERTUNG",
+      "error_span": "wichtik",
+      "correction": "wichtig",
+      "notes": "Auslautverhärtung g→k — typischer LRS-Fehler"
+    },
+    {
+      "id": "cmp-042",
+      "input": "Er ist als wie sein Bruder gekommen.",
+      "has_error": true,
+      "error_category": "ALS_WIE",
+      "error_span": "als wie",
+      "correction": "als",
+      "notes": "Dopplung als+wie — dialektal, hochsprachlich falsch"
+    },
+    {
+      "id": "cmp-043",
+      "input": "Die Schüler schreiben eine Klassenarbeit in Mathematik.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz"
+    },
+    {
+      "id": "cmp-044",
+      "input": "Für's Protokoll: Die Sitzung wurde um 14 Uhr beendet.",
+      "has_error": true,
+      "error_category": "APOSTROPH",
+      "error_span": "Für's",
+      "correction": "Fürs",
+      "notes": "Überflüssiger Apostroph bei Kontraktion"
+    },
+    {
+      "id": "cmp-045",
+      "input": "Heut zu Tage ist alles digital.",
+      "has_error": true,
+      "error_category": "VERSCHMELZUNG_ADVERB",
+      "error_span": "Heut zu Tage",
+      "correction": "Heutzutage",
+      "notes": "Getrennte Schreibung eines verschmolzenen Adverbs"
+    },
+    {
+      "id": "cmp-046",
+      "input": "Ich weiss nicht, was ich sagen soll.",
+      "has_error": true,
+      "error_category": "SS_ESZETT",
+      "error_span": "weiss",
+      "correction": "weiß",
+      "notes": "ss → ß nach langem Vokal"
+    },
+    {
+      "id": "cmp-047",
+      "input": "Das Buch liegt auf dem Tisch neben der Lampe.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz"
+    },
+    {
+      "id": "cmp-048",
+      "input": "Er müßte eigentlich schon da sein.",
+      "has_error": true,
+      "error_category": "ALTE_RECHTSCHREIBUNG",
+      "error_span": "müßte",
+      "correction": "müsste",
+      "notes": "Alte Rechtschreibung — ß nach kurzem Vokal vor Reform"
+    },
+    {
+      "id": "cmp-049",
+      "input": "Unter einander haben sie sich gut verstanden.",
+      "has_error": true,
+      "error_category": "GETRENNTSCHREIBUNG",
+      "error_span": "Unter einander",
+      "correction": "Untereinander",
+      "notes": "Getrenntschreibung — zusammen korrekt"
+    },
+    {
+      "id": "cmp-050",
+      "input": "Die Studenten diskutierten über verschiedene philosophische Ansätze.",
+      "has_error": false,
+      "error_category": null,
+      "error_span": null,
+      "correction": null,
+      "notes": "Korrekter Satz, keine Fehler"
+    }
+  ]
+}

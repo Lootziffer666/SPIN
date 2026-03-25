@@ -117,43 +117,88 @@ Das 10-Punkte-Verbotsmanifest (`ANTI_FEATURES.md`) ist ungewöhnlich rigoros. Di
 ```
 FLOW    →  Zeichenebene   →  Orthographie & Tippfehler  →  Hintergrundprozess
 SPIN    →  Satzebene       →  Struktur & Diagnose        →  Aktives Werkzeug
-LOOM    →  Narrativebene   →  Plot, Bögen, Gewebe         →  Perspektiv-Wechsel
+LOOM    →  AI-Ebene        →  KI-Unterstützung für SPIN   →  Erweiterung, kein eigenes Tool
 SMASH   →  Kognitionsebene →  Mikropausen & Reset         →  Begleiter
 ```
 
+### Was ist LOOM wirklich?
+
+LOOM ist **kein eigenständiges Tool** und kein separates Narrativ-Werkzeug. LOOM ist die geplante **AI-Unterstützungsschicht für SPIN**. Sie existiert bewusst noch nicht, weil SPIN selbst noch nicht fertig ist. Erst wenn SPINs deterministische Kern-Engine steht, macht eine KI-Erweiterung Sinn — sonst baut man KI-Features auf instabilem Fundament.
+
+LOOM wird:
+- SPINs Diagnose-Ergebnisse nutzen, um kontextbezogene Hinweise zu geben
+- Strukturmuster erkennen, die rein regelbasiert schwer fassbar sind
+- Als optionale Schicht arbeiten — SPIN funktioniert auch ohne LOOM
+
+LOOM wird **nicht**:
+- SPIN ersetzen oder umgehen
+- Eigene UI haben (nutzt SPINs Interface)
+- Den deterministischen Kern verändern
+
+### SPIN + FLOW: Repo-Zusammenlegung?
+
+**Empfehlung: Ja, SPIN und FLOW sollten in einem Repo vereint werden.**
+
+Die Grammatik-Engine (`clauseDetector.js`, `rules.gr.js`, `contextWindowRules.js`, `phonotactics.js`) existiert aktuell als **Kopie** in beiden Repos. Das führt zu:
+
+- Synchronisationsproblemen bei Regeländerungen
+- Doppelter Wartung der gleichen Tests
+- Divergenten Versionsständen
+
+**Vorgeschlagene Struktur bei Zusammenlegung:**
+
+```
+spin-flow/
+├── packages/
+│   ├── grammar/           ← Geteilte Grammatik-Engine
+│   │   ├── rules.gr.js
+│   │   ├── contextWindowRules.js
+│   │   ├── clauseDetector.js
+│   │   ├── phonotactics.js
+│   │   └── __tests__/
+│   ├── spin/              ← SPIN-spezifisch (Diagnose, Chunking, UI)
+│   │   ├── diagnosis.js
+│   │   ├── config.js
+│   │   └── ui.js
+│   └── flow/              ← FLOW-spezifisch (Normalizer, Hotkeys)
+│       ├── pipeline.js
+│       └── normalizer.js
+├── benchmark/             ← Benchmark-System (shared)
+└── package.json           ← Workspace-Root
+```
+
+**Vorteile:**
+- Eine Änderung an `rules.gr.js` gilt sofort für beide Tools
+- Ein CI-Lauf testet die Grammatik-Engine für beide Konsumenten
+- Echte Modularität statt Copy-Paste-Modularität
+
+**Risiken:**
+- Höhere Komplexität im Repo-Setup (npm workspaces oder ähnlich)
+- Wenn FLOW v1 (AHK) und FLOW v2 (C#/Node) beide weiterexistieren, muss klar sein, welche Version konsumiert wird
+
 ### Synergie-Bewertung
 
-**JA, die Synergie ist sinnvoll.** Hier die Begründung:
+**✅ Stärken:**
 
-**✅ Stärken der Synergie:**
-
-1. **Klare Ebenen-Trennung:** Jedes Tool operiert auf einer anderen Abstraktionsebene. Kein Overlap, kein Kannibalismus. FLOW korrigiert Buchstaben, SPIN rotiert Satzteile, LOOM webt Erzählfäden.
+1. **Klare Ebenen-Trennung:** FLOW korrigiert Buchstaben, SPIN diagnostiziert Satzstruktur. Kein Overlap.
 
 2. **Geteilte Infrastruktur:** `clauseDetector.js` und `rules.gr.js` werden von FLOW und SPIN gemeinsam genutzt. Die Grammatik-Engine hat echten Double-Use.
 
-3. **Metaphern-Kohärenz:** Spinnen → Drehen → Weben. Die Metaphern ergänzen sich: SPIN dreht den einzelnen Faden, LOOM verwebt die Fäden zum Stoff. Das ist keine Marketing-Kosmetik, sondern konzeptionelle Tiefe.
+3. **LOOM als natürliche Erweiterung:** KI-Unterstützung macht erst Sinn, wenn die regelbasierte Engine steht. Die Reihenfolge (SPIN-Kern → LOOM-KI) ist richtig.
 
-4. **Kognitive Pipeline:** Die Tools bilden einen natürlichen Schreibprozess ab:
-   - Tippen → FLOW fängt Tippfehler ab
-   - Satz formulieren → SPIN diagnostiziert Struktur
-   - Text strukturieren → LOOM zeigt das Gesamtbild
-   - Blockade → SMASH unterbricht, SPIN erkennt die Blockade
+4. **Design-Kohärenz:** Identische Design-Tokens (Cream #f2f0e8, Navy #000030, Teal #00c0c0, Red #e01020). Identische Typografie (Bebas Neue + Inter).
 
-5. **Design-Kohärenz:** Identische Design-Tokens (Cream #f2f0e8, Navy #000030, Teal #00c0c0, Red #e01020). Identische Typografie (Bebas Neue + Inter). Das Familiengefühl ist architektonisch verankert.
+**⚠️ Risiken:**
 
-**⚠️ Risiken der Synergie:**
+1. **Shared Package fehlt.** Die Grammatik-Engine existiert als Kopie in FLOW und SPIN. Lösung: Repo-Zusammenlegung (siehe oben).
 
-1. **LOOM existiert nur konzeptionell.** Keine Zeile Code, kein Repo. Die Synergie ist theoretisch perfekt, aber praktisch ungetestet.
+2. **Solo-Projekt-Skalierung.** Mehrere Tools zu pflegen ist ambitioniert. Die Repo-Zusammenlegung würde die Wartungslast reduzieren.
 
-2. **Shared Package fehlt.** Die Grammatik-Engine existiert als Kopie in FLOW und SPIN. Ohne ein tatsächlich geteiltes NPM-Paket bleibt die „eine Erweiterung, zwei Nutzen"-Vision fragil.
-
-3. **Complexity Creep.** Vier Tools zu pflegen ist für ein Solo-Projekt (oder Kleinstteam) ambitioniert. Das Risiko: Keines wird fertig.
-
-4. **SMASH-Bridge ist spekulativ.** Automatische Blockadenerkennung (Loop ≥3×, DOGMA-Eskalation, Inaktivität) klingt gut, könnte aber ND-Nutzer:innen stressen statt helfen.
+3. **SMASH-Bridge ist spekulativ.** Automatische Blockadenerkennung (Loop ≥3×, DOGMA-Eskalation, Inaktivität) klingt gut, könnte aber ND-Nutzer:innen stressen statt helfen.
 
 ### Synergie-Gesamturteil
 
-Die Synergie ist **konzeptionell stark** (5/5), **technisch angebahnt** (3/5), und **praktisch unvollständig** (2/5). Die Vision ist kohärent, die Umsetzung muss noch folgen.
+Die FLOW/SPIN-Synergie ist **technisch real** (geteilte Engine) und würde durch Repo-Zusammenlegung deutlich gestärkt. LOOM ist als zukünftige KI-Erweiterung richtig positioniert — es existiert bewusst noch nicht.
 
 ---
 
@@ -181,21 +226,7 @@ SPIN spielt nicht in derselben Liga wie LanguageTool (3.000+ Regeln) oder Duden 
 
 **Kernunterschied:** LanguageTool sagt „Das ist falsch, hier ist die Korrektur." SPIN sagt „Hier ist die Struktur deines Satzes — er ist mehrkernig/konfliktär/performativ instabil."
 
-### B. Narrative Struktur-Tools (LOOM-Vergleich)
-
-| Kriterium | LOOM (Konzept) | Scrivener | Plottr | yWriter |
-|-----------|---------------|-----------|-------|---------|
-| **Visualisierung** | Graph (Nodes + Links) | Corkboard + Outliner | Timeline + Drag-Drop | Szenen-basiert |
-| **Story-Architektur** | Offener Graph, nie geschlossen | Ordner-Hierarchie | Templates (Hero's Journey etc.) | Kapitel/Szenen |
-| **Cross-Project** | ✅ Geplant | ❌ | ❌ | ❌ |
-| **Integration** | Nutzt SPIN-Komponenten | Eigenständig | Eigenständig | Eigenständig |
-| **Preis** | Kostenlos (geplant) | ~60€ Einmal | ~60€/Jahr | Kostenlos |
-| **Zielgruppe** | ND-Schreiber:innen | Alle Autor:innen | Visuell Denkende | Pragmatiker:innen |
-
-**Einordnung:**
-LOOM wäre — falls realisiert — das **einzige Narrativ-Tool, das auf Satzebene verankert ist**. Scrivener zeigt Kapitel als Karten, Plottr zeigt Zeitstrahlen. LOOM würde zeigen, wie sich ein einzelner Satz in das Erzählgewebe einfügt. Das ist ein Alleinstellungsmerkmal.
-
-### C. ND-Tools (Neurodivergenz-Vergleich)
+### B. ND-Tools (Neurodivergenz-Vergleich)
 
 | Kriterium | SPIN/FLOW/LOOM | Litero.ai | Speechify | Notion AI |
 |-----------|---------------|-----------|-----------|-----------|
@@ -245,15 +276,22 @@ Determinismus             100%              ✅ Garantiert
 - Precision: **0.33** (33% der geflaggerten Fehler sind echte Fehler)
 - Recall: **0.26** (26% aller echten Fehler werden gefunden)
 
+Diese Zahlen stammen aus einem Vergleich gegen Lehrer-Korrekturen (offenes Fehler-Set). Sie sind überraschend niedrig, aber erklärbar: LanguageTool hat ~3.000 Regeln, von denen viele stilistische Empfehlungen sind, die Lehrer:innen nicht als „Fehler" werten.
+
 **SPIN (eigene Messung, 140 Beispiele):**
 - Precision: **Hoch** bei abgedeckten Regeln (~0.95 pro Regel-Confidence)
 - Recall: **Begrenzt** auf 145 Regeln → kein Anspruch auf Vollabdeckung
 - Pass Rate: **80%** über alle Kategorien
 
-**Wichtig:** Diese Zahlen sind **nicht direkt vergleichbar**:
-- LanguageTool wurde gegen Lehrer-Korrekturen gemessen (offenes Fehler-Set)
-- SPIN wird gegen **eigene, curated Beispiele** gemessen (geschlossenes Set)
-- Ein fairer Vergleich bräuchte denselben Testkorpus
+**Ehrliche Einordnung:**
+Diese Zahlen sind **nicht direkt vergleichbar**, weil SPIN gegen eigene, kuratierte Beispiele gemessen wird. Um einen ehrlichen Vergleich zu ermöglichen, enthält das Projekt jetzt einen **LanguageTool-Vergleichs-Benchmark** (`benchmark/scripts/compare_lt.mjs`), der:
+
+1. Einen geteilten Ground-Truth-Korpus mit 50 annotierten deutschen Sätzen nutzt
+2. SPIN gegen diesen Korpus misst (Precision, Recall, F1)
+3. Optional LanguageTool gegen denselben Korpus misst (via API)
+4. Ergebnisse ehrlich nebeneinanderstellt — wenn SPIN schlechter abschneidet, zeigt der Benchmark das
+
+Ohne den LanguageTool-API-Vergleich liefert der Benchmark bereits SPINs eigene Precision/Recall-Werte auf dem neutralen Korpus.
 
 ### Wie die Score-Berechnung funktioniert
 
@@ -295,14 +333,14 @@ Endergebnis:        0.0 – 1.0 (geclippt, 4 Dezimalen)
 
 ### 🔴 Kritisch
 
-**1. LOOM existiert nicht.**
-Das Synergie-Dreieck hat eine leere Ecke. LOOM ist konzeptionell beschrieben, hat aber keinen Code, kein Repo, keine Implementierung. Solange LOOM fehlt, ist die „drei Tools = drei Ebenen"-Vision unvollständig.
+**1. Kein Shared Package / Repo-Zusammenlegung.**
+Die Grammatik-Engine (`clauseDetector.js`, `rules.gr.js`) existiert als **Kopie** in FLOW und SPIN. Jede Änderung muss manuell synchronisiert werden. Bei 145+ Regeln ist das ein Wartungsrisiko. Empfehlung: SPIN und FLOW in einem Repo vereinen (siehe Abschnitt 3).
 
-**2. Kein Shared Package.**
-Die Grammatik-Engine (`clauseDetector.js`, `rules.gr.js`) existiert als **Kopie** in FLOW und SPIN. Jede Änderung muss manuell synchronisiert werden. Bei 145+ Regeln ist das ein Wartungsrisiko.
+**2. Kein externer Validierungskorpus.**
+Die Benchmarks messen SPIN gegen **sich selbst**. Der neue Vergleichs-Benchmark (`compare_lt.mjs`) mit Ground-Truth-Korpus ist ein erster Schritt, aber ein unabhängiger, extern annotierter LRS-Korpus fehlt noch.
 
-**3. Kein externer Validierungskorpus.**
-Die Benchmarks messen SPIN gegen **sich selbst**. Es gibt keinen unabhängigen Gold-Standard-Datensatz (z.B. annotierter LRS-Korpus), gegen den die Erkennung validiert wird.
+**3. Benchmark war bisher self-referential.**
+Der bestehende Benchmark misst SPIN gegen eigene kuratierte Beispiele. Das kann nie objektiv sein. Der neue LanguageTool-Vergleichsbenchmark adressiert das, indem er Standard-NLP-Metriken (Precision/Recall/F1) auf einem neutralen Korpus berechnet.
 
 ### 🟡 Wichtig
 
@@ -335,9 +373,9 @@ Der SMASH-Prototyp hat eine Editorial-Poster-Ästhetik, die nicht zur Design-Bib
 
 ### Sofort (nächste Iteration)
 
-1. **Shared Grammar Package**: `@spin/grammar` als eigenständiges NPM-Paket extrahieren. FLOW und SPIN als Consumer. Das ist die wichtigste technische Schuld.
+1. **Repo-Zusammenlegung SPIN + FLOW**: Die Grammatik-Engine als geteiltes Modul in einem Monorepo. Das ist die wichtigste technische Schuld.
 
-2. **Precision/Recall in Benchmarks**: F1-Score berechnen. Dafür mindestens 50 Negativbeispiele (korrekte Sätze, die KEINE Regel triggern sollen) in den Datensatz aufnehmen.
+2. **LanguageTool-Vergleich ausführen**: Den neuen `compare_lt.mjs`-Benchmark mit LanguageTool API-Key laufen lassen und Ergebnisse dokumentieren. Ehrlich sein, wenn SPIN verliert — das zeigt, wo nachgebessert werden muss.
 
 3. **Unicode-Regex-Audit**: Alle 145 Regeln systematisch auf `\b`-Probleme mit ä/ö/ü/ß prüfen.
 
@@ -345,9 +383,9 @@ Der SMASH-Prototyp hat eine Editorial-Poster-Ästhetik, die nicht zur Design-Bib
 
 4. **Externer Validierungskorpus**: LRS-Fehler-Korpora aus der Forschung beschaffen oder selbst annotieren. Idealerweise 500+ Sätze mit manueller Annotation.
 
-5. **LanguageTool-Vergleich**: Automatisierter A/B-Test auf identischem Datensatz. Das würde die Benchmark-Glaubwürdigkeit dramatisch erhöhen.
+5. **Precision/Recall verbessern**: Die Benchmark-Ergebnisse nutzen, um gezielt Regeln nachzuschärfen, wo SPIN schlecht abschneidet.
 
-6. **LOOM-Prototyp**: Mindestens eine Graph-Visualisierung (z.B. mit D3.js oder Cytoscape) als Proof-of-Concept. Ohne Code bleibt LOOM eine Idee.
+6. **LOOM vorbereiten**: Die SPIN-Engine so strukturieren, dass eine KI-Erweiterungsschicht sauber andocken kann. Kein LOOM-Code, bevor SPIN nicht stabil ist.
 
 ### Langfristig
 
@@ -370,8 +408,8 @@ Der SMASH-Prototyp hat eine Editorial-Poster-Ästhetik, die nicht zur Design-Bib
 | **Schwachstellen** | Bekannt und adressierbar | 🟡 |
 | **Vergleich** | Kein direkter Konkurrent — das ist Stärke und Risiko zugleich | 🟢 |
 
-**SPIN ist kein Grammar-Checker.** Es wäre ein Fehler, es an LanguageTool zu messen. SPIN ist ein **diagnostisches Instrument für Satzstruktur** — das erste seiner Art, speziell für neurodivergente Schreiber:innen. Die Grammatik-Engine ist eine Komponente, nicht der Zweck.
+**SPIN ist kein Grammar-Checker.** Es wäre ein Fehler, es nur an LanguageTool zu messen. SPIN ist ein **diagnostisches Instrument für Satzstruktur**. Aber die Grammatik-Engine muss sich dem Vergleich stellen — ehrlich, mit Standard-Metriken, auf neutralem Korpus. Wenn wir schlechter sind, feilen wir nach.
 
-Die größte Stärke: Philosophische Klarheit.  
-Die größte Schwäche: LOOM und die App-Shell existieren noch nicht.  
-Das größte Risiko: Zu viele Tools für zu wenige Hände.
+Die größte Stärke: Philosophische Klarheit und einzigartige Phonotaktik-Ebene.  
+Die größte Schwäche: Getrennte Repos für FLOW und SPIN, fehlende App-Shell.  
+Der wichtigste nächste Schritt: Repo-Zusammenlegung und ehrlicher LanguageTool-Vergleich.

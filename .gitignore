@@ -30,6 +30,7 @@ npm-debug.log*
 benchmark/private/runs/**
 benchmark/private/tweaks/**
 benchmark/private/_test_tmp/**
+benchmark/private/comparison_report.json
 benchmark/lab/artifacts/**
 benchmark/public/releases/**
 # Keep folder structure via README placeholders
