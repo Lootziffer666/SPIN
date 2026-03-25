@@ -1,9 +1,0 @@
-{
-  "artifact_id": "ART-TEST-EXAMPLE",
-  "classification": "private_dev",
-  "generated_at": "2026-03-25T17:23:49.351Z",
-  "runtime_ms": 33163,
-  "simulated_tokens": 9192,
-  "peak_rss_bytes": 65687552,
-  "throughput_examples_per_s": 4.221572234116335
-}

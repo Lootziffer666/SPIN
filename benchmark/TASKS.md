@@ -27,13 +27,12 @@ This file defines implementation roadmap.
 
 ---
 
-## Phase 2 — Protocol System
+## Phase 2 — Protocol System (Complete)
 
-
-- [ ] protocol.schema.json definition
-- [ ] protocol hashing script
-- [ ] protocol registry folder
-- [ ] protocol version locking
+- [x] protocol.schema.json definition
+- [x] protocol hashing script
+- [x] protocol registry folder
+- [x] protocol version locking
 
 ---
 
@@ -49,32 +48,32 @@ This file defines implementation roadmap.
 ## Phase 4 — Environment Reproducibility
 
 - [ ] env_manifest.json generator
-- [ ] env fingerprint hashing
+- [x] env fingerprint hashing
 - [ ] container support
-- [ ] deterministic flags enforcement
+- [x] deterministic flags enforcement
 
 ---
 
-## Phase 5 — Benchmark Runner
+## Phase 5 — Benchmark Runner (Complete)
 
-- [ ] benchmark runner script
-- [ ] benchmark suite definition
-- [ ] metrics generation
-- [ ] slice analysis
+- [x] benchmark runner script
+- [x] benchmark suite definition
+- [x] metrics generation
+- [x] slice analysis
 
 ---
 
-## Phase 6 — Audit and Provenance
+## Phase 6 — Audit and Provenance (Complete)
 
-- [ ] provenance.json generation
-- [ ] artifact hash chain
-- [ ] audit verification script
+- [x] provenance.json generation
+- [x] artifact hash chain
+- [x] audit verification script
 
 ---
 
 ## Phase 7 — CI Integration
 
-- [ ] GitHub Actions workflow
+- [x] GitHub Actions workflow
 - [ ] automated dataset validation
 - [ ] automated protocol validation
 - [ ] artifact generation pipeline
@@ -91,7 +90,7 @@ This file defines implementation roadmap.
 
 ## Next Actions (You can do now)
 
-- [ ] Run install script and start UI (`npm run dev`)
-- [ ] Run one private benchmark to generate artifacts (`npm run bench -- --artifact private/_inbox/artifact.json --out private/runs`)
-- [ ] Run a short auto-tweak (`npm run tweak -- --minutes 10 --artifact private/_inbox/artifact.json`)
-- [ ] Implement a minimal FLOW CLI stub (`flow/flow_cli.mjs`) and run with `FLOW_CMD`
+- [x] Implement FLOW CLI (`flow/flow_cli.mjs`) with real SPIN module integration
+- [x] Run one private benchmark to generate artifacts (`npm run bench:spin`)
+- [ ] Run a short auto-tweak (`npm run bench:tweak -- --minutes 10 --artifact private/_inbox/artifact.json`)
+- [ ] Create dataset_card.json schema for dataset governance
