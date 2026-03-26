@@ -15,7 +15,10 @@
     "bench:hash": "cd benchmark && node scripts/hash_protocol.mjs",
     "bench:test": "cd benchmark && node --test tests/*.mjs",
     "bench:compare": "cd benchmark && node scripts/compare_lt.mjs",
-    "bench:runner": "cd benchmark && node runner/server.mjs"
+    "bench:runner": "cd benchmark && node runner/server.mjs",
+    "eval": "node scripts/run_eval.mjs",
+    "eval:dedupe": "node scripts/dedupe_and_split.mjs",
+    "eval:sources": "node scripts/fetch_sources.mjs"
   },
   "keywords": [
     "writing",
