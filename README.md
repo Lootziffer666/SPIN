@@ -1,3 +1,7 @@
+###VERALTET, konsolidiert mit Flow und Smash im Monorepo FLOW-SPIN-SMASH###
+
+
+
 # SPIN
 
 Diagnostisches Schreibinstrument für Satzstruktur, Grammatik, Widerstand und evaluierbare Schreibanalyse.
